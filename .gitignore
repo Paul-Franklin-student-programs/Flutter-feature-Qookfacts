@@ -1,11 +1,42 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+**/.cxx/
+*.ninja_log
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
+.pub-cache/
+.pub/
+/build/
 .dart_tool/
 .packages
 build/
 # If you're building an application, you may want to check-in your pubspec.lock
-pubspec.lock
+# pubspec.lock
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
@@ -19,3 +50,6 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+
+# Exceptions to above rules.
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
