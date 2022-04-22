@@ -1,4 +1,3 @@
-/*
 import 'dart:math';
 import 'dart:ui';
 
@@ -212,4 +211,3 @@ class Classifier {
   /// Gets the loaded labels
   List<String> get labels => _labels;
 }
-*/

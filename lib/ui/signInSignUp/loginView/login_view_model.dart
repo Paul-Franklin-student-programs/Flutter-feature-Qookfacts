@@ -168,6 +168,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
 
+
   Future<void> loginWithApple(BuildContext context) async {
     String message = await authService.signInWithApple(context);
     /*await UserBloc().getUserData();

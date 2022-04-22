@@ -1,9 +1,11 @@
 // ignore_for_file: file_names
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image/image.dart' as imageLib;
 import 'package:qookit/services/services.dart';
 import 'package:qookit/tflite/recognition.dart';
@@ -91,6 +93,21 @@ class Classifier {
       });
     } catch (e) {
       print('Error while creating interpreter: $e');
+    }
+  }
+
+
+
+  Future<Null>_loadmodel() async{
+
+    try{
+      const platform =const MethodChannel('');
+      var jsonString= await rootBundle.loadString('');
+      var metadata= json.decode(jsonString);
+      labels= metadata[''];
+
+    }catch(e){
+
     }
   }
 
