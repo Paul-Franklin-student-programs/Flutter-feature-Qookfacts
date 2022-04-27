@@ -2,8 +2,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:collection/collection.dart';
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as imageLib;
@@ -30,7 +32,8 @@ class Classifier {
   List<String> _labels;
 
   static const String MODEL_FILE_NAME = 'groceries-yolov4-tiny-416-01-09-21.tflite';
-  static const String LABEL_FILE_NAME = 'groceries.names';
+  static const String LABEL_FILE_NAME = 'groceries.txt';
+  static const String YOLO_FILE_NAME= "yolov2_tiny.tflite";
 
   /// Input size of image (heixght = width = 300)
   static const int INPUT_SIZE = 416;
@@ -56,17 +59,62 @@ class Classifier {
   /// Number of results to show
   static const int NUM_RESULTS = 10;
 
+  Future<FirebaseCustomModel> model =  FirebaseModelDownloader.instance.getModel('assets/+"$path"', FirebaseModelDownloadType.latestModel);
+
   Classifier({
     this.modelFile,
     Interpreter interpreter,
     List<String> labels,
   }) {
-    loadModel(interpreter: interpreter);
+    loadModel(modelFilePath: MODEL_FILE_NAME, labelsFilePath: LABEL_FILE_NAME);
+    //loadModel(interpreter: interpreter);
     loadLabels(labels: labels);
   }
 
+  FirebaseModelDownloadConditions conditions = FirebaseModelDownloadConditions(
+    // Download whilst connected to cellular data
+    iosAllowsCellularAccess: true,
+    // Allow downloading in the background
+    iosAllowsBackgroundDownloading: false,
+    // Only download whilst charging
+    androidChargingRequired: false,
+    // Only download whilst on Wifi
+    androidWifiRequired: false,
+    // Only download whilst the device is idle
+    androidDeviceIdleRequired: false,
+  );
+
+
+  static const MethodChannel _channel = const MethodChannel('ai.qookit/flutter_tflite');
+
+  static Future<String> get platformVersion async {
+    final String version = await _channel.invokeMethod('getPlatformVersion');
+    return version;
+  }
+
+  static Future<String> loadModel(
+      {@required String modelFilePath,
+        @required String labelsFilePath,
+        bool isTinyYolo = true,
+        bool useGPU = true,
+        bool useNNAPI = false,
+        bool isQuantized = false,
+        bool isAsset = false}) async {
+    return await _channel.invokeMethod(
+      'loadModel',
+      {
+        "modelFilePath": MODEL_FILE_NAME,
+        "labelsFilePath": LABEL_FILE_NAME,
+        "isTinyYolo": YOLO_FILE_NAME,
+        "isQuantized": isQuantized,
+        "isAsset": detectObjectOnImage(imagePath: LABEL_FILE_NAME
+        )
+      },
+    );
+  }
+
   /// Loads interpreter from asset
-  void loadModel({Interpreter interpreter}) async {
+  /*void loadModel({Interpreter interpreter}) async {
     try {
       if (modelFile != null) {
         _interpreter = interpreter ??
@@ -94,13 +142,43 @@ class Classifier {
     } catch (e) {
       print('Error while creating interpreter: $e');
     }
+  }*/
+
+  static Future<String> detectObjectOnImage({@required String imagePath}) async {
+    return await _channel.invokeMethod(
+      'detectObjectOnImage',
+      {
+        "imagePath": imagePath
+      },
+    );
   }
+
+  static Future<String> detectObjectOnFrame({@required List<Uint8List> bytesList,
+    int imageWidth = 720,
+    int imageHeight = 1280,
+    int rotation = 90, // Android only
+  }) async {
+    return await _channel.invokeMethod(
+      'detectObjectOnFrame',
+      {
+        "bytesList": bytesList,
+        "width": imageWidth,
+        "height": imageHeight,
+        "rotation": rotation
+      },
+    );
+  }
+
+  static Future close() async {
+    return await _channel.invokeMethod('close');
+  }
+
 
 
   /// Loads labels from assets
   void loadLabels({List<String> labels}) async {
     try {
-      _labels = labels ?? await FileUtil.loadLabels('assets/' + LABEL_FILE_NAME);
+      _labels = labels ?? await FileUtil.loadLabels('assets/'+"$LABEL_FILE_NAME");
     } catch (e) {
       print('Error while loading labels: $e');
     }

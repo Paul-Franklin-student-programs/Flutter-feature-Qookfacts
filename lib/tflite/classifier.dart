@@ -1,6 +1,8 @@
+/*
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as imageLib;
 import 'package:qookit/tflite/recognition.dart';
@@ -17,8 +19,8 @@ class Classifier {
   /// Labels file loaded as list
   List<String> _labels;
 
-  static const String MODEL_FILE_NAME = "detect.tflite";
-  static const String LABEL_FILE_NAME = "labelmap.txt";
+  static const String MODEL_FILE_NAME = "groceries-yolov4-tiny-416-01-09-21.tflite";
+  static const String LABEL_FILE_NAME = "groceries.txt";
 
   /// Input size of image (height = width = 300)
   static const int INPUT_SIZE = 300;
@@ -41,6 +43,9 @@ class Classifier {
   /// Number of results to show
   static const int NUM_RESULTS = 10;
 
+  FirebaseCustomModel model =  FirebaseModelDownloader.instance.getModel('assets/+"$Path"', FirebaseModelDownloadType.latestModel) as FirebaseCustomModel;
+
+
   Classifier({
     Interpreter interpreter,
     List<String> labels,
@@ -48,6 +53,7 @@ class Classifier {
     loadModel(interpreter: interpreter);
     loadLabels(labels: labels);
   }
+
 
   /// Loads interpreter from asset
   void loadModel({Interpreter interpreter}) async {
@@ -211,3 +217,4 @@ class Classifier {
   /// Gets the loaded labels
   List<String> get labels => _labels;
 }
+*/

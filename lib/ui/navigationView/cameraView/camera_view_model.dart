@@ -262,7 +262,7 @@ class CameraViewModel extends ReactiveViewModel with WidgetsBindingObserver {
           //labelsFilePath: 'assets/ssd_labels.txt',
 
           modelFilePath: 'assets/groceries-yolov4-tiny-416-01-09-21.tflite',
-          labelsFilePath: 'assets/groceries.names',
+          labelsFilePath: 'assets/groceries.txt',
 
           //modelFilePath: 'assets/yolov2_tiny.tflite',
           //labelsFilePath: 'assets/ssd_labels.txt',

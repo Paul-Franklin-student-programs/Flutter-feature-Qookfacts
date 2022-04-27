@@ -26,6 +26,7 @@ dependencies:
   firebase_dynamic_links: ^4.0.4
   #firebase_ml_custom: ^0.1.0
 #  flutter_facebook_auth: ^1.0.2
+  firebase_ml_model_downloader: ^0.1.0+11
   flutter_facebook_login: ^3.0.0
 #  flutter_facebook_auth: '^3.5.0'
 
@@ -99,7 +100,7 @@ flutter:
     - assets/cfg/
     - assets/images/
     - assets/kite.jpg
-    - assets/groceries.names
+    - assets/groceries.txt
     - assets/groceries-yolov4-tiny-416-01-09-21.tflite
 
   fonts:
