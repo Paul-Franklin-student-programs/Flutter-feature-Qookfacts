@@ -99,9 +99,8 @@ flutter:
     - assets/cfg/
     - assets/images/
     - assets/kite.jpg
-    - assets/tflite
-#    - assets/groceries.names
-#    - assets/groceries-yolov4-tiny-416-01-09-21.tflite
+    - assets/groceries.names
+    - assets/groceries-yolov4-tiny-416-01-09-21.tflite
 
   fonts:
     - family: kabel

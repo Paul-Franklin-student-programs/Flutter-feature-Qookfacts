@@ -97,20 +97,6 @@ class Classifier {
   }
 
 
-
-  Future<Null>_loadmodel() async{
-
-    try{
-      const platform =const MethodChannel('');
-      var jsonString= await rootBundle.loadString('');
-      var metadata= json.decode(jsonString);
-      labels= metadata[''];
-
-    }catch(e){
-
-    }
-  }
-
   /// Loads labels from assets
   void loadLabels({List<String> labels}) async {
     try {
@@ -125,7 +111,8 @@ class Classifier {
   TensorImage getProcessedImage(TensorImage inputImage) {
     padSize = max(inputImage.height, inputImage.width);
     imageProcessor ??=
-        ImageProcessorBuilder().add(ResizeWithCropOrPadOp(padSize, padSize)).add(ResizeOp(INPUT_SIZE, INPUT_SIZE, ResizeMethod.BILINEAR)).build();
+        ImageProcessorBuilder().add(ResizeWithCropOrPadOp(padSize, padSize)).add(ResizeOp(INPUT_SIZE, INPUT_SIZE,
+            ResizeMethod.BILINEAR)).build();
     inputImage = imageProcessor.process(inputImage);
     return inputImage;
   }
