@@ -1,11 +1,8 @@
-/*
 import 'dart:math';
 import 'dart:ui';
-
-import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as imageLib;
-import 'package:qookit/tflite/recognition.dart';
+import 'package:image/image.dart' as img_lib;
+import '../tflite/recognition.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
@@ -19,8 +16,8 @@ class Classifier {
   /// Labels file loaded as list
   List<String> _labels;
 
-  static const String MODEL_FILE_NAME = "groceries-yolov4-tiny-416-01-09-21.tflite";
-  static const String LABEL_FILE_NAME = "groceries.txt";
+  static const String MODEL_FILE_NAME = 'tflite/detect-yolo4.tflite';
+  static const String LABEL_FILE_NAME = 'tflite/labelmap.txt';
 
   /// Input size of image (height = width = 300)
   static const int INPUT_SIZE = 300;
@@ -43,9 +40,6 @@ class Classifier {
   /// Number of results to show
   static const int NUM_RESULTS = 10;
 
-  FirebaseCustomModel model =  FirebaseModelDownloader.instance.getModel('assets/+"$Path"', FirebaseModelDownloadType.latestModel) as FirebaseCustomModel;
-
-
   Classifier({
     Interpreter interpreter,
     List<String> labels,
@@ -53,7 +47,6 @@ class Classifier {
     loadModel(interpreter: interpreter);
     loadLabels(labels: labels);
   }
-
 
   /// Loads interpreter from asset
   void loadModel({Interpreter interpreter}) async {
@@ -65,16 +58,14 @@ class Classifier {
           );
 
       var outputTensors = _interpreter.getOutputTensors();
-      print("the length of the ouput Tensors is ${outputTensors.length}");
       _outputShapes = [];
       _outputTypes = [];
       outputTensors.forEach((tensor) {
-        print(tensor.toString());
         _outputShapes.add(tensor.shape);
         _outputTypes.add(tensor.type);
       });
     } catch (e) {
-      print("Error while creating interpreter: $e");
+      print('Error while creating interpreter: $e');
     }
   }
 
@@ -82,31 +73,29 @@ class Classifier {
   void loadLabels({List<String> labels}) async {
     try {
       _labels =
-          labels ?? await FileUtil.loadLabels("assets/" + LABEL_FILE_NAME);
+          labels ?? await FileUtil.loadLabels('assets/' + LABEL_FILE_NAME);
     } catch (e) {
-      print("Error while loading labels: $e");
+      print('Error while loading labels: $e');
     }
   }
 
   /// Pre-process the image
   TensorImage getProcessedImage(TensorImage inputImage) {
     padSize = max(inputImage.height, inputImage.width);
-    if (imageProcessor == null) {
-      imageProcessor = ImageProcessorBuilder()
+    imageProcessor ??= ImageProcessorBuilder()
           .add(ResizeWithCropOrPadOp(padSize, padSize))
           .add(ResizeOp(INPUT_SIZE, INPUT_SIZE, ResizeMethod.BILINEAR))
           .build();
-    }
     inputImage = imageProcessor.process(inputImage);
     return inputImage;
   }
 
   /// Runs object detection on the input image
-  Map<String, dynamic> predict(imageLib.Image image) {
+  Map<String, dynamic> predict(img_lib.Image image) {
     var predictStartTime = DateTime.now().millisecondsSinceEpoch;
 
     if (_interpreter == null) {
-      print("Interpreter not initialized");
+      print('Interpreter not initialized');
       return null;
     }
 
@@ -115,14 +104,8 @@ class Classifier {
     // Create TensorImage from image
     TensorImage inputImage = TensorImage.fromImage(image);
 
-    print("inputImage = ${inputImage.getDataType()}");
-    print("getProcessedImage");
-
     // Pre-process TensorImage
     inputImage = getProcessedImage(inputImage);
-
-    print("inputImage.dataType = ${inputImage.getDataType()}");
-    print("inputImage = ${inputImage.getBuffer()}");
 
     var preProcessElapsedTime =
         DateTime.now().millisecondsSinceEpoch - preProcessStart;
@@ -136,9 +119,6 @@ class Classifier {
     // Inputs object for runForMultipleInputs
     // Use [TensorImage.buffer] or [TensorBuffer.buffer] to pass by reference
     List<Object> inputs = [inputImage.buffer];
-
-    print("inputs = $inputs");
-    print("inputs[0] = ${inputs[0]}");
 
     // Outputs map
     Map<int, Object> outputs = {
@@ -178,12 +158,10 @@ class Classifier {
     for (int i = 0; i < resultsCount; i++) {
       // Prediction score
       var score = outputScores.getDoubleValue(i);
-      print(score);
 
       // Label string
       var labelIndex = outputClasses.getIntValue(i) + labelOffset;
       var label = _labels.elementAt(labelIndex);
-      print(label);
 
       if (score > THRESHOLD) {
         // inverse of rect
@@ -202,9 +180,8 @@ class Classifier {
         DateTime.now().millisecondsSinceEpoch - predictStartTime;
 
     return {
-      "image": inputImage.image,
-      "recognitions": recognitions,
-      "stats": Stats(
+      'recognitions': recognitions,
+      'stats': Stats(
           totalPredictTime: predictElapsedTime,
           inferenceTime: inferenceTimeElapsed,
           preProcessingTime: preProcessElapsedTime)
@@ -217,4 +194,3 @@ class Classifier {
   /// Gets the loaded labels
   List<String> get labels => _labels;
 }
-*/

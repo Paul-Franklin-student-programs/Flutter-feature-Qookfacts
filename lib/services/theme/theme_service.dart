@@ -22,7 +22,6 @@ class ThemeService {
 ThemeData qookitLight = ThemeData(
   /// Colors
   primaryColor: Color(0xFFFFD53F),
-  accentColor: Color(0xFFFFBE30),
   backgroundColor: Color(0xFFEAEAEA),
   errorColor: Color(0xFFBE3944),
 
@@ -38,7 +37,7 @@ ThemeData qookitLight = ThemeData(
           fontWeight: FontWeight.bold,
           fontFamily: 'opensans'),),
 
-  indicatorColor: Colors.amber,
+  indicatorColor: Colors.amber, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)),
 
   /// Text
   /*textTheme: TextTheme(

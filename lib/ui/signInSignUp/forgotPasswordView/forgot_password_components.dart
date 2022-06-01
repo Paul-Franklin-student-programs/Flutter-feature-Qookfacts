@@ -1,11 +1,8 @@
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/elements/block_button_widget.dart';
-import 'package:qookit/services/services.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view_model.dart';
-import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:stacked/stacked.dart';
 
 class SendEmailButton extends ViewModelWidget<ForgotPasswordViewModel> {

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/app/theme/colors.dart';
-import 'package:qookit/services/elastic/elastic_service.dart';
-import 'package:qookit/services/elastic/endpoints/users_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/services/user/user_service.dart';

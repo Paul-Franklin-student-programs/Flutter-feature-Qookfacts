@@ -26,8 +26,7 @@ done
 
 
 download () {
-#    wget "${URL}${TAG}/$1"
-    curl -L "${URL}${TAG}/$1" -o "$1"
+    wget "${URL}${TAG}/$1"
     mkdir -p "${ANDROID_DIR}$2/"
     mv $1 "${ANDROID_DIR}$2/${ANDROID_LIB}"
 }

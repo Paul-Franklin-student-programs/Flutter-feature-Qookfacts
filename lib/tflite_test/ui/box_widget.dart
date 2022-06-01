@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:qookit/tflite/recognition.dart';
+import '../tflite/recognition.dart';
 
 /// Individual bounding box
 class BoxWidget extends StatelessWidget {
   final Recognition result;
 
   const BoxWidget({Key key, this.result}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     // Color for bounding box

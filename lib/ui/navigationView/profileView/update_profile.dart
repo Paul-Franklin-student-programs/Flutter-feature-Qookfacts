@@ -1,17 +1,12 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:qookit/app/theme/colors.dart';
 import 'package:qookit/bloc/user_bloc.dart';
 import 'package:qookit/elements/block_button_widget.dart';
-import 'package:qookit/services/elastic/elastic_service.dart';
-import 'package:qookit/services/elastic/endpoints/users_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/services/utilities/string_service.dart';
-import 'package:qookit/ui/signInSignUp/loginView/login_components.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,7 +18,7 @@ class UpdateProfile extends StatefulWidget {
 }
 
 class _UpdateProfileState extends State<UpdateProfile> {
-  static GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   String urlimg1;
   String document_path1;

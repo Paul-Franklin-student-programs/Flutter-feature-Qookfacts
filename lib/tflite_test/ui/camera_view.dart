@@ -1,17 +1,14 @@
-import 'dart:io';
 import 'dart:isolate';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:qookit/services/services.dart';
-import 'package:qookit/tflite/classifierYolov4.dart';
-import 'package:qookit/tflite/recognition.dart';
-import 'package:qookit/tflite/stats.dart';
-import 'package:qookit/ui/navigationView/cameraView/tflite/camera_view_singleton.dart';
-import 'package:qookit/utils/isolate_utils.dart';
+import '../tflite/classifier.dart';
+import '../tflite/recognition.dart';
+import '../tflite/stats.dart';
+import '../ui/camera_view_singleton.dart';
+import '../utils/isolate_utils.dart';
 
 /// [CameraView] sends each frame for inference
-class YoloCameraView extends StatefulWidget {
+class CameraView extends StatefulWidget {
   /// Callback to pass results after inference to [HomeView]
   final Function(List<Recognition> recognitions) resultsCallback;
 
@@ -19,18 +16,19 @@ class YoloCameraView extends StatefulWidget {
   final Function(Stats stats) statsCallback;
 
   /// Constructor
-  const YoloCameraView(this.resultsCallback, this.statsCallback);
-
+  const CameraView(this.resultsCallback, this.statsCallback);
   @override
-  _YoloCameraViewState createState() => _YoloCameraViewState();
+  _CameraViewState createState() => _CameraViewState();
 }
 
-class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObserver {
+class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// List of available cameras
   List<CameraDescription> cameras;
 
   /// Controller
   CameraController cameraController;
+
+  String destination = 'pantry';
 
   /// true when inference is ongoing
   bool predicting;
@@ -44,20 +42,24 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
   @override
   void initState() {
     super.initState();
+    initStateAsync();
+  }
+
+  void initStateAsync() async {
     WidgetsBinding.instance.addObserver(this);
+
+    // Spawn a new isolate
+    isolateUtils = IsolateUtils();
+    await isolateUtils.start();
 
     // Camera initialization
     initializeCamera();
 
     // Create an instance of classifier to load model and labels
-    classifier = Classifier(modelFile: mlService.modelFile.value);
+    classifier = Classifier();
 
     // Initially predicting = false
     predicting = false;
-
-    // Spawn a new isolate
-    isolateUtils = IsolateUtils();
-    isolateUtils.start();
   }
 
   /// Initializes the camera by setting [cameraController]
@@ -65,10 +67,10 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
     cameras = await availableCameras();
 
     // cameras[0] for rear-camera
-    cameraController = CameraController(cameras[0], ResolutionPreset.medium,
-        enableAudio: false);
+    cameraController =
+        CameraController(cameras[0], ResolutionPreset.low, enableAudio: false,);
 
-    cameraController.initialize().then((_) async {
+    await cameraController.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
       await cameraController.startImageStream(onLatestImageAvailable);
 
@@ -84,15 +86,8 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
       // same as screenWidth while maintaining the aspectRatio
       Size screenSize = MediaQuery.of(context).size;
       CameraViewSingleton.screenSize = screenSize;
+      CameraViewSingleton.ratio = screenSize.width / previewSize.height;
 
-      if (Platform.isAndroid) {
-        // On Android Platform image is initially rotated by 90 degrees
-        // due to the Flutter Camera plugin
-        CameraViewSingleton.ratio = screenSize.width / previewSize.height;
-      } else {
-        // For iOS
-        CameraViewSingleton.ratio = screenSize.width / previewSize.width;
-      }
     });
   }
 
@@ -103,9 +98,7 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
       return Container();
     }
 
-    return AspectRatio(
-        aspectRatio: cameraController.value.aspectRatio,
-        child: CameraPreview(cameraController));
+    return CameraPreview(cameraController);
   }
 
   /// Callback to receive each frame [CameraImage] perform inference on it
@@ -115,6 +108,7 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
       if (predicting) {
         return;
       }
+
       setState(() {
         predicting = true;
       });
@@ -136,12 +130,11 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
           DateTime.now().millisecondsSinceEpoch - uiThreadTimeStart;
 
       // pass results to HomeView
-      widget.resultsCallback(inferenceResults["recognitions"]);
+      widget.resultsCallback(inferenceResults['recognitions']);
 
       // pass stats to HomeView
-      widget.statsCallback((inferenceResults["stats"] as Stats)
+      widget.statsCallback((inferenceResults['stats'] as Stats)
         ..totalElapsedTime = uiThreadInferenceElapsedTime);
-      //widget.imageCallback(inferenceResults["image"]);
 
       // set predicting to false to allow new frames
       setState(() {
@@ -163,10 +156,12 @@ class _YoloCameraViewState extends State<YoloCameraView> with WidgetsBindingObse
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     switch (state) {
       case AppLifecycleState.paused:
-        cameraController.stopImageStream();
+        await cameraController.stopImageStream();
         break;
       case AppLifecycleState.resumed:
-        await cameraController.startImageStream(onLatestImageAvailable);
+        if (!cameraController.value.isStreamingImages) {
+          await cameraController.startImageStream(onLatestImageAvailable);
+        }
         break;
       default:
     }

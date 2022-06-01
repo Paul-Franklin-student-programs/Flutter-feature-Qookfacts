@@ -7,7 +7,7 @@ import 'forgot_password_components.dart';
 class ForgotPasswordView extends StatelessWidget {
   static const String id = 'forgot_password_screen';
 
-  static GlobalKey<FormState> _forgotpasswordFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _forgotpasswordFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class ForgotPasswordView extends StatelessWidget {
                                     width: 25, // width of the button
                                     child: Center(
                                       child: Image.asset(
-                                        "assets/images/back.png",
+                                        'assets/images/back.png',
                                         width: 25,
                                         height: 25,
                                         fit: BoxFit.contain,

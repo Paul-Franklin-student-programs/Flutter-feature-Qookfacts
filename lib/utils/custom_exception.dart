@@ -6,27 +6,27 @@ class CustomException implements Exception {
 
   @override
   String toString() {
-    return "$_prefix$_message";
+    return '$_prefix$_message';
   }
 }
 
 class FetchDataException extends CustomException {
   FetchDataException(String message)
-      : super(message, "Error During Communication: ");
+      : super(message, 'Error During Communication: ');
 }
 
 class NoInternetException extends CustomException {
-  NoInternetException([message]) : super(message, "");
+  NoInternetException([message]) : super(message, '');
 }
 
 class BadRequestException extends CustomException {
-  BadRequestException([message]) : super(message, "");
+  BadRequestException([message]) : super(message, '');
 }
 
 class UnauthorisedException extends CustomException {
-  UnauthorisedException([message]) : super(message, "");
+  UnauthorisedException([message]) : super(message, '');
 }
 
 class InvalidInputException extends CustomException {
-  InvalidInputException(String message) : super(message, "");
+  InvalidInputException(String message) : super(message, '');
 }

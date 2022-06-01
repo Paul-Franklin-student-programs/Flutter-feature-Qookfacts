@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeSearch/recipeSearchWidgets/search_label.dart';

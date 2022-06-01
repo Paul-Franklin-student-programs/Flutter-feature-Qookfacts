@@ -18,8 +18,8 @@ class NavigationViewModel extends BaseViewModel {
   OverlayEntry fabOverlay;
 
   OverlayEntry get firstFabOverlay {
-    //fabOverlay = showFabActions(fabKey.currentContext, this);
-   // return fabOverlay;
+    fabOverlay = showFabActions(fabKey.currentContext, this);
+    return fabOverlay;
   }
 
   void initializeModel() {

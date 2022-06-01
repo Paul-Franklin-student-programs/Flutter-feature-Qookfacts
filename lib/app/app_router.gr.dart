@@ -8,9 +8,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import '../models/recipe.dart';
-import '../ui/navigationView/cameraView/camera_view.dart';
+import '../tflite_test/ui/home_view.dart';
 import '../ui/navigationView/navigation_view.dart';
 import '../ui/navigationView/pantryView/pantryCatalog/pantry_catalog_view.dart';
 import '../ui/navigationView/pantryView/pantry_view.dart';
@@ -143,7 +142,7 @@ class NavigationViewRouter extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(NavigationViewRoutes.cameraView, page: CameraView),
+    RouteDef(NavigationViewRoutes.cameraView, page: HomeView),
     RouteDef(NavigationViewRoutes.profileView, page: ProfileView),
     RouteDef(NavigationViewRoutes.pantryView, page: PantryView),
     RouteDef(NavigationViewRoutes.pantryCatalogView, page: PantryCatalogView),
@@ -156,9 +155,9 @@ class NavigationViewRouter extends RouterBase {
   @override
   get pagesMap => _pagesMap;
   final _pagesMap = {
-    CameraView: (data) {
+    HomeView: (data) {
       return buildAdaptivePageRoute<dynamic>(
-        builder: (context) => CameraView(),
+        builder: (context) => HomeView(),
         settings: data,
       );
     },

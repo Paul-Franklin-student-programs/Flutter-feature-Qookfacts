@@ -1,10 +1,10 @@
- import 'dart:math';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
-import 'package:qookit/ui/navigationView/cameraView/tflite/camera_view_singleton.dart';
+import '../ui/camera_view_singleton.dart';
 
 /// Represents the recognition output from the model
-class Recognition implements Comparable<Recognition> {
+class Recognition {
   /// Index of the result
   int _id;
 
@@ -44,10 +44,8 @@ class Recognition implements Comparable<Recognition> {
 
     double transLeft = max(0.1, location.left * ratioX);
     double transTop = max(0.1, location.top * ratioY);
-    double transWidth = min(
-        location.width * ratioX, CameraViewSingleton.actualPreviewSize.width);
-    double transHeight = min(
-        location.height * ratioY, CameraViewSingleton.actualPreviewSize.height);
+    double transWidth = min(location.width * ratioX, CameraViewSingleton.actualPreviewSize.width);
+    double transHeight = min(location.height * ratioY, CameraViewSingleton.actualPreviewSize.height);
 
     Rect transformedRect =
         Rect.fromLTWH(transLeft, transTop, transWidth, transHeight);
@@ -56,17 +54,6 @@ class Recognition implements Comparable<Recognition> {
 
   @override
   String toString() {
-    return 'Recognition(id: $id, label: $label, score: ${(score * 100).toStringAsPrecision(3)}, location: $location)';
-  }
-
-  @override
-  int compareTo(Recognition other) {
-    if (this.score == other.score) {
-      return 0;
-    } else if (this.score > other.score) {
-      return -1;
-    } else {
-      return 1;
-    }
+    return 'Recognition(id: $id, label: $label, score: $score, location: $location)';
   }
 }

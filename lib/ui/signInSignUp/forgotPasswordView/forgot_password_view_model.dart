@@ -6,10 +6,10 @@ import 'package:stacked/stacked.dart';
 class ForgotPasswordViewModel extends BaseViewModel{
   String email;
   bool emailSent = false;
-  String emailMessage = "Enter your email address below to reset password";
+  String emailMessage = 'Enter your email address below to reset password';
 
   ForgotPasswrdController() {
-    this.scaffoldKey = new GlobalKey<ScaffoldState>();
+    scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   GlobalKey<ScaffoldState> scaffoldKey;
@@ -25,9 +25,9 @@ class ForgotPasswordViewModel extends BaseViewModel{
   FocusNode pinPutFocusNode = FocusNode();
   FocusNode focusEmailId = FocusNode();
 
-  String btnText = "Login";
-  String receivedOtp = "";
-  String receivedUserId = "";
+  String btnText = 'Login';
+  String receivedOtp = '';
+  String receivedUserId = '';
   Function callback;
   Function callbackOpenPasswordChangedDialog;
 
@@ -39,9 +39,9 @@ class ForgotPasswordViewModel extends BaseViewModel{
   void toggleEmailSent(){
     emailSent = !emailSent;
     if(emailSent){
-      emailMessage = "Your password reset email has been sent to $email";
+      emailMessage = 'Your password reset email has been sent to $email';
     } else {
-      emailMessage = "Enter your email address below to reset password";
+      emailMessage = 'Enter your email address below to reset password';
     }
     notifyListeners();
   }
