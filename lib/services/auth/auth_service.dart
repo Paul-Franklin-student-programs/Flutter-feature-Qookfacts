@@ -15,7 +15,7 @@ import 'package:qookit/services/utilities/string_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_lwa_platform_interface/flutter_lwa_platform_interface.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+//import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 
 @singleton
@@ -55,7 +55,7 @@ class AuthService extends ChangeNotifier {
    /* getIt
         .get<NavigationService>()
         .navigateToFirstScreen(route: SplashScreenView.id, context: context);*/
-    FacebookLogin().logOut();
+    //FacebookLogin().logOut();
     LoginWithAmazon().signOut();
     ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.loginView, (route) => false);
     notifyListeners();
@@ -240,7 +240,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  Future<String> initiateFacebookLogin() async {
+  /*Future<String> initiateFacebookLogin() async {
     var facebookLogin = FacebookLogin();
     final facebookLoginResult = await facebookLogin.logIn(['public_profile', 'email']);
 
@@ -292,7 +292,7 @@ class AuthService extends ChangeNotifier {
         return 'Success';
         break;
     }
-  }
+  }*/
 
 
   // **************************************************************************

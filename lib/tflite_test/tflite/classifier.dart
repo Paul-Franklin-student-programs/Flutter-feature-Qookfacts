@@ -16,8 +16,10 @@ class Classifier {
   /// Labels file loaded as list
   List<String> _labels;
 
-  static const String MODEL_FILE_NAME = 'tflite/detect-yolo4.tflite';
-  static const String LABEL_FILE_NAME = 'tflite/labelmap.txt';
+  // static const String MODEL_FILE_NAME = 'tflite/detect-yolo4.tflite';
+  // static const String LABEL_FILE_NAME = 'tflite/labelmap.txt';
+  static const String MODEL_FILE_NAME = 'groceries-yolov4-tiny-416-01-09-21.tflite';
+  static const String LABEL_FILE_NAME = 'groceries.txt';
 
   /// Input size of image (height = width = 300)
   static const int INPUT_SIZE = 300;
@@ -53,7 +55,7 @@ class Classifier {
     try {
       _interpreter = interpreter ??
           await Interpreter.fromAsset(
-            MODEL_FILE_NAME,
+             MODEL_FILE_NAME,
             options: InterpreterOptions()..threads = 4,
           );
 

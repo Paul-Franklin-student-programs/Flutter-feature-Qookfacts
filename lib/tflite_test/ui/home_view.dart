@@ -95,7 +95,8 @@ class _HomeViewState extends State<HomeView> {
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(8),
                                 topLeft: Radius.circular(8),
-                              )),
+                              )
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +147,8 @@ class _HomeViewState extends State<HomeView> {
                                   margin: EdgeInsets.symmetric(horizontal: 8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    children: [Text(obj.label), IconButton(icon: Icon(Icons.clear), onPressed: () {
+                                    children: [
+                                      Text(obj.label), IconButton(icon: Icon(Icons.clear), onPressed: () {
 
                                     })],
                                   ),

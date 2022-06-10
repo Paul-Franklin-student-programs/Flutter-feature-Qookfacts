@@ -121,7 +121,7 @@ class LoginViewModel extends BaseViewModel {
 
   ///login with Facebook and stored credential in firebase
   Future<void> loginWithFacebook(BuildContext context) async {
-    String message = await authService.initiateFacebookLogin();
+    String message = 'test';//await authService.initiateFacebookLogin();
 
     if(message == 'Success'){
       await UserBloc().getUserData();

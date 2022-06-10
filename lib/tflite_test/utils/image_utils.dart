@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 /// ImageUtils
 class ImageUtils {
   /// Converts a [CameraImage] in YUV420 format to [imageLib.Image] in RGB format
+
   static img_lib.Image convertCameraImage(CameraImage cameraImage) {
     if (cameraImage.format.group == ImageFormatGroup.yuv420) {
       return convertYUV420ToImage(cameraImage);
