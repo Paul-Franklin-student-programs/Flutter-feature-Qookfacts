@@ -23,7 +23,7 @@ class RecipesService {
     var uri =
         Uri.https(elasticService.domain, endpoint, recipeParameters.toMap());
     var token = await authService.token;
-    print("token = " + token);
+    print('token = ' + token);
     var recipeResponse = await http.get(
       uri,
       headers: {

@@ -1,5 +1,4 @@
 import 'package:auto_route/annotations.dart';
-import 'package:qookit/ui/navigationView/cameraView/camera_view.dart';
 import 'package:qookit/ui/navigationView/navigation_view.dart';
 import 'package:qookit/ui/navigationView/pantryView/pantryCatalog/pantry_catalog_view.dart';
 import 'package:qookit/ui/navigationView/pantryView/pantry_view.dart';
@@ -17,6 +16,8 @@ import 'package:qookit/ui/signInSignUp/onboardingView/recommendationPreferences/
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
 import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
 
+import '../tflite_test/ui/home_view.dart';
+
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
     // initial route is named "/"
@@ -29,7 +30,7 @@ import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
     AdaptiveRoute(page: RegisterView,),
     AdaptiveRoute(page: NavigationView,
     children: [
-      AdaptiveRoute(page: CameraView,),
+      AdaptiveRoute(page: HomeView,),
       AdaptiveRoute(page: ProfileView,),
       AdaptiveRoute(page: PantryView, initial: true),
       AdaptiveRoute(page: PantryCatalogView,),

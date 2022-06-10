@@ -1,6 +1,5 @@
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/services/services.dart';
-import 'package:qookit/services/user/user_service.dart';
 import 'package:stacked/stacked.dart';
 
 class RecommendationPreferencesViewModel extends BaseViewModel{

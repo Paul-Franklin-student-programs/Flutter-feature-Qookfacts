@@ -2,11 +2,9 @@
 // Recipe groups should be given a list of recipes, a title, and a subtitle
 // In the future, defining the query that creates each recipe group will also be useful
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qookit/app/dimensions.dart';
 import 'package:qookit/models/recipe.dart';
-import 'package:qookit/models/recipe_list.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeWidgets/recipe_card.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipe_details_view_model.dart';
 import 'package:stacked/stacked.dart';

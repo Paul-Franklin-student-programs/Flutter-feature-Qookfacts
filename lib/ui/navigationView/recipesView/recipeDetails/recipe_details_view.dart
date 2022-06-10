@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/models/recipe.dart';
-import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipeDetailsWidgets/add_to_shopping.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipeDetailsWidgets/info_column.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipeDetailsWidgets/recipe_image.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipeDetailsWidgets/recipe_switch.dart';

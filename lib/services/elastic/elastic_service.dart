@@ -109,8 +109,6 @@ class ElasticService {
         return responseJson;
 
       case 500:
-        var responseJson = json.decode(response.body.toString());
-        var error = responseJson['errors'] ?? '';
         var msg = '';
         throw BadRequestException(msg ?? response.body.toString());
       // } else {

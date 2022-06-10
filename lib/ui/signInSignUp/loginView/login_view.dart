@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:qookit/app/theme/colors.dart';
 import 'package:qookit/elements/block_button_widget.dart';
@@ -11,7 +8,7 @@ import 'package:stacked/stacked.dart';
 
 class LoginView extends StatelessWidget {
 
-  static GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   String fullName = '';
   String profileImage = '';
@@ -82,7 +79,7 @@ class LoginView extends StatelessWidget {
                               ThirdPartyIcons(),
                               SizedBox(height: 15),
                               Text(
-                                "OR",
+                                'OR',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -134,7 +131,7 @@ class LoginView extends StatelessWidget {
                                             vertical: 0.0, horizontal: 10.0),
                                         hintText: 'Enter Email ID',
                                         labelText: 'Email ID',
-                                        counterText: "",
+                                        counterText: '',
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -178,7 +175,7 @@ class LoginView extends StatelessWidget {
                                             vertical: 0.0, horizontal: 10.0),
                                         hintText: 'Enter Password',
                                         labelText: 'Password',
-                                        counterText: "",
+                                        counterText: '',
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -227,7 +224,7 @@ class LoginView extends StatelessWidget {
   String emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex = new RegExp(pattern);
+    RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Email format is invalid';
     } else {
@@ -237,7 +234,7 @@ class LoginView extends StatelessWidget {
 
   //PASSWORD VALIDATION
   String pwdValidator(String value) {
-    if (value.length == 0) {
+    if (value.isEmpty) {
       return 'Enter Password';
     } else {
       return null;

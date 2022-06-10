@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:qookit/services/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';

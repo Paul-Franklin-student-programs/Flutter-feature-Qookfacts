@@ -1,15 +1,8 @@
-import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_lwa/lwa.dart';
 import 'package:qookit/app/app_router.gr.dart';
-import 'package:qookit/bloc/create_user_bloc.dart';
 import 'package:qookit/bloc/user_bloc.dart';
-import 'package:qookit/services/auth/auth_service.dart';
 import 'package:qookit/services/services.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_lwa_platform_interface/flutter_lwa_platform_interface.dart';
 
@@ -75,11 +68,11 @@ class LoginViewModel extends BaseViewModel {
   }
 
   RegisterController() {
-    this.scaffoldKey = GlobalKey<ScaffoldState>();
+   scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   LoginController() {
-    this.scaffoldKey = GlobalKey<ScaffoldState>();
+   scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   void toggleShowPassword() {
@@ -104,9 +97,10 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
+
     }
   }
 
@@ -119,7 +113,7 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await loginNavigation(message, context);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
     }
@@ -133,7 +127,7 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await loginNavigation(message, context);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
     }
@@ -146,7 +140,7 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await loginNavigation(message, context);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
     }
@@ -161,7 +155,7 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await loginNavigation(message, context);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
     }
@@ -176,7 +170,7 @@ class LoginViewModel extends BaseViewModel {
       await UserBloc().getUserData();
       await loginNavigation(message, context);
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
       ));
     }
@@ -187,11 +181,9 @@ class LoginViewModel extends BaseViewModel {
       await ExtendedNavigator.named('topNav')
           .pushAndRemoveUntil(Routes.splashScreenView, (route) => true);
     } else {
-      Scaffold.of(context).showSnackBar(
-          SnackBar(content: Text(
-          '$message',
-          textAlign: TextAlign.center,
-        ),
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message, textAlign: TextAlign.center),
       ));
     }
   }

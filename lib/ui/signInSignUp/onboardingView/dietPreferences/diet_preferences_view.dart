@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:qookit/services/getIt.dart';
 import 'package:qookit/services/services.dart';
-import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view_model.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.dart';
 import 'package:stacked/stacked.dart';

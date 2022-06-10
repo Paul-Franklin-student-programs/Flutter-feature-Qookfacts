@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qookit/app/app_router.gr.dart';
@@ -35,9 +34,10 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  /*await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,overlays: [
+await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,overlays: [
     SystemUiOverlay.top,
-  ]);*/
+  ]);
+
 
   await SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
@@ -72,3 +72,30 @@ class App extends StatelessWidget {
         });
   }
 }
+
+
+/*
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:qookit/tflite_test/ui/home_view.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Object Detection TFLite',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: HomeView(),
+    );
+  }
+}
+*/

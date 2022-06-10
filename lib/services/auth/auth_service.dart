@@ -12,17 +12,14 @@ import 'package:qookit/bloc/create_user_bloc.dart';
 import 'package:qookit/services/getIt.dart';
 import 'package:http/http.dart' as http;
 import 'package:qookit/services/utilities/string_service.dart';
-import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter_lwa_platform_interface/flutter_lwa_platform_interface.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
-import '../services.dart';
 
 @singleton
 class AuthService extends ChangeNotifier {
-  LwaAuthorizeResult _lwaAuth;
 
   String currentLatLag;
   FirebaseAuth get auth {
@@ -135,14 +132,15 @@ class AuthService extends ChangeNotifier {
     } catch (error) {
       if (error is PlatformException) {
         print(error.message);
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('${error.message}'),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.message),
         ));
         return 'Failed';
       } else {
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(error.toString()),
         ));
+
         return 'Failed';
       }
     }
@@ -333,27 +331,30 @@ class AuthService extends ChangeNotifier {
     if (email.isValidEmail()) {
       try {
         await getIt.get<AuthService>().auth.sendPasswordResetEmail(email: email);
-
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             'Email reset email sent',
             textAlign: TextAlign.center,
           ),
         ));
+
       } catch (e) {
-        Scaffold.of(context).showSnackBar(SnackBar(
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(e,
             textAlign: TextAlign.center,
-          )));
+          ),
+        ));
         print(e);
       }
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Enter a valid email before requesting reset',
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Enter a valid email before requesting reset',
           textAlign: TextAlign.center,
         ),
       ));
+
     }
   }
 

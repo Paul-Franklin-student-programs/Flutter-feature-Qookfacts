@@ -1,7 +1,5 @@
 import 'package:email_validator/email_validator.dart' as Validator;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:qookit/app/theme/colors.dart';
 import 'package:qookit/elements/block_button_widget.dart';
 import 'package:qookit/services/utilities/string_service.dart';
@@ -11,7 +9,7 @@ import 'package:stacked/stacked.dart';
 
 class RegisterView extends StatelessWidget {
 
-  static GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -360,7 +358,7 @@ class RegisterView extends StatelessWidget {
                                 height: 15,
                                 width: 15,
                                 child: Image.asset(
-                                  "assets/images/close.png",
+                                  'assets/images/close.png',
                                   height: 17,
                                   width: 17,
                                   fit: BoxFit.contain,
@@ -372,14 +370,14 @@ class RegisterView extends StatelessWidget {
                         Column(
                           children: <Widget>[
                             Image.asset(
-                              "assets/images/forgot_password.png",
+                              'assets/images/forgot_password.png',
                               height: 80,
                               width: MediaQuery.of(context).size.width * 0.7,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text("FORGOT YOUR PASSWORD?",
+                                Text('FORGOT YOUR PASSWORD?',
                                     style: TextStyle(
                                         color: colorTheme,
                                         fontSize: 18,
@@ -395,7 +393,7 @@ class RegisterView extends StatelessWidget {
                                 Flexible(
                                   child: Padding(
                                     child: Text(
-                                        "Enter your email address we will send you the 4 digit verification code",
+                                        'Enter your email address we will send you the 4 digit verification code',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: colorTheme,
@@ -416,7 +414,7 @@ class RegisterView extends StatelessWidget {
                                   width: 22,
                                 ),
                                 Text(
-                                  "Email ID",
+                                  'Email ID',
                                   style: TextStyle(
                                     color: Colors.black54,
                                     fontSize: 15,
@@ -452,7 +450,7 @@ class RegisterView extends StatelessWidget {
                                         contentPadding: EdgeInsets.symmetric(
                                             vertical: 0.0, horizontal: 10.0),
                                         hintText: 'Enter Email ID',
-                                        counterText: "",
+                                        counterText: '',
                                         labelStyle: TextStyle(
                                             fontFamily: 'seg', fontSize: 14),
                                         hintStyle: TextStyle(
@@ -471,7 +469,7 @@ class RegisterView extends StatelessWidget {
                                         focusedBorder: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12.0)),
-                                          borderSide: const BorderSide(
+                                          borderSide: BorderSide(
                                               color: Colors.black26,
                                               width: 1.0),
                                         ),
@@ -485,19 +483,19 @@ class RegisterView extends StatelessWidget {
                             ),
                           ],
                         ),
-                        new SizedBox(
+                        SizedBox(
                           height: 5,
                         ),
                         InkWell(
                           onTap: () {
-                            if (model.txtEmailIDForgotPassword.text == "") {
+                            if (model.txtEmailIDForgotPassword.text == '') {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context1) => Card(
                                         child: Column(
                                           children: [
                                             Text('Validation Failed'),
-                                            Text("Please enter valid email id")
+                                            Text('Please enter valid email id')
                                           ],
                                         ),
                                       ));
@@ -509,7 +507,7 @@ class RegisterView extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Text('Validation Failed'),
-                                            Text("Please enter valid email id")
+                                            Text('Please enter valid email id')
                                           ],
                                         ),
                                       ));
@@ -535,7 +533,7 @@ class RegisterView extends StatelessWidget {
                               child: GestureDetector(
                                 child: Center(
                                   child:  GestureDetector(
-                                      child:  Text("SUBMIT",
+                                      child:  Text('SUBMIT',
                                           style: TextStyle(
                                               color: colorTheme2,
                                               fontSize: 15,
@@ -560,7 +558,7 @@ class RegisterView extends StatelessWidget {
                       },
                       child: Container(
                         child: Image.asset(
-                          "assets/images/close.png",
+                          'assets/images/close.png',
                           width: 35,
                           height: 35,
                           fit: BoxFit.contain,
