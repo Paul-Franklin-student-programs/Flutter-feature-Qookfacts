@@ -30,9 +30,6 @@ class NavigationViewModel extends BaseViewModel {
     ); //defaultValue: PantryView.id);
     selectedIndex = routeMap.indexOf(screenId);
 
-    UsersService.endpoint1;
-
-
   }
 
   bool get hideNav {
