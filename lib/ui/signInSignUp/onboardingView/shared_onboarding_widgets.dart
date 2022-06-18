@@ -115,7 +115,7 @@ class OnboardingButtons extends StatelessWidget {
             await ExtendedNavigator.named('topNav').push(nextRoute);
           } else{
             await hiveService.userBox.put(UserService.finishedOnboarding, true);
-            //usersService.addUserToElastic();
+            usersService.addUserToElastic();
             await usersService.addUserToElastic(
               addUser: UserRoot(
                 displayName: 'empty',
@@ -135,7 +135,7 @@ class OnboardingButtons extends StatelessWidget {
                   location: Location(
                     city: 'empty',
                     country: 'empty',
-                    gps: 'empty',
+                    gps: null,
                     ipAddr: 'empty',
                     state: 'empty',
                     zip: 'empty',

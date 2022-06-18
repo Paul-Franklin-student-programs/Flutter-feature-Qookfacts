@@ -161,8 +161,6 @@ PODS:
     - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
-  - video_player (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
   - camera (from `.symlinks/plugins/camera/ios`)
@@ -183,7 +181,6 @@ DEPENDENCIES:
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
   - tflite_flutter_helper (from `.symlinks/plugins/tflite_flutter_helper/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
 
 SPEC REPOS:
   trunk:
@@ -242,12 +239,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/tflite_flutter_helper/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
-  camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
+  camera: 4c7c7562fd24ad55906bbdf4cee437ce10d49228
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
   firebase_analytics: 99eefffcacf3ab694db7926dd1291833e1300853
   firebase_auth: a6470a6974d42f83117932c913aecb926182f907
@@ -281,8 +276,7 @@ SPEC CHECKSUMS:
   tflite_flutter: 9157a660578930a99728974f247369af1c3595d5
   tflite_flutter_helper: 543b46b6bd064b21c92ea6e54bc0b29f1ce74cb5
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
-  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
 
-PODFILE CHECKSUM: ca021da485273f3b565f97ddb4e4bcfdd122847a
+PODFILE CHECKSUM: 6255324811caaf9f2dfea95c59c17ead906bd558
 
 COCOAPODS: 1.11.3

@@ -25,6 +25,14 @@ class UserBloc{
     try {
       UserDataModel userDataModel = await elasticService.getList(UsersService.endpoint);
 
+      UserDataModel userDataModel1= await elasticService.getList(UsersService.endpoint1);
+
+
+      print("_____________________________++++++++++++++++++++++_______________________");
+      print(userDataModel1);
+
+
+
       ///store data in local database (hive)
       await hiveService.setupHive();
       await hiveService.userBox.put(UserService.fullName, userDataModel.userName);

@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 @singleton
 class UsersService {
   static const String endpoint = '/v1/user';
-
   Future<UserRoot> getUserInfo(String userId) async {
     UserRoot thisUser;
     var uri = Uri.https(
@@ -32,7 +31,6 @@ class UsersService {
 
     return thisUser;
   }
-
   Future<List<Recipe>> getUserRecipes(String userId) async {
     UserRoot thisUser;
     var uri = Uri.https(elasticService.domain, endpoint + '/$userId');

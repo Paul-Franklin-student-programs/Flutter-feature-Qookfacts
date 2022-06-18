@@ -70,7 +70,7 @@ class NavDrawer extends StatelessWidget {
                         location: Location(
                           city: 'empty',
                           country: 'empty',
-                          gps: 'empty',
+                          gps: null,
                           ipAddr: 'empty',
                           state: 'empty',
                           zip: 'empty',
