@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import LoginWithAmazon
+//import LoginWithAmazon
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -12,10 +12,10 @@ import LoginWithAmazon
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  override func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-
-      return AMZNAuthorizationManager.handleOpen(
-          url,
-          sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String)
-  }
+//   override func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+//
+//       return AMZNAuthorizationManager.handleOpen(
+//           url,
+//           sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String)
+//   }
 }

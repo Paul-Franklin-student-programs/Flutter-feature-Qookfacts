@@ -135,7 +135,7 @@ class OnboardingButtons extends StatelessWidget {
                   location: Location(
                     city: 'empty',
                     country: 'empty',
-                    gps: null,
+                    gps: 'null',
                     ipAddr: 'empty',
                     state: 'empty',
                     zip: 'empty',

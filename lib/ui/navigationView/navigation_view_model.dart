@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qookit/app/app_router.gr.dart';
-import 'package:qookit/services/elastic/endpoints/users_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/navigationView/navigation_widgets.dart';
-import 'package:qookit/ui/navigationView/pantryView/pantry_view.dart';
 import 'package:stacked/stacked.dart';
 
 class NavigationViewModel extends BaseViewModel {
@@ -26,10 +24,9 @@ class NavigationViewModel extends BaseViewModel {
 
   void initializeModel() {
     screenId = hiveService.userBox.get(
-      UserService.lastScreen,
+      UserService.lastScreen
     ); //defaultValue: PantryView.id);
     selectedIndex = routeMap.indexOf(screenId);
-
   }
 
   bool get hideNav {

@@ -69,7 +69,7 @@ class RecipesService {
     var uri =
         Uri.https(elasticService.domain, endpoint, queryParameters.toMap());
     var token = await authService.token;
-
+    print("----------------------------------------");
     var recipeResponse = await http.get(
       uri,
       headers: {

@@ -1,6 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/models/expiry_group.dart';
@@ -10,27 +10,29 @@ import 'package:qookit/services/theme/theme_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
+import 'models/itemlist.dart';
+
 bool preview = false;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   configureDependencies();
 
   print('just before model setup');
-  //unawaited(mlService.setupModel());
+  // unawaited(mlService.setupModel());
 
   /// Initialize hive stuff
   await Hive.initFlutter();
   Hive.registerAdapter(PantryItemAdapter());
   Hive.registerAdapter(ExpiryGroupAdapter());
+  Hive.registerAdapter(ItemListAdapter());
 
   await Hive.openBox('master');
   await Hive.box('master').put('ready', false);
 
   /// Initialize stacked themes
   await ThemeManager.initialise();
-
-  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -50,7 +52,8 @@ await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,overlays: [
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ThemeBuilder(
+    return
+      ThemeBuilder(
         darkTheme: qookitDark,
         lightTheme: qookitLight,
         defaultThemeMode: ThemeMode.light,

@@ -1,5 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:qookit/app/app_router.gr.dart';
+import 'package:stacked/stacked.dart';
+import '../../models/itemlist.dart';
+import '../../services/hivedb/hivedb.dart';
+import '../../ui/navigationView/pantryView/pantry_view_widgets.dart';
 import '../tflite/recognition.dart';
 import '../tflite/stats.dart';
 import '../ui/box_widget.dart';
@@ -14,10 +23,17 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   /// Results to draw bounding boxes
+  // List<dynamic> ditemlist = [];
+  bool itemCheck = false;
   List<Recognition> results = [];
+  List<dynamic> apiitemlist= [];
+  List<String> lablestring = ["Dill","Garden onion","Leek","Allium","Angelica"];
 
+  // List<String> mylabel=[];
+  // int i=0;
   /// Realtime stats
   Stats stats;
+  Box box;
 
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -26,7 +42,33 @@ class _HomeViewState extends State<HomeView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    openBox();
+    // detectedItem(
+    //
+    //     friends: results
+    // );
+  }
+
+  Future openBox() async {
+    var dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
+    box = await Hive.openBox('DItem');
+    final apibox = await Hive.openBox('ApiItem');
+    apiitemlist =  apibox.values.toList();
+    print("--------------------------------------respons--------------------------------");
+    for (int i = 0; i < apiitemlist.length; i++) {
+      print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+      print(apiitemlist[i].name);
+      // print(apiitemlist[i].url);
+
+    }
+    return;
   }
 
   @override
@@ -46,12 +88,12 @@ class _HomeViewState extends State<HomeView> {
         ),
         backgroundColor: Colors.amber,
         actions: [
-         IconButton(
+          IconButton(
               icon: Icon(Icons.android),
               onPressed: () {
                 // Go to demo
                 //Navigator.of(context).pushNamed(CameraDemo.id);
-             /*   model.demo = !model.demo;
+                /*   model.demo = !model.demo;
                 if (model.demo) {
                   model.cameraController.dispose();
                 } else {
@@ -87,7 +129,6 @@ class _HomeViewState extends State<HomeView> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-
                         Container(
                           height: 40,
                           decoration: BoxDecoration(
@@ -95,8 +136,7 @@ class _HomeViewState extends State<HomeView> {
                               borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(8),
                                 topLeft: Radius.circular(8),
-                              )
-                          ),
+                              )),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -105,33 +145,37 @@ class _HomeViewState extends State<HomeView> {
                                 height: 5,
                                 width: 80,
                                 alignment: Alignment.center,
-                                decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(2)),
+                                decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(2)),
                               )
                             ],
                           ),
                         ),
                         (stats != null)
                             ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              StatsRow('Inference time:',
-                                  '${stats.inferenceTime} ms'),
-                              StatsRow('Total prediction time:',
-                                  '${stats.totalElapsedTime} ms'),
-                              StatsRow('Pre-processing time:', '${stats.preProcessingTime} ms'),
-                              /*StatsRow('Frame',
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    StatsRow('Inference time:',
+                                        '${stats.inferenceTime} ms'),
+                                    StatsRow('Total prediction time:',
+                                        '${stats.totalElapsedTime} ms'),
+                                    StatsRow('Pre-processing time:',
+                                        '${stats.preProcessingTime} ms'),
+                                    /*StatsRow('Frame',
                                   '${CameraViewSingleton.inputImageSize?.width} X ${CameraViewSingleton.inputImageSize?.height}'),*/
-                            ],
-                          ),
-                        )
+                                  ],
+                                ),
+                              )
                             : Container(),
                         Container(
                           height: 40,
                           alignment: Alignment.center,
                           child: Text(
                             'Items Detected',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500),
                           ),
                         ),
                         Divider(
@@ -148,9 +192,11 @@ class _HomeViewState extends State<HomeView> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(obj.label), IconButton(icon: Icon(Icons.clear), onPressed: () {
-
-                                    })],
+                                      Text(obj.label),
+                                      IconButton(
+                                          icon: Icon(Icons.clear),
+                                          onPressed: () {}),
+                                    ],
                                   ),
                                 ),
                               )
@@ -175,27 +221,36 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                                 Text(
                                   'Add Ingredient',
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.amber,
-                                textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
                                 'Add Items To',
-                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 18),
                               ),
                               DropdownButton(
                                 value: 'pantry',
-                                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    color: Colors.black),
                                 items: [
                                   DropdownMenuItem(
                                     child: Text('Pantry'),
@@ -211,8 +266,8 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                 ],
                                 onChanged: (value) {
-                               //   model.destination = value;
-                                 // model.notifyListeners();
+                                  //   model.destination = value;
+                                  // model.notifyListeners();
                                 },
                               )
                             ],
@@ -220,28 +275,126 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(horizontal: 24),
-                         // color: Colors.amber,
+                          // color: Colors.amber,
                           child: ElevatedButton(
-                            child: Text('ADD ITEMS',style:  TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                           // color: Colors.amber,
-                            onPressed: () {
+                            child: Text(
+                              'ADD ITEMS',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            // color: Colors.amber,
+                            onPressed: ()  {
+                              // detectedItem(
+                              //
+                              //     friends: results
+                              // );
 
+                              // for(int i =0 ; i<=results.length; i++) {
+                              //   box.put(i, results);
+
+                              // i++;
+                              // var mydetected = detectedItem(
+                              //
+                              //    friends: results
+                              //  );
+                              // print("j11111111111111111");
+
+                              // await box.add("farhan");
+
+                              // listEmployees = box.values.toList();
+                              //    print("222222222222211111111111111111");
+                              //     print(box.get('dave'));
+                              // }s
+                             //----- ditemlist = box.values.toList();
+                              //
+                              //  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                              // print(ditemlist);
+                              //
+                              // if(ditemlist.isEmpty){
+                              //
+                              //   for (int i = 0; i < results.length; i++) {
+                              //     await box.add(results[i].label);
+                              //   }
+                              // } else {
+                              //   for (int i = 0; i < results.length; i++) {
+                              //     for (int j = 0; j < ditemlist.length; j++) {
+                              //       if (results[i].label != ditemlist[j]) {
+                              //         print(
+                              //             "---------------------------------");
+                              //         print("notesame item");
+                              //         itemCheck = true;
+                              //       } else {
+                              //         print(
+                              //             "---------------------------------");
+                              //         print("same item");
+                              //       }
+                              //     }
+                              //     if (itemCheck == true) {
+                              //       print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                              //       await box.add(results[i].label);
+                              //     }
+                              //     itemCheck = false;
+                              //   }
+                              //--------- }
+
+                              //  Navigator.pop(context);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) =>  FlexiblePantry()),
+                              // );
+                              //       box.clear();
+                              // for(int i = 0; i < apiitemlist.length; i++) {
+                              //   if(apiitemlist[i].name == "Kiwi") {
+                              //     box.add("Kiwi");
+                              //   }
+                              //     }
+
+    //                           print("lllllllllllll");
+    // print(lablestring.length);
+                              for(int i= 0; i<lablestring.length; i++)
+                                {
+                                  for(int j = 0; j<apiitemlist.length; j++)
+                                    {
+
+                                      if(apiitemlist[j].name == lablestring[i])
+                                        {
+                                          print("lllllllllllll");
+                                          // print(lablestring[i]);
+                                          // box. add("Kiwi");
+                                          // box.add(results[i].label);
+                                          box.add(lablestring[i]);
+                                          // itemCheck = true;
+                                        }
+                                    }
+                                  // if(itemCheck ==true){
+                                  //    box.add(lablestring[i]);
+                                  // }
+                                  print(lablestring[i]);
+                                }
+
+
+
+                              ExtendedNavigator.named("nestedNav")
+                                  .push(NavigationViewRoutes.pantryView);
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.amber,
-                                textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
                           ),
                         ),
                         Container(
                           width: 100,
                           child: TextButton(
-                            child: Text('Clear All'),
-                            onPressed: () {
-                              // TODO: clear ingredients
-                            //  model.detectedObjects = [];
-                             // model.notifyListeners();
-                            },
-                          ),
+                              child: Text('Clear All'),
+                              onPressed: () async {
+                                // TODO: clear ingredients
+                                //  model.detectedObjects = [];
+                                // model.notifyListeners();
+                                box.deleteFromDisk();
+                              }),
                         ),
                       ],
                     ),

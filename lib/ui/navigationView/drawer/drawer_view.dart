@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 //import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:flutter_lwa/lwa.dart';
+// import 'package:flutter_lwa/lwa.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:qookit/models/location.dart';
 import 'package:qookit/models/personal.dart';
@@ -29,7 +29,7 @@ class NavDrawer extends StatelessWidget {
                   authService.signOut(context);
                   await _googleSignIn.disconnect();
                   //await FacebookLogin().logOut();
-                  await LoginWithAmazon().signOut();
+                  // await LoginWithAmazon().signOut();
                   //await ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
                 },
               ),
@@ -70,7 +70,7 @@ class NavDrawer extends StatelessWidget {
                         location: Location(
                           city: 'empty',
                           country: 'empty',
-                          gps: null,
+                          gps: 'empty',
                           ipAddr: 'empty',
                           state: 'empty',
                           zip: 'empty',
@@ -88,7 +88,7 @@ class NavDrawer extends StatelessWidget {
               ListTile(
                 title: Text('Query My Recipes'),
                 onTap: () {
-                  usersService.getUserRecipes(authService.user.uid);
+                  // usersService.getUserRecipes(authService.user.uid);
                 },
               ),
               ListTile(

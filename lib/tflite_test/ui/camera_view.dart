@@ -104,7 +104,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
     if (classifier.interpreter != null && classifier.labels != null) {
-      // If previous inference has not completed then return
+    //   // If previous inference has not completed then return
       if (predicting) {
         return;
       }
