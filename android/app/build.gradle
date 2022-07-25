@@ -35,6 +35,13 @@ if (keystorePropertiesFile.exists()) {
 android {
     compileSdkVersion 32
 
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "Instantiatable"
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
     aaptOptions {
         noCompress "tflite"
     }

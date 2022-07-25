@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
@@ -49,10 +48,7 @@ class _HomeViewState extends State<HomeView> {
     // TODO: implement initState
     super.initState();
     openBox();
-    // detectedItem(
-    //
-    //     friends: results
-    // );
+
   }
 
   Future openBox() async {
@@ -61,11 +57,9 @@ class _HomeViewState extends State<HomeView> {
     box = await Hive.openBox('DItem');
     final apibox = await Hive.openBox('ApiItem');
     apiitemlist =  apibox.values.toList();
-    print("--------------------------------------respons--------------------------------");
+
     for (int i = 0; i < apiitemlist.length; i++) {
-      print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       print(apiitemlist[i].name);
-      // print(apiitemlist[i].url);
 
     }
     return;
@@ -109,11 +103,11 @@ class _HomeViewState extends State<HomeView> {
           CameraView(resultsCallback, statsCallback),
 
           // Bounding boxes
-          boundingBoxes(results),
+           boundingBoxes(results),
 
           // Bottom Sheet
           Align(
-            alignment: Alignment.bottomCenter,
+            // alignment: Alignment.bottomCenter,
             child: DraggableScrollableSheet(
               initialChildSize: 0.4,
               minChildSize: 0.1,
@@ -153,7 +147,8 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                         (stats != null)
-                            ? Padding(
+                            ?
+                        Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
@@ -285,98 +280,19 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             // color: Colors.amber,
                             onPressed: ()  {
-                              // detectedItem(
-                              //
-                              //     friends: results
-                              // );
 
-                              // for(int i =0 ; i<=results.length; i++) {
-                              //   box.put(i, results);
-
-                              // i++;
-                              // var mydetected = detectedItem(
-                              //
-                              //    friends: results
-                              //  );
-                              // print("j11111111111111111");
-
-                              // await box.add("farhan");
-
-                              // listEmployees = box.values.toList();
-                              //    print("222222222222211111111111111111");
-                              //     print(box.get('dave'));
-                              // }s
-                             //----- ditemlist = box.values.toList();
-                              //
-                              //  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                              // print(ditemlist);
-                              //
-                              // if(ditemlist.isEmpty){
-                              //
-                              //   for (int i = 0; i < results.length; i++) {
-                              //     await box.add(results[i].label);
-                              //   }
-                              // } else {
-                              //   for (int i = 0; i < results.length; i++) {
-                              //     for (int j = 0; j < ditemlist.length; j++) {
-                              //       if (results[i].label != ditemlist[j]) {
-                              //         print(
-                              //             "---------------------------------");
-                              //         print("notesame item");
-                              //         itemCheck = true;
-                              //       } else {
-                              //         print(
-                              //             "---------------------------------");
-                              //         print("same item");
-                              //       }
-                              //     }
-                              //     if (itemCheck == true) {
-                              //       print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                              //       await box.add(results[i].label);
-                              //     }
-                              //     itemCheck = false;
-                              //   }
-                              //--------- }
-
-                              //  Navigator.pop(context);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) =>  FlexiblePantry()),
-                              // );
-                              //       box.clear();
-                              // for(int i = 0; i < apiitemlist.length; i++) {
-                              //   if(apiitemlist[i].name == "Kiwi") {
-                              //     box.add("Kiwi");
-                              //   }
-                              //     }
-
-    //                           print("lllllllllllll");
-    // print(lablestring.length);
-                              for(int i= 0; i<lablestring.length; i++)
+                              for(int i= 0; i<results.length; i++)
                                 {
-                                  for(int j = 0; j<apiitemlist.length; j++)
-                                    {
 
-                                      if(apiitemlist[j].name == lablestring[i])
-                                        {
-                                          print("lllllllllllll");
-                                          // print(lablestring[i]);
-                                          // box. add("Kiwi");
-                                          // box.add(results[i].label);
-                                          box.add(lablestring[i]);
-                                          // itemCheck = true;
-                                        }
-                                    }
-                                  // if(itemCheck ==true){
-                                  //    box.add(lablestring[i]);
-                                  // }
-                                  print(lablestring[i]);
+                                  box.add(results[i].label.toString());
+                                  print(results[i]);
                                 }
 
 
-
-                              ExtendedNavigator.named("nestedNav")
-                                  .push(NavigationViewRoutes.pantryView);
+                              if(results.isNotEmpty) {
+                                ExtendedNavigator.named("nestedNav")
+                                    .push(NavigationViewRoutes.pantryView);
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.amber,
@@ -391,8 +307,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Text('Clear All'),
                               onPressed: () async {
                                 // TODO: clear ingredients
-                                //  model.detectedObjects = [];
-                                // model.notifyListeners();
+
                                 box.deleteFromDisk();
                               }),
                         ),

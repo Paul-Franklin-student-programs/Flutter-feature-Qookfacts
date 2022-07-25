@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-//import LoginWithAmazon
+// import LoginWithAmazon
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

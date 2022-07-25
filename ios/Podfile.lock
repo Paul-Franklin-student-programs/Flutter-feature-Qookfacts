@@ -134,7 +134,7 @@ PODS:
     - AppAuth/Core (~> 1.4)
     - GTMSessionFetcher/Core (~> 1.5)
   - GTMSessionFetcher/Core (1.7.2)
-  - image_crop (0.0.1):
+  - image_picker_ios (0.0.1):
     - Flutter
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -149,6 +149,10 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - tflite_flutter (0.1.0):
+    - Flutter
+  - tflite_flutter_helper (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
@@ -159,10 +163,12 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_statusbarcolor_ns (from `.symlinks/plugins/flutter_statusbarcolor_ns/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
-  - image_crop (from `.symlinks/plugins/image_crop/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
+  - tflite_flutter_helper (from `.symlinks/plugins/tflite_flutter_helper/ios`)
 
 SPEC REPOS:
   trunk:
@@ -201,23 +207,27 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_statusbarcolor_ns/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
-  image_crop:
-    :path: ".symlinks/plugins/image_crop/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  tflite_flutter:
+    :path: ".symlinks/plugins/tflite_flutter/ios"
+  tflite_flutter_helper:
+    :path: ".symlinks/plugins/tflite_flutter_helper/ios"
 
 SPEC CHECKSUMS:
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
-  camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
+  camera_avfoundation: 2ec3dbdf5d54dc84ca7ba43cab88bc22e533f1f1
   Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
-  firebase_analytics: 9029d8bd4cd488a3dd7ff32ec4fccd3160bf7200
-  firebase_auth: 0c31e02a522f6ece632f9f6d623441898c4dd679
-  firebase_core: b14c1cfa29b9eb316345f74d1489328283825d6d
-  firebase_dynamic_links: 007ad1d6eb991a53b4baacf215adb4de62df11e2
+  firebase_analytics: 5f34b00932151be4727c0c84e8b6e28809d72ffd
+  firebase_auth: e5fdda0c59c1aca7561bfe5515c5f8a1719b0ea0
+  firebase_core: ae4d3d5c8b182b667ca0d942a1539e8a61b435cd
+  firebase_dynamic_links: 939ca04aeac9d1cf81852639a4d9d5537498739d
   FirebaseAnalytics: 7761cbadb00a717d8d0939363eb46041526474fa
   FirebaseAuth: 3e73bf8abf4fbb40f8b421f361f4cc48ee57388c
   FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
@@ -227,20 +237,22 @@ SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_statusbarcolor_ns: 68a360889d88d7915ae524e422aeab62e4063804
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  google_sign_in_ios: 90eec6616c4c2105b9f9fe5c774773d13565b504
+  google_sign_in_ios: c286eb398582e393f4bb88a9eff485656d6ac978
   GoogleAppMeasurement: 4c19f031220c72464d460c9daa1fb5d1acce958e
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleSignIn: 3c68388ac221f379676e8f1cb115df3aaf73b93f
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   GTMAppAuth: 4d8f864896f3646f0c33baf38a28362f4c601e15
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  image_crop: e0a67085d3ebf3cf46ca46d61c53a082507b0bc3
+  image_picker_ios: e52fcbc7ba6d475ae069b7cc6b42147b5f3ee8c1
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  path_provider_ios: 6ee606feaea2e8d07ff40aa8e521645256a9398b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  sqflite: 12301fb38ad5dba0c8c77585369b445acf43696f
+  tflite_flutter: 1d5ea7cbdb9c40e9c0ca0707fe1b346fd43fd62f
+  tflite_flutter_helper: e999c445279efebe1aeafb7cb6de0d61e984e7bf
 
-PODFILE CHECKSUM: efd43c12b0d50fe0ebc6ec0718d186c90c94e0f2
+PODFILE CHECKSUM: 3106a71760aa03a712cc31a3f740071dec8da37d
 
 COCOAPODS: 1.11.3

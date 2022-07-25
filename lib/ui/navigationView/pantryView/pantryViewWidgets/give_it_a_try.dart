@@ -14,6 +14,7 @@ class GiveItATry extends StatefulWidget {
 class _GiveItATryState extends State<GiveItATry> {
   List<dynamic> apiitemlist= [];
   List<dynamic> ditemlist = [];
+  Box ditembox;
 
   // CheckDitem hiverespons;
 
@@ -51,7 +52,7 @@ class _GiveItATryState extends State<GiveItATry> {
     //   await UsersService.detectedItem();
     //
     // }
-    final ditembox = await Hive.openBox('DItem');
+     ditembox = await Hive.openBox('DItem');
     // final apibox = await Hive.openBox('ApiItem');
 
 
@@ -118,7 +119,23 @@ class _GiveItATryState extends State<GiveItATry> {
               itemCount: ditemlist.length,
               itemBuilder: (context, index) {
                 return Container(
-                  child: Card(child: Text(ditemlist[index],style: TextStyle(fontSize: 30.0),)),
+                  child: Card(child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(ditemlist[index],style: TextStyle(fontSize: 30.0),
+
+                      ),
+                      IconButton(onPressed: (){
+                        ditembox.deleteAt(index);
+                        ditemlist.removeAt(index);
+                    setState(() {
+
+                    });
+
+
+                      }, icon: Icon(Icons.clear))
+                    ],
+                  )),
 
                 );
               }

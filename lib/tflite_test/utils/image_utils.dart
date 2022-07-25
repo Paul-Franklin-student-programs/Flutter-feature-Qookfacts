@@ -20,6 +20,9 @@ class ImageUtils {
     }
   }
 
+
+
+
   /// Converts a [CameraImage] in BGRA888 format to [imageLib.Image] in RGB format
   static img_lib.Image convertBGRA8888ToImage(CameraImage cameraImage) {
     img_lib.Image img = img_lib.Image.fromBytes(cameraImage.planes[0].width,

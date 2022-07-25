@@ -17,6 +17,7 @@ class CameraView extends StatefulWidget {
 
   /// Constructor
   const CameraView(this.resultsCallback, this.statsCallback);
+
   @override
   _CameraViewState createState() => _CameraViewState();
 }
@@ -67,8 +68,12 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     cameras = await availableCameras();
 
     // cameras[0] for rear-camera
-    cameraController =
-        CameraController(cameras[0], ResolutionPreset.low, enableAudio: false,);
+    cameraController = CameraController(
+      cameras[0],
+      ResolutionPreset.max,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.yuv420,
+    );
 
     await cameraController.initialize().then((_) async {
       // Stream of image passed to [onLatestImageAvailable] callback
@@ -87,7 +92,6 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
       Size screenSize = MediaQuery.of(context).size;
       CameraViewSingleton.screenSize = screenSize;
       CameraViewSingleton.ratio = screenSize.width / previewSize.height;
-
     });
   }
 
@@ -104,7 +108,7 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
   /// Callback to receive each frame [CameraImage] perform inference on it
   onLatestImageAvailable(CameraImage cameraImage) async {
     if (classifier.interpreter != null && classifier.labels != null) {
-    //   // If previous inference has not completed then return
+      //   // If previous inference has not completed then return
       if (predicting) {
         return;
       }
@@ -174,3 +178,5 @@ class _CameraViewState extends State<CameraView> with WidgetsBindingObserver {
     super.dispose();
   }
 }
+
+
