@@ -10,62 +10,88 @@ class SubSection extends ViewModelWidget<SettingsViewModel> {
       children: [
         Column(
           children: model.subsections
-              .map((e) => e=='ACCOUNT'? Column(
-            children: [
-              ListTile(
-                title: Text(e),
-              ),
-              Column(
-                children: model.accountTiles
-                    .map((e) => ListTile(
-                  tileColor: Colors.white,
-                  leading: SvgPicture.asset(e.iconAsset),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  title: Text(e.label),
-                ))
-                    .toList(),
-              )
-            ],
-          ):Container()).toList(),
+              .map((e) => e == 'ACCOUNT'
+                  ? Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            e,
+                            style: TextStyle(fontFamily: 'lato_bold'),
+                          ),
+                        ),
+                        Column(
+                          children: model.accountTiles
+                              .map((e) => ListTile(
+                                    tileColor: Colors.white,
+                                    leading: SvgPicture.asset(e.iconAsset),
+                                    trailing: Icon(Icons.arrow_forward_ios),
+                                    title: Text(
+                                      e.label,
+                                      style: TextStyle(fontFamily: 'lato_bold'),
+                                    ),
+                                  ))
+                              .toList(),
+                        )
+                      ],
+                    )
+                  : Container())
+              .toList(),
         ),
         Column(
           children: model.subsections
-              .map((e) => e=='SYSTEM' ?Column(
-            children: [
-              ListTile(
-                title: Text(e),
-              ),
-              Column(
-                children: model.systemTiles
-                    .map((e) => ListTile(
-                  tileColor: Colors.white,
-                  leading: SvgPicture.asset(e.iconAsset),
-                  title: Text(e.label),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                ))
-                    .toList()
-              )
-            ],
-          ): Container()).toList(),
+              .map((e) => e == 'SYSTEM'
+                  ? Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            e,
+                            style: TextStyle(fontFamily: 'lato_bold'),
+                          ),
+                        ),
+                        Column(
+                            children: model.systemTiles
+                                .map((e) => ListTile(
+                                      tileColor: Colors.white,
+                                      leading: SvgPicture.asset(e.iconAsset),
+                                      title: Text(
+                                        e.label,
+                                        style:
+                                            TextStyle(fontFamily: 'lato_bold'),
+                                      ),
+                                      trailing: Icon(Icons.arrow_forward_ios),
+                                    ))
+                                .toList())
+                      ],
+                    )
+                  : Container())
+              .toList(),
         ),
         Column(
           children: model.subsections
-              .map((e) => e=='ABOUT US' ? Column(
-            children: [
-              ListTile(
-                title: Text(e),
-              ),
-              Column(
-                  children: model.aboutUsTiles.map((e) => ListTile(
-                    tileColor: Colors.white,
-                    leading: SvgPicture.asset(e.iconAsset),
-                    title: Text(e.label),
-                    trailing: Icon(Icons.arrow_forward_ios)
-                  ))
-                      .toList()
-              )
-            ],
-          ): Container()).toList(),
+              .map((e) => e == 'ABOUT US'
+                  ? Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            e,
+                            style: TextStyle(fontFamily: 'lato_bold'),
+                          ),
+                        ),
+                        Column(
+                            children: model.aboutUsTiles
+                                .map((e) => ListTile(
+                                    tileColor: Colors.white,
+                                    leading: SvgPicture.asset(e.iconAsset),
+                                    title: Text(
+                                      e.label,
+                                      style: TextStyle(fontFamily: 'lato_bold'),
+                                    ),
+                                    trailing: Icon(Icons.arrow_forward_ios)))
+                                .toList())
+                      ],
+                    )
+                  : Container())
+              .toList(),
         ),
       ],
     );

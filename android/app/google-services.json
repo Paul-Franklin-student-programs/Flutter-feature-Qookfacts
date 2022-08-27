@@ -23,6 +23,22 @@
           }
         },
         {
+          "client_id": "58811368561-k6mfkj56adi7fjb8ftg1dris6n6c127m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ai.qookit.flutter_tflite_example",
+            "certificate_hash": "ec3f2acf8e53f5b35d28c5bf182c69ab351c3df1"
+          }
+        },
+        {
+          "client_id": "58811368561-ng4ci34ks713cul8sv1gsodb2bjvnfp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ai.qookit.flutter_tflite_example",
+            "certificate_hash": "0c853c8b5670ce5b4f7f3d2b9c62ead695f51adb"
+          }
+        },
+        {
           "client_id": "58811368561-mffkr7r53e5n50hpt33f1d8hsqlcfvle.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -40,10 +56,10 @@
               "client_type": 3
             },
             {
-              "client_id": "58811368561-gorogfienv83d0llgbg2faqhbqavf6ks.apps.googleusercontent.com",
+              "client_id": "58811368561-4hlmas4nlbuqj1sjvpi86klpeja8j4i1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "app.qookit"
+                "bundle_id": "com.app.guardiansapp"
               }
             }
           ]
@@ -107,11 +123,27 @@
           }
         },
         {
+          "client_id": "58811368561-u1b4253agl9b8orvhcu1egtvehk5j57h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qookit.mobileapp",
+            "certificate_hash": "0c853c8b5670ce5b4f7f3d2b9c62ead695f51adb"
+          }
+        },
+        {
           "client_id": "58811368561-v5hq77lemgd0sri9boogkd9lin77pafq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.qookit.mobileapp",
             "certificate_hash": "53ba045987ef843f2b78146818b1d7d50fdec224"
+          }
+        },
+        {
+          "client_id": "58811368561-vcve25bupuuij9134j9k5g375bklb15s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qookit.mobileapp",
+            "certificate_hash": "ec3f2acf8e53f5b35d28c5bf182c69ab351c3df1"
           }
         },
         {
@@ -140,10 +172,10 @@
               "client_type": 3
             },
             {
-              "client_id": "58811368561-gorogfienv83d0llgbg2faqhbqavf6ks.apps.googleusercontent.com",
+              "client_id": "58811368561-4hlmas4nlbuqj1sjvpi86klpeja8j4i1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "app.qookit"
+                "bundle_id": "com.app.guardiansapp"
               }
             }
           ]

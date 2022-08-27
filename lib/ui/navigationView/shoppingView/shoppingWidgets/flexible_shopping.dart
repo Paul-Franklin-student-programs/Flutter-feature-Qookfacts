@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_compare.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_recipes.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_title.dart';
@@ -45,19 +46,31 @@ class FlexibleShoppingHeader extends ViewModelWidget<ShoppingViewModel> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.list, color: viewModel.screenMode == 'recipes'?Colors.amber:Colors.black45),
+                  Icon(Icons.list,
+                      color: viewModel.screenMode == 'recipes'
+                          ? Colors.amber
+                          : Colors.black45),
                   Flexible(
                     child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             viewModel.updateScreenMode('recipes');
                           },
-                            child: Text('RECIPES',style: TextStyle(
-                                fontSize: 12,
-                                color: viewModel.screenMode == 'recipes'?Colors.amber:Colors.black45
-                            )),
-                            )),
+                          child: Text('RECIPES',
+                              style: TextStyle(
+                                  fontFamily: 'opensans_bold',
+                                  fontSize: 12,
+                                  color: viewModel.screenMode == 'recipes'
+                                      ? Colors.amber
+                                      : Colors.black45)),
+
+                          // GoogleFonts.lato(
+                          //   fontSize: 12,
+                          //   color: viewModel.screenMode == 'recipes'
+                          //       ? Colors.amber
+                          //       : Colors.black45)
+                        )),
                   ),
                 ],
               ),
@@ -66,30 +79,47 @@ class FlexibleShoppingHeader extends ViewModelWidget<ShoppingViewModel> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.monetization_on_outlined, color: viewModel.screenMode == 'compare'?Colors.amber:Colors.black45),
+                  Icon(Icons.monetization_on_outlined,
+                      color: viewModel.screenMode == 'compare'
+                          ? Colors.amber
+                          : Colors.black45),
                   Flexible(
                     child: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: TextButton(
-                          onPressed: (){
+                          onPressed: () {
                             viewModel.updateScreenMode('compare');
                           },
-                          child: Text('COMPARE PRICES',
-                          style: TextStyle(
-                            fontSize: 12,
-                              color: viewModel.screenMode == 'compare'?Colors.amber:Colors.black45
-                          ),),
+                          child: Text(
+                            'COMPARE PRICES',
+                            style: TextStyle(
+                                fontFamily: 'opensans',
+                                fontSize: 12,
+                                color: viewModel.screenMode == 'compare'
+                                    ? Colors.amber
+                                    : Colors.black45),
+
+                            //  GoogleFonts.lato(
+                            //     fontSize: 12,
+                            //     color: viewModel.screenMode == 'compare'
+                            //         ? Colors.amber
+                            //         : Colors.black45)
+                          ),
                         )),
                   ),
                 ],
               ),
             ),
-            IconButton(icon: Icon(Icons.favorite_border, color: Colors.black45), onPressed: (){
-              // TODO: Favorites
-            }),
-            IconButton(icon: Icon(Icons.share_outlined, color: Colors.black45), onPressed: (){
-              // TODO: Share this
-            })
+            IconButton(
+                icon: Icon(Icons.favorite_border, color: Colors.black45),
+                onPressed: () {
+                  // TODO: Favorites
+                }),
+            IconButton(
+                icon: Icon(Icons.share_outlined, color: Colors.black45),
+                onPressed: () {
+                  // TODO: Share this
+                })
           ],
         ),
       ),
@@ -109,8 +139,7 @@ class ShoppingHeader extends ViewModelWidget<ShoppingViewModel> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(
-                  child: ShoppingTitle()),
+              Flexible(child: ShoppingTitle()),
               Expanded(
                 child: Row(
                   children: [
@@ -123,8 +152,11 @@ class ShoppingHeader extends ViewModelWidget<ShoppingViewModel> {
                             fillColor: Colors.grey.shade200,
                             filled: true,
                             hintText: 'Add Items',
+                            hintStyle: TextStyle(
+                                color: Colors.black87, fontFamily: 'opensans'),
                             prefixIcon: Icon(
                               Icons.add,
+                              color: Colors.black87,
                               size: 28,
                             ),
                             contentPadding: EdgeInsets.zero,
@@ -149,10 +181,9 @@ class ShoppingHeader extends ViewModelWidget<ShoppingViewModel> {
 class FlexibleShoppingContent extends ViewModelWidget<ShoppingViewModel> {
   @override
   Widget build(BuildContext context, ShoppingViewModel viewModel) {
-    if(viewModel.screenMode == 'recipes'){
+    if (viewModel.screenMode == 'recipes') {
       return ShoppingRecipes();
-    }
-    else if(viewModel.screenMode == 'compare'){
+    } else if (viewModel.screenMode == 'compare') {
       return ShoppingCompare();
     }
   }

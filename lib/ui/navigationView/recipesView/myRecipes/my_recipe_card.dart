@@ -31,7 +31,8 @@ class MyRecipeCard extends StatelessWidget {
             width: sideLength,
             height: sideLength,
             child: Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8)),
               child: Stack(
                 children: [
                   Container(
@@ -64,7 +65,10 @@ class MyRecipeCard extends StatelessWidget {
                     left: 8,
                     child: Text(
                       'KATE + COOKIE',
-                      style: TextStyle(fontWeight: FontWeight.w700, color: Colors.amber),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Colors.amber,
+                          fontFamily: 'opensance_bold'),
                     ),
                   )
                 ],
@@ -77,10 +81,12 @@ class MyRecipeCard extends StatelessWidget {
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  recipe.title,
-                  style: GoogleFonts.lato(fontWeight: FontWeight.w600),
-                ),
+                child:
+                    Text(recipe.title, style: TextStyle(fontFamily: 'opensance')
+                        // GoogleFonts.lato(
+                        //   fontWeight: FontWeight.w600,
+                        // ),
+                        ),
               ),
             ),
           ],

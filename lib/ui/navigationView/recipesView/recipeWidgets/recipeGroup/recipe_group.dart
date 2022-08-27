@@ -57,10 +57,10 @@ class RecipeGroup extends StatelessWidget {
         ),
         Flexible(
           child: Container(
-            height: Dimensions.recipeCardHeight+50,
+            height: Dimensions.recipeCardHeight + 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: recipes != null? recipes.length: 0,
+              itemCount: recipes != null ? recipes.length : 0,
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return RecipeCard(

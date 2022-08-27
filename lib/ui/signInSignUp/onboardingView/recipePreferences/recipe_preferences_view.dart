@@ -9,27 +9,25 @@ class RecipePreferencesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RecipePreferencesViewModel>.reactive(
-      viewModelBuilder: () => RecipePreferencesViewModel(),
-      builder:(context,model,child) {
-        return SafeArea(
-            child: Scaffold(
-              body: Center(
-                child: Column(
-                  children: [
-                    BackgroundImage(model.background),
-                    OnboardingTitle(model.title),
-                    Recipes(model, context),
-                    OnboardingButtons(context, true, true, model.nextRoute)
-                  ],
-                ),
+        viewModelBuilder: () => RecipePreferencesViewModel(),
+        builder: (context, model, child) {
+          return SafeArea(
+              child: Scaffold(
+            body: Center(
+              child: Column(
+                children: [
+                  BackgroundImage(model.background),
+                  OnboardingTitle(model.title),
+                  Recipes(model, context),
+                  OnboardingButtons(context, true, true, model.nextRoute)
+                ],
               ),
-            )
-        );
-      }
-    );
+            ),
+          ));
+        });
   }
 
-  Widget Recipes(RecipePreferencesViewModel model, BuildContext context){
+  Widget Recipes(RecipePreferencesViewModel model, BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: hiveService.recipesListenable,
       builder: (context, box, child) {
@@ -45,7 +43,7 @@ class RecipePreferencesView extends StatelessWidget {
                 mainAxisSpacing: 10,
                 children: [
                   for (String recipe in model.recipes)
-                    RecipeOption(recipe, context, model,box)
+                    RecipeOption(recipe, context, model, box)
                 ],
               ),
             ),
@@ -55,34 +53,27 @@ class RecipePreferencesView extends StatelessWidget {
           ],
         );
       },
-
     );
   }
 
-  Widget RecipeOption(
-      String label, BuildContext context, RecipePreferencesViewModel model,Box box) {
+  Widget RecipeOption(String label, BuildContext context,
+      RecipePreferencesViewModel model, Box box) {
     return InkWell(
       child: Container(
         margin: EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
-            color: box.containsKey(label)
-                ? Colors.black
-                : Colors.white,
+            color: box.containsKey(label) ? Colors.black : Colors.white,
             border: Border.all(
-                color: box.containsKey(label)
-                    ? Colors.black
-                    : Colors.grey)),
+                color: box.containsKey(label) ? Colors.black : Colors.grey)),
         child: Center(
           child: Text(
             label,
             style: TextStyle(
-              color: box.containsKey(label)
-                  ? Colors.white
-                  : Colors.black,
+              color: box.containsKey(label) ? Colors.white : Colors.black,
               fontSize: 15,
               height: 1.1,
               fontWeight: FontWeight.w600,
-              fontFamily: 'sofia_bold',
+              fontFamily: 'opensans',
             ),
           ),
         ),
@@ -93,4 +84,3 @@ class RecipePreferencesView extends StatelessWidget {
     );
   }
 }
-

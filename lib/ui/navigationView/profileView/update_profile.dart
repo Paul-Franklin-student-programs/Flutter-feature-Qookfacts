@@ -24,7 +24,8 @@ class _UpdateProfileState extends State<UpdateProfile> {
   String document_path1;
 
   TextEditingController nameController = TextEditingController(
-      text: hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen'));
+      text: hiveService.userBox
+          .get(UserService.displayName, defaultValue: 'Karen'));
   TextEditingController emailController = TextEditingController(
       text: hiveService.userBox.get(UserService.userEmail, defaultValue: ' '));
 
@@ -38,7 +39,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   @override
   Widget build(BuildContext context) {
-
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
       builder: (contest, model, child) {
@@ -95,7 +95,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                       color: Colors.black,
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'sofia_bold'),
+                                      fontFamily: 'georgia_bold'),
                                 ),
                                 SizedBox(width: 30),
                               ],
@@ -197,20 +197,25 @@ class _UpdateProfileState extends State<UpdateProfile> {
   }
 
   Future<void> updateProfile(LoginViewModel model) async {
-
     var userId = hiveService.userBox.get(UserService.userId);
 
     var token = await authService.token;
 
-    final response = await http.patch(
-        Uri.https(elasticService.domain , '/v1/user/' + userId),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'accept': 'application/json',
-          'Content-Type': 'application/json-patch+json',
-        },
-        body: json.encode([{'op': 'replace', 'path': 'displayName', 'value': nameController.text}]));
-    if(response.statusCode==200){
+    final response =
+        await http.patch(Uri.https(elasticService.domain, '/v1/user/' + userId),
+            headers: {
+              'Authorization': 'Bearer $token',
+              'accept': 'application/json',
+              'Content-Type': 'application/json-patch+json',
+            },
+            body: json.encode([
+              {
+                'op': 'replace',
+                'path': 'displayName',
+                'value': nameController.text
+              }
+            ]));
+    if (response.statusCode == 200) {
       await UserBloc().getUserData();
       Navigator.pop(context);
     }

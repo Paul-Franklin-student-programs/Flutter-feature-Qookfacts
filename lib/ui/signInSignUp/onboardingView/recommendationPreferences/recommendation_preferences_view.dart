@@ -7,7 +7,6 @@ import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.
 import 'package:stacked/stacked.dart';
 
 class RecommendationPreferences extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RecommendationPreferencesViewModel>.reactive(
@@ -15,44 +14,45 @@ class RecommendationPreferences extends StatelessWidget {
       builder: (context, model, child) {
         return SafeArea(
             child: Scaffold(
-              body: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      BackgroundImage(model.background),
-                      OnboardingTitle(model.title + ' ${hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen')}!'),
-                      OnboardingSubtitle(model.subtitle),
-                      Recommendations(model, context),
-                      OnboardingButtons(context, true, false, model.nextRoute)
-                    ],
-                  ),
-                ),
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(
+                children: [
+                  BackgroundImage(model.background),
+                  OnboardingTitle(model.title +
+                      ' ${hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen')}!'),
+                  OnboardingSubtitle(model.subtitle),
+                  Recommendations(model, context),
+                  OnboardingButtons(context, true, false, model.nextRoute)
+                ],
               ),
-            ));
+            ),
+          ),
+        ));
       },
     );
   }
 
-  Widget Recommendations(RecommendationPreferencesViewModel model, BuildContext context){
+  Widget Recommendations(
+      RecommendationPreferencesViewModel model, BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: hiveService.recommendationsListenable,
       builder: (context, box, child) {
         return Center(
             child: ListView(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                for (String rec in model.recs) RecommendationOption(
-                    rec, context, model,box)
-              ],
-            )
-        );
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          children: [
+            for (String rec in model.recs)
+              RecommendationOption(rec, context, model, box)
+          ],
+        ));
       },
     );
   }
 
   Widget RecommendationOption(String label, BuildContext context,
-      RecommendationPreferencesViewModel model,Box box) {
+      RecommendationPreferencesViewModel model, Box box) {
     return Column(
       children: [
         InkWell(
@@ -61,24 +61,19 @@ class RecommendationPreferences extends StatelessWidget {
             height: 45,
             width: MediaQuery.of(context).size.width * 0.6,
             decoration: BoxDecoration(
-                color: box.containsKey(label)
-                    ? Colors.black
-                    : Colors.white,
+                color: box.containsKey(label) ? Colors.black : Colors.white,
                 border: Border.all(
-                    color: box.containsKey(label)
-                        ? Colors.black
-                        : Colors.grey)),
+                    color:
+                        box.containsKey(label) ? Colors.black : Colors.grey)),
             child: Center(
               child: Text(
                 label,
                 style: TextStyle(
-                  color: box.containsKey(label)
-                      ? Colors.white
-                      : Colors.black,
+                  color: box.containsKey(label) ? Colors.white : Colors.black,
                   fontSize: 15,
                   height: 1.1,
                   fontWeight: FontWeight.w600,
-                  fontFamily: 'sofia_bold',
+                  fontFamily: 'opensans',
                 ),
               ),
             ),
@@ -94,4 +89,3 @@ class RecommendationPreferences extends StatelessWidget {
     );
   }
 }
-

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/elements/block_button_widget.dart';
@@ -17,8 +16,7 @@ class SendEmailButton extends ViewModelWidget<ForgotPasswordViewModel> {
         text: 'SEND EMAIL',
         color: Colors.black,
         onPressed: () {
-          if (_loginFormKey.currentState
-              .validate()) {
+          if (_loginFormKey.currentState.validate()) {
             model.sendResetPasswordEmail(context);
           }
         },
@@ -28,7 +26,6 @@ class SendEmailButton extends ViewModelWidget<ForgotPasswordViewModel> {
 }
 
 class BackToLoginButton extends ViewModelWidget<ForgotPasswordViewModel> {
-
   @override
   Widget build(BuildContext context, model) {
     return Builder(
@@ -44,7 +41,6 @@ class BackToLoginButton extends ViewModelWidget<ForgotPasswordViewModel> {
 }
 
 class ForgotPassMessage extends ViewModelWidget<ForgotPasswordViewModel> {
-
   @override
   Widget build(BuildContext context, model) {
     return Column(
@@ -71,4 +67,3 @@ class ForgotPassMessage extends ViewModelWidget<ForgotPasswordViewModel> {
     );
   }
 }
-

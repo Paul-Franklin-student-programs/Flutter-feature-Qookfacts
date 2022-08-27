@@ -5,30 +5,30 @@ import 'package:qookit/app/strings.dart';
 import 'package:stacked/stacked.dart';
 
 class RecipesSearchBar extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return TextField(
       textInputAction: TextInputAction.search,
       onSubmitted: (searchTerm) {
-        ExtendedNavigator.named('nestedNav').push(NavigationViewRoutes.recipeSearchView,
-        arguments: RecipeSearchViewArguments(
-          searchTerm: searchTerm
-        ));
+        ExtendedNavigator.named('nestedNav').push(
+            NavigationViewRoutes.recipeSearchView,
+            arguments: RecipeSearchViewArguments(searchTerm: searchTerm));
       },
       decoration: InputDecoration(
         fillColor: Colors.grey.shade200,
         filled: true,
         hintText: Strings.recipeSearch,
+        hintStyle: TextStyle(fontFamily: 'opensans', color: Colors.black87),
         prefixIcon: Icon(
           Icons.search,
-          color: Colors.white,
+          color: Colors.black,
           size: 28,
         ),
         suffixIcon: IconButton(
           icon: FaIcon(FontAwesomeIcons.slidersH),
           onPressed: () {
-            ExtendedNavigator.named('nestedNav').push(NavigationViewRoutes.recipeSearchView);
+            ExtendedNavigator.named('nestedNav')
+                .push(NavigationViewRoutes.recipeSearchView);
           },
         ),
         contentPadding: EdgeInsets.all(0),

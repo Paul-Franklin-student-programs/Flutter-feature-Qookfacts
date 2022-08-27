@@ -8,7 +8,6 @@ import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class RegisterView extends StatelessWidget {
-
   static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   @override
@@ -69,7 +68,7 @@ class RegisterView extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'sofia_bold'),
+                                      fontFamily: 'georgia_bold'),
                                 ),
                                 SizedBox(width: 30),
                               ],
@@ -111,6 +110,9 @@ class RegisterView extends StatelessWidget {
                                       left: 20, right: 20, top: 0, bottom: 10),
                                   child: TextFormField(
                                     controller: model.txtName,
+                                    style: TextStyle(fontFamily: 'opensans'),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     maxLength: 100,
                                     validator: nameValidator,
                                     textInputAction: TextInputAction.next,
@@ -129,6 +131,8 @@ class RegisterView extends StatelessWidget {
                                         hintText: 'Enter Full Name',
                                         labelText: 'Name',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -143,6 +147,9 @@ class RegisterView extends StatelessWidget {
                                       left: 20, right: 20, top: 5, bottom: 10),
                                   child: TextFormField(
                                     controller: model.txtEmailId,
+                                    style: TextStyle(fontFamily: 'opensans'),
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
                                     maxLength: 100,
                                     keyboardType: TextInputType.emailAddress,
                                     textInputAction: TextInputAction.next,
@@ -162,6 +169,8 @@ class RegisterView extends StatelessWidget {
                                         hintText: 'Enter Email ID',
                                         labelText: 'Email ID',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -176,6 +185,7 @@ class RegisterView extends StatelessWidget {
                                       left: 20, right: 20, top: 0, bottom: 10),
                                   child: TextFormField(
                                     controller: model.txtPassword,
+                                    style: TextStyle(fontFamily: 'opensans'),
                                     maxLength: 20,
                                     validator: pwdValidator,
                                     obscureText: !model.showPassword,
@@ -211,6 +221,8 @@ class RegisterView extends StatelessWidget {
                                         hintText: 'Enter Password',
                                         labelText: 'Password',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -225,6 +237,7 @@ class RegisterView extends StatelessWidget {
                                       left: 20, right: 20, top: 0, bottom: 10),
                                   child: TextFormField(
                                     controller: model.txtConfirmPassword,
+                                    style: TextStyle(fontFamily: 'opensans  '),
                                     maxLength: 20,
                                     validator: confirmPwdValidator,
                                     obscureText: !model.confirmShowPassword,
@@ -256,6 +269,8 @@ class RegisterView extends StatelessWidget {
                                         hintText: 'Enter Confirm Password',
                                         labelText: 'Confirm Password',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -270,7 +285,8 @@ class RegisterView extends StatelessWidget {
                                     text: 'SIGN UP',
                                     color: colorTheme,
                                     onPressed: () {
-                                      if (_loginFormKey.currentState.validate()) {
+                                      if (_loginFormKey.currentState
+                                          .validate()) {
                                         model.signUpWithEmail(context);
                                       }
                                     },
@@ -282,7 +298,7 @@ class RegisterView extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text('By signing up you agree to our ',
+                                Text('By signing up you agree to our',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontSize: 14,
@@ -298,7 +314,7 @@ class RegisterView extends StatelessWidget {
                                                 fontSize: 16,
                                                 height: 1.2,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: 'opensans')),
+                                                fontFamily: 'georgia')),
                                         Container(
                                             color: Colors.yellow,
                                             height: 1,
@@ -532,8 +548,8 @@ class RegisterView extends StatelessWidget {
                               ),
                               child: GestureDetector(
                                 child: Center(
-                                  child:  GestureDetector(
-                                      child:  Text('SUBMIT',
+                                  child: GestureDetector(
+                                      child: Text('SUBMIT',
                                           style: TextStyle(
                                               color: colorTheme2,
                                               fontSize: 15,

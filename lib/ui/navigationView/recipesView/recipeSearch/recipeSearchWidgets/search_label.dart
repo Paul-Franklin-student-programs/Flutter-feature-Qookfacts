@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SearchLabel extends StatelessWidget {
-
   final String label;
 
   const SearchLabel({Key key, this.label}) : super(key: key);
@@ -15,6 +14,7 @@ class SearchLabel extends StatelessWidget {
           child: Text(
             label,
             style: TextStyle(
+              fontFamily: 'opensans',
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Colors.black,

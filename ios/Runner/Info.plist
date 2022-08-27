@@ -2,16 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-
-    
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Using the library for ...</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Using the mic for ...</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Using the camera for ...</string>
 	<key>APIKey</key>
 	<string>eyJhbGciOiJSU0EtU0hBMjU2IiwidmVyIjoiMSJ9.eyJ2ZXIiOiIzIiwiZW5kcG9pbnRzIjp7ImF1dGh6IjoiaHR0cHM6Ly93d3cuYW1hem9uLmNvbS9hcC9vYSIsInRva2VuRXhjaGFuZ2UiOiJodHRwczovL2FwaS5hbWF6b24uY29tL2F1dGgvbzIvdG9rZW4ifSwiY2xpZW50SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi1vYTItY2xpZW50LjY3NmM5ZDhkZjNmMzQ2NTI5ZDk0MjUwZTM0ZTlkYjVhIiwiYXBwRmFtaWx5SWQiOiJhbXpuMS5hcHBsaWNhdGlvbi5jOTE0YWU5ZWQ2YjQ0NjU1YTE0MmJkOTBhNDc0OGI3MSIsImJ1bmRsZVNlZWRJZCI6ImFwcC5xb29raXQiLCJidW5kbGVJZCI6ImFwcC5xb29raXQiLCJpc3MiOiJBbWF6b24iLCJ0eXBlIjoiQVBJS2V5IiwiYXBwVmFyaWFudElkIjoiYW16bjEuYXBwbGljYXRpb24tY2xpZW50LmVlZjhlNmYxMGI3OTRlZmQ5OWQ2YTNlODRjMzM3MDA2IiwidHJ1c3RQb29sIjpudWxsLCJhcHBJZCI6ImFtem4xLmFwcGxpY2F0aW9uLWNsaWVudC5lZWY4ZTZmMTBiNzk0ZWZkOTlkNmEzZTg0YzMzNzAwNiIsImlkIjoiZTc5NGUzMWQtNDViYS00ZmMyLWJkYTMtMDUwYzI5NzY1NzM0IiwiaWF0IjoiMTY0ODIwNDc2OTk1OSJ9.j5ms4k6fRzPgZChbrOGtSJQVT7X2Fk9E885U9JT0RsJ3+xx6lBqo/mvpGDBwDRFUN0mxcuxZ2mjYUr2kGt67UVcnC0dg/WpBGxJ21IYhhhQ67dGZykirUxBv/hvKi931JrB1Vmxbuvd/Ym06Af2yU1yh5VTqHD3RY9XQBa4zMTSmJM+Sd1319IdOPl56pHxPygkiMJcxrzV68ltu8BAKV2bOgSJ5u3Iuqke8Faq1fEbE8YeX96W19cdri3FRax4j4knyyVJcu5kI7+lrQKbngJ1bYNaTuHiTK/lfOBoU/kUgARuZvuoymuEyDANUISmWUQf9T2K8DSS7D/jO3V16cA==</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

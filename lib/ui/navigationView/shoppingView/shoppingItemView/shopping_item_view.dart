@@ -63,29 +63,41 @@ class ShoppingItemView extends StatelessWidget {
                                                   child: TextField(
                                                     enabled: false,
                                                     decoration: InputDecoration(
-                                                      fillColor: Colors.grey.shade200,
+                                                      fillColor:
+                                                          Colors.grey.shade200,
                                                       filled: true,
-                                                      hintText: 'Add Pantry Items',
+                                                      hintText:
+                                                          'Add Pantry Items',
+                                                      hintStyle: TextStyle(
+                                                          fontFamily:
+                                                              'opensans'),
                                                       prefixIcon: Icon(
-                                                        Icons.add,
-                                                        size: 28
-                                                      ),
+                                                          Icons.add,
+                                                          size: 28),
                                                       suffixIcon: Container(
-                                                        margin: const EdgeInsets
-                                                            .only(right: 8.0),
-                                                        child: SvgPicture.asset(
-                                                          'assets/images/barcode_icon.svg',
-                                                          color: Colors.black,
-                                                        )
-                                                      ),
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 8.0),
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            'assets/images/barcode_icon.svg',
+                                                            color: Colors.black,
+                                                          )),
                                                       suffixIconConstraints:
                                                           BoxConstraints.loose(
                                                               Size(30, 30)),
-                                                      contentPadding: EdgeInsets.all(0),
+                                                      contentPadding:
+                                                          EdgeInsets.all(0),
                                                       border:
                                                           OutlineInputBorder(
-                                                              borderRadius: BorderRadius.circular(8),
-                                                              borderSide: BorderSide.none),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              borderSide:
+                                                                  BorderSide
+                                                                      .none),
                                                     ),
                                                   ),
                                                 ),
@@ -106,6 +118,7 @@ class ShoppingItemView extends StatelessWidget {
                                 indicatorColor: Colors.amber,
                                 labelColor: Colors.amber,
                                 labelStyle: TextStyle(
+                                    fontFamily: 'SquarePeg-Regular',
                                     color: Colors.amber,
                                     fontWeight: FontWeight.w600),
                                 unselectedLabelColor: Colors.black,
@@ -129,43 +142,42 @@ class ShoppingItemView extends StatelessWidget {
                           delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                             return ListTileTheme(
-                                  tileColor: Colors.grey.shade300,
-                                  child: ExpansionTile(
-                                    initiallyExpanded: true,
-                                    leading: Padding(
-                                      padding: const EdgeInsets.only(top: 4.0),
-                                      child: Text('PRODUCE'),
-                                    ),
-                                    title: null,
-                                    children: [
-                                      Slidable(
-                                        actionPane: SlidableScrollActionPane(),
-                                        secondaryActions: [
-                                          IconSlideAction(
-                                            color: Color(0xffBE3944),
-                                            icon: Icons.favorite_border,
-                                            onTap: () => print('Favorite'),
-                                          ),
-                                          IconSlideAction(
-                                            color: Color(0xff720000),
-                                            icon: Icons.delete_outline,
-                                            onTap: () => print('Delete'),
-                                          )
-                                        ],
-                                        child: ListTileTheme(
-                                          tileColor: Colors.white,
-                                          child: ListTile(
-                                            title: Text('Gala Apples'),
-                                            subtitle:
-                                                Text('WHOLEFOODS * EXP 9/24'),
-                                            leading: FlutterLogo(),
-                                            trailing: Text('1 bag'),
-                                          ),
-                                        ),
+                              tileColor: Colors.grey.shade300,
+                              child: ExpansionTile(
+                                initiallyExpanded: true,
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(top: 4.0),
+                                  child: Text('PRODUCE'),
+                                ),
+                                title: null,
+                                children: [
+                                  Slidable(
+                                    actionPane: SlidableScrollActionPane(),
+                                    secondaryActions: [
+                                      IconSlideAction(
+                                        color: Color(0xffBE3944),
+                                        icon: Icons.favorite_border,
+                                        onTap: () => print('Favorite'),
+                                      ),
+                                      IconSlideAction(
+                                        color: Color(0xff720000),
+                                        icon: Icons.delete_outline,
+                                        onTap: () => print('Delete'),
                                       )
                                     ],
-                                  ),
-                                );
+                                    child: ListTileTheme(
+                                      tileColor: Colors.white,
+                                      child: ListTile(
+                                        title: Text('Gala Apples'),
+                                        subtitle: Text('WHOLEFOODS * EXP 9/24'),
+                                        leading: FlutterLogo(),
+                                        trailing: Text('1 bag'),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
                           }, childCount: 20),
                         )
                       ]),

@@ -12,7 +12,7 @@ class GiveItATry extends StatefulWidget {
 }
 
 class _GiveItATryState extends State<GiveItATry> {
-  List<dynamic> apiitemlist= [];
+  List<dynamic> apiitemlist = [];
   List<dynamic> ditemlist = [];
   Box ditembox;
 
@@ -21,10 +21,10 @@ class _GiveItATryState extends State<GiveItATry> {
   @override
   // List<String> name= [];
   // var name;
- void initState()  {
+  void initState() {
     // TODO: implement initState
     super.initState();
-     showdata();
+    showdata();
     // ditemlist();
     // var box = Hive.box('testbox');
     // if(box.isNotEmpty ) {
@@ -40,7 +40,6 @@ class _GiveItATryState extends State<GiveItATry> {
   }
 
   Future showdata() async {
-
     // setState(() {
     //   ditemlist = box.values.toList();
     // });
@@ -52,16 +51,12 @@ class _GiveItATryState extends State<GiveItATry> {
     //   await UsersService.detectedItem();
     //
     // }
-     ditembox = await Hive.openBox('DItem');
+    ditembox = await Hive.openBox('DItem');
     // final apibox = await Hive.openBox('ApiItem');
-
-
 
     // apiitemlist =  apibox.values.toList();
     ditemlist = ditembox.values.toList();
-    setState(() {
-
-    });
+    setState(() {});
     // print(
     //     "--------------------------------------0--------------------------------");
     // print(apiitemlist.length);
@@ -91,89 +86,91 @@ class _GiveItATryState extends State<GiveItATry> {
   Widget build(BuildContext context) {
     return
 
+        // apiitemlist.isNotEmpty? Container(
+        //      height: 500.0,
+        //
+        //      width: double.infinity,
+        //      child: ListView.builder(
+        //          itemCount: apiitemlist.length,
+        //          itemBuilder: (context, index) {
+        //            return Container(
+        //              child: Column(children: [
+        //                Image.network(apiitemlist[index].url),
+        //                Text(apiitemlist[index].name,style: TextStyle(fontSize: 30.0),)
+        //
+        //              ],),
+        //
+        //            );
+        //          }
+        //      ),
+        //    ):
 
-     // apiitemlist.isNotEmpty? Container(
-     //      height: 500.0,
-     //
-     //      width: double.infinity,
-     //      child: ListView.builder(
-     //          itemCount: apiitemlist.length,
-     //          itemBuilder: (context, index) {
-     //            return Container(
-     //              child: Column(children: [
-     //                Image.network(apiitemlist[index].url),
-     //                Text(apiitemlist[index].name,style: TextStyle(fontSize: 30.0),)
-     //
-     //              ],),
-     //
-     //            );
-     //          }
-     //      ),
-     //    ):
-
-      ditemlist.isNotEmpty? Container(
-          height: 500.0,
-
-          width: double.infinity,
-          child: ListView.builder(
-              itemCount: ditemlist.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Card(child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(ditemlist[index],style: TextStyle(fontSize: 30.0),
-
-                      ),
-                      IconButton(onPressed: (){
-                        ditembox.deleteAt(index);
-                        ditemlist.removeAt(index);
-                    setState(() {
-
-                    });
-
-
-                      }, icon: Icon(Icons.clear))
-                    ],
-                  )),
-
-                );
-              }
-          ),
-        ):
-
-        Container(
-              width: 70,
-              height: 400,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          'Go ahead and try it out!',
-                          style: GoogleFonts.openSans(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18),
+        ditemlist.isNotEmpty
+            ? Container(
+                height: 500.0,
+                width: double.infinity,
+                child: ListView.builder(
+                    itemCount: ditemlist.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        child: Card(
+                            child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: Text(
+                                ditemlist[index].replaceFirst(
+                                    ditemlist[index][0],
+                                    ditemlist[index][0].toUpperCase()),
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: 'opensans',
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  ditembox.deleteAt(index);
+                                  ditemlist.removeAt(index);
+                                  setState(() {});
+                                },
+                                icon: Icon(Icons.clear))
+                          ],
+                        )),
+                      );
+                    }),
+              )
+            : Container(
+                width: 70,
+                height: 400,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Go ahead and try it out!',
+                            style: GoogleFonts.openSans(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Icon(
-                      Icons.tag_faces,
-                      size: 36,
+                      ],
                     ),
-                  )
-                ],
-              ),
-            );
-
-
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: Icon(
+                        Icons.tag_faces,
+                        size: 36,
+                      ),
+                    )
+                  ],
+                ),
+              );
   }
 }

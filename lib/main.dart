@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,6 +7,7 @@ import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/models/expiry_group.dart';
 import 'package:qookit/models/pantry_item.dart';
 import 'package:qookit/services/getIt.dart';
+import 'package:qookit/services/ml/ml_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
@@ -17,10 +19,13 @@ bool preview = false;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   configureDependencies();
 
   print('just before model setup');
   // unawaited(mlService.setupModel());
+
+  MlService.firebasemodeldownloder();
 
   /// Initialize hive stuff
   await Hive.initFlutter();
@@ -36,10 +41,9 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,overlays: [
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
     SystemUiOverlay.top,
   ]);
-
 
   await SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
@@ -52,8 +56,7 @@ await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,overlays: [
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return
-      ThemeBuilder(
+    return ThemeBuilder(
         darkTheme: qookitDark,
         lightTheme: qookitLight,
         defaultThemeMode: ThemeMode.light,

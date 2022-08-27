@@ -25,8 +25,14 @@ class _HomeViewState extends State<HomeView> {
   // List<dynamic> ditemlist = [];
   bool itemCheck = false;
   List<Recognition> results = [];
-  List<dynamic> apiitemlist= [];
-  List<String> lablestring = ["Dill","Garden onion","Leek","Allium","Angelica"];
+  List<dynamic> apiitemlist = [];
+  List<String> lablestring = [
+    "Dill",
+    "Garden onion",
+    "Leek",
+    "Allium",
+    "Angelica"
+  ];
 
   // List<String> mylabel=[];
   // int i=0;
@@ -48,7 +54,10 @@ class _HomeViewState extends State<HomeView> {
     // TODO: implement initState
     super.initState();
     openBox();
-
+    // detectedItem(
+    //
+    //     friends: results
+    // );
   }
 
   Future openBox() async {
@@ -56,10 +65,14 @@ class _HomeViewState extends State<HomeView> {
     Hive.init(dir.path);
     box = await Hive.openBox('DItem');
     final apibox = await Hive.openBox('ApiItem');
-    apiitemlist =  apibox.values.toList();
-
+    apiitemlist = apibox.values.toList();
+    print(
+        "--------------------------------------respons--------------------------------");
     for (int i = 0; i < apiitemlist.length; i++) {
+      print(
+          "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       print(apiitemlist[i].name);
+      // print(apiitemlist[i].url);
 
     }
     return;
@@ -103,7 +116,7 @@ class _HomeViewState extends State<HomeView> {
           CameraView(resultsCallback, statsCallback),
 
           // Bounding boxes
-           boundingBoxes(results),
+          boundingBoxes(results),
 
           // Bottom Sheet
           Align(
@@ -147,8 +160,7 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ),
                         (stats != null)
-                            ?
-                        Padding(
+                            ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
                                   children: [
@@ -170,7 +182,9 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             'Items Detected',
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w500),
+                                fontFamily: 'opensans',
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
                         Divider(
@@ -187,7 +201,13 @@ class _HomeViewState extends State<HomeView> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Text(obj.label),
+                                      Text(
+                                        obj.label.replaceFirst(obj.label[0],
+                                            obj.label[0].toUpperCase()),
+                                        style: TextStyle(
+                                            fontFamily: 'opensans',
+                                            fontWeight: FontWeight.w400),
+                                      ),
                                       IconButton(
                                           icon: Icon(Icons.clear),
                                           onPressed: () {}),
@@ -217,6 +237,7 @@ class _HomeViewState extends State<HomeView> {
                                 Text(
                                   'Add Ingredient',
                                   style: TextStyle(
+                                      fontFamily: 'opensans',
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -238,11 +259,14 @@ class _HomeViewState extends State<HomeView> {
                               Text(
                                 'Add Items To',
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18),
+                                    fontFamily: 'opensans',
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18),
                               ),
                               DropdownButton(
                                 value: 'pantry',
                                 style: TextStyle(
+                                    fontFamily: 'opensans',
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                     color: Colors.black),
@@ -275,21 +299,101 @@ class _HomeViewState extends State<HomeView> {
                             child: Text(
                               'ADD ITEMS',
                               style: TextStyle(
+                                  fontFamily: 'opensans',
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
                             // color: Colors.amber,
-                            onPressed: ()  {
+                            onPressed: () {
+                              // detectedItem(
+                              //
+                              //     friends: results
+                              // );
 
-                              for(int i= 0; i<results.length; i++)
-                                {
+                              // for(int i =0 ; i<=results.length; i++) {
+                              //   box.put(i, results);
 
-                                  box.add(results[i].label.toString());
-                                  print(results[i]);
-                                }
+                              // i++;
+                              // var mydetected = detectedItem(
+                              //
+                              //    friends: results
+                              //  );
+                              // print("j11111111111111111");
 
+                              // await box.add("farhan");
 
-                              if(results.isNotEmpty) {
+                              // listEmployees = box.values.toList();
+                              //    print("222222222222211111111111111111");
+                              //     print(box.get('dave'));
+                              // }s
+                              //----- ditemlist = box.values.toList();
+                              //
+                              //  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+                              // print(ditemlist);
+                              //
+                              // if(ditemlist.isEmpty){
+                              //
+                              //   for (int i = 0; i < results.length; i++) {
+                              //     await box.add(results[i].label);
+                              //   }
+                              // } else {
+                              //   for (int i = 0; i < results.length; i++) {
+                              //     for (int j = 0; j < ditemlist.length; j++) {
+                              //       if (results[i].label != ditemlist[j]) {
+                              //         print(
+                              //             "---------------------------------");
+                              //         print("notesame item");
+                              //         itemCheck = true;
+                              //       } else {
+                              //         print(
+                              //             "---------------------------------");
+                              //         print("same item");
+                              //       }
+                              //     }
+                              //     if (itemCheck == true) {
+                              //       print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                              //       await box.add(results[i].label);
+                              //     }
+                              //     itemCheck = false;
+                              //   }
+                              //--------- }
+
+                              //  Navigator.pop(context);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) =>  FlexiblePantry()),
+                              // );
+                              //       box.clear();
+                              // for(int i = 0; i < apiitemlist.length; i++) {
+                              //   if(apiitemlist[i].name == "Kiwi") {
+                              //     box.add("Kiwi");
+                              //   }
+                              //     }
+
+                              //                           print("lllllllllllll");
+                              // print(lablestring.length);
+                              for (int i = 0; i < results.length; i++) {
+                                /* for(int j = 0; j<apiitemlist.length; j++)
+                                    {
+
+                                      if(apiitemlist[j].name == results[i].label)
+                                        {
+                                          print("lllllllllllll");
+                                          // print(lablestring[i]);
+                                          // box. add("Kiwi");
+                                          // box.add(results[i].label);
+                                          // box.add(results[i].label.toString());
+                                          // itemCheck = true;
+                                        }
+                                    }
+                                  // if(itemCheck ==true){
+                                  //    box.add(lablestring[i]);
+                                  // }*/
+                                box.add(results[i].label.toString());
+                                print(results[i]);
+                              }
+
+                              if (results.isNotEmpty) {
                                 ExtendedNavigator.named("nestedNav")
                                     .push(NavigationViewRoutes.pantryView);
                               }
@@ -304,10 +408,14 @@ class _HomeViewState extends State<HomeView> {
                         Container(
                           width: 100,
                           child: TextButton(
-                              child: Text('Clear All'),
+                              child: Text(
+                                'Clear All',
+                                style: TextStyle(fontFamily: 'opensans'),
+                              ),
                               onPressed: () async {
                                 // TODO: clear ingredients
-
+                                //  model.detectedObjects = [];
+                                // model.notifyListeners();
                                 box.deleteFromDisk();
                               }),
                         ),
@@ -369,7 +477,18 @@ class StatsRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(left), Text(right)],
+        children: [
+          Text(
+            left,
+            style:
+                TextStyle(fontFamily: 'opensans', fontWeight: FontWeight.w600),
+          ),
+          Text(
+            right,
+            style:
+                TextStyle(fontFamily: 'opensans', fontWeight: FontWeight.w600),
+          )
+        ],
       ),
     );
   }

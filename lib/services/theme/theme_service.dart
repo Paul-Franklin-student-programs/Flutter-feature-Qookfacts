@@ -28,16 +28,18 @@ ThemeData qookitLight = ThemeData(
   fontFamily: 'kabel',
 
   tabBarTheme: TabBarTheme(
-      indicatorSize: TabBarIndicatorSize.label,
-      labelColor: Colors.amber,
-      unselectedLabelColor: Colors.black,
-      labelStyle: TextStyle(
-          color: Colors.amber,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'opensans'),),
+    indicatorSize: TabBarIndicatorSize.label,
+    labelColor: Colors.amber,
+    unselectedLabelColor: Colors.black,
+    labelStyle: TextStyle(
+        color: Colors.amber,
+        fontSize: 15,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'opensans'),
+  ),
 
-  indicatorColor: Colors.amber, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)),
+  indicatorColor: Colors.amber,
+  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)),
 
   /// Text
   /*textTheme: TextTheme(
@@ -69,17 +71,11 @@ ThemeData qookitLight = ThemeData(
   ),*/
 );
 
-TextStyle headerStyle = TextStyle(
-  fontFamily: 'georgi0a_bold',
-  fontSize: 32,
-  color: Colors.black
-);
+TextStyle headerStyle =
+    TextStyle(fontFamily: 'georgia_bold', fontSize: 32, color: Colors.black);
 
-TextStyle subheaderStyle = TextStyle(
-    fontFamily: 'opensans',
-    fontSize: 14,
-    color: Colors.black
-);
+TextStyle subheaderStyle =
+    TextStyle(fontFamily: 'opensans', fontSize: 14, color: Colors.black54);
 
 ThemeData qookitDark = ThemeData();
 

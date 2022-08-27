@@ -1,31 +1,74 @@
 import 'dart:io';
 
-//import 'package:firebase_ml_custom/firebase_ml_custom.dart';
+// import 'package:firebase_ml_custom/firebase_ml_custom.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 import 'package:observable_ish/observable_ish.dart';
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 
 /// https://github.com/am15h/tflite_flutter_plugin/issues/48
-@singleton
-class MlService with ReactiveServiceMixin{
 
-  MlService(){
+
+
+@singleton
+class MlService with ReactiveServiceMixin {
+
+ static var localModelPath;
+
+  MlService() {
     listenToReactiveValues([modelFile]);
   }
 
- RxValue<File> modelFile = RxValue<File>(File(""));
+  RxValue<File> modelFile = RxValue<File>(File(""));
+
+  static dynamic firebasemodeldownloder() {
+    FirebaseModelDownloader.instance
+        .getModel(
+            'tflitemodel',
+            FirebaseModelDownloadType.localModel,
+            FirebaseModelDownloadConditions(
+              iosAllowsCellularAccess: true,
+              iosAllowsBackgroundDownloading: true,
+              androidChargingRequired: true,
+              androidWifiRequired: true,
+              androidDeviceIdleRequired: true,
+            ))
+        .then((customModel) {
+      // Download complete. Depending on your app, you could enable the ML
+      // feature, or switch from the local model to the remote model, etc.
+
+      // The CustomModel object contains the local path of the model file,
+      // which you can use to instantiate a TensorFlow Lite interpreter.
+      localModelPath = customModel.file;
+
+      // ...
+    });
+  }
 
   /*FirebaseCustomRemoteModel get groceryModel {
     return FirebaseCustomRemoteModel('groceries-yolov4-tflite');
   }
 
   FirebaseModelDownloadConditions get conditions {
-    return FirebaseModelDownloadConditions(
-       *//* androidRequireWifi: false,
+<<<<<<< HEAD
+    return FirebaseModelDownloadConditions(*/
+
+
+/* androidRequireWifi: false,
         androidRequireDeviceIdle: true,
         androidRequireCharging: true,
         iosAllowCellularAccess: true,
-        iosAllowBackgroundDownloading: true*//*
+        iosAllowBackgroundDownloading: true*/
+
+/*
+=======
+    return FirebaseModelDownloadConditions(
+       */ /* androidRequireWifi: false,
+        androidRequireDeviceIdle: true,
+        androidRequireCharging: true,
+        iosAllowCellularAccess: true,
+        iosAllowBackgroundDownloading: true*/ /*
+>>>>>>> 7f2fd745eff6b77b82a50f02e0510a9004a4711f
     );
   }
 
