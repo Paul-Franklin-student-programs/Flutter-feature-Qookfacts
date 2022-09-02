@@ -26,6 +26,7 @@ Future<void> main() async {
   // unawaited(mlService.setupModel());
 
   MlService.firebasemodeldownloder();
+  MlService.downloadlabelfile();
 
   /// Initialize hive stuff
   await Hive.initFlutter();

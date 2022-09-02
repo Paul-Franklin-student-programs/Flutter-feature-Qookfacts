@@ -98,15 +98,7 @@ class _HomeViewState extends State<HomeView> {
           IconButton(
               icon: Icon(Icons.android),
               onPressed: () {
-                // Go to demo
-                //Navigator.of(context).pushNamed(CameraDemo.id);
-                /*   model.demo = !model.demo;
-                if (model.demo) {
-                  model.cameraController.dispose();
-                } else {
-                  model.initializeCamera(context);
-                }
-                model.notifyListeners();*/
+
               })
         ],
       ),
@@ -305,90 +297,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             // color: Colors.amber,
                             onPressed: () {
-                              // detectedItem(
-                              //
-                              //     friends: results
-                              // );
 
-                              // for(int i =0 ; i<=results.length; i++) {
-                              //   box.put(i, results);
-
-                              // i++;
-                              // var mydetected = detectedItem(
-                              //
-                              //    friends: results
-                              //  );
-                              // print("j11111111111111111");
-
-                              // await box.add("farhan");
-
-                              // listEmployees = box.values.toList();
-                              //    print("222222222222211111111111111111");
-                              //     print(box.get('dave'));
-                              // }s
-                              //----- ditemlist = box.values.toList();
-                              //
-                              //  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
-                              // print(ditemlist);
-                              //
-                              // if(ditemlist.isEmpty){
-                              //
-                              //   for (int i = 0; i < results.length; i++) {
-                              //     await box.add(results[i].label);
-                              //   }
-                              // } else {
-                              //   for (int i = 0; i < results.length; i++) {
-                              //     for (int j = 0; j < ditemlist.length; j++) {
-                              //       if (results[i].label != ditemlist[j]) {
-                              //         print(
-                              //             "---------------------------------");
-                              //         print("notesame item");
-                              //         itemCheck = true;
-                              //       } else {
-                              //         print(
-                              //             "---------------------------------");
-                              //         print("same item");
-                              //       }
-                              //     }
-                              //     if (itemCheck == true) {
-                              //       print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                              //       await box.add(results[i].label);
-                              //     }
-                              //     itemCheck = false;
-                              //   }
-                              //--------- }
-
-                              //  Navigator.pop(context);
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) =>  FlexiblePantry()),
-                              // );
-                              //       box.clear();
-                              // for(int i = 0; i < apiitemlist.length; i++) {
-                              //   if(apiitemlist[i].name == "Kiwi") {
-                              //     box.add("Kiwi");
-                              //   }
-                              //     }
-
-                              //                           print("lllllllllllll");
-                              // print(lablestring.length);
                               for (int i = 0; i < results.length; i++) {
-                                /* for(int j = 0; j<apiitemlist.length; j++)
-                                    {
 
-                                      if(apiitemlist[j].name == results[i].label)
-                                        {
-                                          print("lllllllllllll");
-                                          // print(lablestring[i]);
-                                          // box. add("Kiwi");
-                                          // box.add(results[i].label);
-                                          // box.add(results[i].label.toString());
-                                          // itemCheck = true;
-                                        }
-                                    }
-                                  // if(itemCheck ==true){
-                                  //    box.add(lablestring[i]);
-                                  // }*/
                                 box.add(results[i].label.toString());
                                 print(results[i]);
                               }

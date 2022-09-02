@@ -17,12 +17,13 @@ dependencies:
   double_back_to_close_app: 0.1.2
   email_validator: 0.1.4
   ffi: ^1.1.2
-  firebase_analytics: ^9.0.5
+  firebase_analytics: ^9.3.3
   firebase_auth: ^3.3.5
   firebase_auth_web: ^3.3.6
   firebase_core: ^1.21.1
   firebase_dynamic_links: ^4.0.4
   firebase_ml_model_downloader: ^0.1.1+6
+  firebase_storage: ^10.3.7
   flutter:
     sdk: flutter
   flutter_slidable: ^0.5.7
@@ -54,6 +55,7 @@ dependencies:
   google_ml_kit: ^0.12.0
 #  url_launcher: ^6.0.18
 #  video_player: ^1.0.1
+
 
 #  flutter_lwa: ^2.0.0
 #  sign_in_with_apple: ^3.3.0
@@ -92,6 +94,7 @@ flutter:
     - assets/groceries-yolov4-tiny-416-01-09-21.tflite
     - assets/groceries-yolov4-tiny-416-07-28-22.tflite
     - assets/groceries-yolov4-tiny-rot-416-08-07-22.tflite
+    - assets/groceries-yolov4-tiny-rot-416-08-28-22.tflite
 
   fonts:
     - family: kabel

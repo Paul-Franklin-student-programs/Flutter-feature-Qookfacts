@@ -1,37 +1,41 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 // import 'package:firebase_ml_custom/firebase_ml_custom.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 
 /// https://github.com/am15h/tflite_flutter_plugin/issues/48
-
-
+// var localModelPath;
 
 @singleton
 class MlService with ReactiveServiceMixin {
-
- static var localModelPath;
-
+  static var localModelPath;
   MlService() {
     listenToReactiveValues([modelFile]);
   }
 
   RxValue<File> modelFile = RxValue<File>(File(""));
+  static Reference storageRef = FirebaseStorage.instance.ref();
+  static String imageUrl;
+  static dynamic readdata;
 
   static dynamic firebasemodeldownloder() {
     FirebaseModelDownloader.instance
         .getModel(
-            'tflitemodel',
+            'tflitelatestmodel',
             FirebaseModelDownloadType.localModel,
             FirebaseModelDownloadConditions(
               iosAllowsCellularAccess: true,
-              iosAllowsBackgroundDownloading: true,
-              androidChargingRequired: true,
-              androidWifiRequired: true,
-              androidDeviceIdleRequired: true,
+              iosAllowsBackgroundDownloading: false,
+              androidChargingRequired: false,
+              androidWifiRequired: false,
+              androidDeviceIdleRequired: false,
             ))
         .then((customModel) {
       // Download complete. Depending on your app, you could enable the ML
@@ -39,10 +43,24 @@ class MlService with ReactiveServiceMixin {
 
       // The CustomModel object contains the local path of the model file,
       // which you can use to instantiate a TensorFlow Lite interpreter.
+      // localModelPath = customModel.file;
       localModelPath = customModel.file;
 
       // ...
     });
+  }
+
+  static dynamic downloadlabelfile() async {
+    final islandRef = storageRef.child("groceries.txt");
+
+    try {
+      final Uint8List data = await islandRef.getData();
+      print(data);
+      print(utf8.decode(data));
+
+      readdata = utf8.decode(data);
+    } on FirebaseException catch (e) {}
+
   }
 
   /*FirebaseCustomRemoteModel get groceryModel {
@@ -50,25 +68,12 @@ class MlService with ReactiveServiceMixin {
   }
 
   FirebaseModelDownloadConditions get conditions {
-<<<<<<< HEAD
-    return FirebaseModelDownloadConditions(*/
-
-
-/* androidRequireWifi: false,
-        androidRequireDeviceIdle: true,
-        androidRequireCharging: true,
-        iosAllowCellularAccess: true,
-        iosAllowBackgroundDownloading: true*/
-
-/*
-=======
     return FirebaseModelDownloadConditions(
        */ /* androidRequireWifi: false,
         androidRequireDeviceIdle: true,
         androidRequireCharging: true,
         iosAllowCellularAccess: true,
         iosAllowBackgroundDownloading: true*/ /*
->>>>>>> 7f2fd745eff6b77b82a50f02e0510a9004a4711f
     );
   }
 
