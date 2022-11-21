@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:isolate';
 import 'package:camera/camera.dart';
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart' as imgLib;
+import 'package:tflite_flutter/tflite_flutter.dart';
 import '../tflite/classifier.dart';
 import '../utils/image_utils.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+
 
 /// Manages separate Isolate instance for inference
 class IsolateUtils {
@@ -33,13 +34,12 @@ class IsolateUtils {
     await for (final IsolateData isolateData in port) {
       if (isolateData != null) {
         Classifier classifier = Classifier(
-            interpreter:
-                Interpreter.fromAddress(isolateData.interpreterAddress),
+            interpreter: Interpreter.fromAddress(isolateData.interpreterAddress),
             labels: isolateData.labels);
-        img.Image image =
+        imgLib.Image image =
             ImageUtils.convertCameraImage(isolateData.cameraImage);
         if (Platform.isAndroid) {
-          image = img.copyRotate(image, 90);
+          image = imgLib.copyRotate(image, 90);
         }
         Map<String, dynamic> results = classifier.predict(image);
         isolateData.responsePort.send(results);

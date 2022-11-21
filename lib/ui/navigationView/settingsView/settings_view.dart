@@ -24,15 +24,22 @@ class _SettingsViewState extends State<SettingsView> {
           backgroundColor: Colors.grey[200],
           appBar: AppBar(
               title: Text('SETTINGS',
-                  style: GoogleFonts.lato(
-                      fontSize: 14,
+                  style: TextStyle(
+                      fontFamily: 'opensans_bold',
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                      color: Colors.black)
+                  // GoogleFonts.lato(
+                  //     fontSize: 14,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: Colors.black)
+                  ),
               leading: IconButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
                   },
-                  icon: Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
+                  icon:
+                      Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent),
               centerTitle: true,
@@ -45,39 +52,53 @@ class _SettingsViewState extends State<SettingsView> {
                 color: Colors.white,
                 child: Center(
                     child: ListTile(
-                        title: Text(hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen'),
-                            style: headerStyle.copyWith(fontSize: 24)),
+                        title: Text(
+                            hiveService.userBox.get(UserService.displayName,
+                                defaultValue: 'Karen'),
+                            style: TextStyle(
+                                fontFamily: 'opensans',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 24)
+                            // headerStyle.copyWith(fontSize: 24)
+                            ),
                         subtitle: InkWell(
-                            onTap: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdateProfile())).then((value) {
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateProfile())).then((value) {
                                 setState(() {});
                               });
                             },
-                            child: Text('EDIT PROFILE')),
+                            child: Text(
+                              'EDIT PROFILE',
+                              style: TextStyle(fontFamily: 'lato_bold'),
+                            )),
                         leading: Container(
-                          width: 55,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            //shape: BoxShape.circle,
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: Colors.blue),
-                           /* image: DecorationImage(
+                            width: 55,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              //shape: BoxShape.circle,
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border.all(color: Colors.blue),
+                              /* image: DecorationImage(
                               image: NetworkImage(hiveService.userBox.get(UserService.profileImage, defaultValue: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')),
                               fit: BoxFit.cover,
                             ),*/
-                          )
-                        )))),
+                            ))))),
             SubSection(),
             SizedBox(height: 20),
             ListTile(
                 tileColor: Colors.white,
-                title: Text('LOGOUT', style: TextStyle(color: colorWarning)),
+                title: Text('LOGOUT',
+                    style: TextStyle(
+                        fontFamily: 'lato_bold', color: colorWarning)),
                 leading:
                     Icon(Icons.arrow_forward_ios, color: Colors.transparent),
                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: () {
-
                   authService.signOut(context);
                 }),
             SizedBox(height: 20),

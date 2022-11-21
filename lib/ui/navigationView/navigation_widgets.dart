@@ -34,25 +34,29 @@ OverlayEntry showFabActions(BuildContext context, NavigationViewModel model) {
             left: offset.dx - step,
             top: offset.dy - step / 2,
             child: fabOption(
-                size, 'pantry', 'assets/images/pantry_icon.svg', model,startDemo: 0),
+
+                size, 'pantry', 'assets/images/pantry_icon.svg', model,
+                startDemo: 0),
           ),
           Positioned(
             left: offset.dx - step / 2 + size.width / 4,
             top: offset.dy - step,
             child: fabOption(
-                size, 'recipe', 'assets/images/utensils_icon.svg', model,startDemo: 2),
+                size, 'recipe', 'assets/images/utensils_icon.svg', model,
+                startDemo: 2),
           ),
           Positioned(
             left: offset.dx + step / 2 - size.width / 4,
             top: offset.dy - step,
-            child:
-                fabOption(size, 'dish', 'assets/images/dish_icon.svg', model,startDemo: 1),
+            child: fabOption(size, 'dish', 'assets/images/dish_icon.svg', model,
+                startDemo: 1),
           ),
           Positioned(
             left: offset.dx + step,
             top: offset.dy - step / 2,
             child: fabOption(
-                size, 'receipt', 'assets/images/receipt_icon.svg', model,startDemo: 3),
+                size, 'receipt', 'assets/images/receipt_icon.svg', model,
+                startDemo: 3),
           ),
         ],
       ),
@@ -78,7 +82,8 @@ Widget cancelFab(NavigationViewModel model) {
 }
 
 Widget fabOption(
-    Size size, String label, String assetIcon, NavigationViewModel model, {int startDemo = 0}) {
+    Size size,String label, String assetIcon, NavigationViewModel model,
+    {int startDemo = 0}) {
   return Material(
     color: Colors.transparent,
     child: Builder(
@@ -96,14 +101,15 @@ Widget fabOption(
               model.updateOverlay(false);
               model.fabOverlay.remove();
 
-              ExtendedNavigator.named('nestedNav').push(NavigationViewRoutes.cameraView);
+              ExtendedNavigator.named('nestedNav')
+                  .push(NavigationViewRoutes.cameraView);
             },
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               label,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(fontFamily: 'opensans', color: Colors.white),
             ),
           ),
         ],

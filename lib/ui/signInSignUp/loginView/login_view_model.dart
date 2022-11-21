@@ -4,7 +4,7 @@ import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/bloc/user_bloc.dart';
 import 'package:qookit/services/services.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flutter_lwa_platform_interface/flutter_lwa_platform_interface.dart';
+// import 'package:flutter_lwa_platform_interface/flutter_lwa_platform_interface.dart';
 
 
 class LoginViewModel extends BaseViewModel {
@@ -17,7 +17,7 @@ class LoginViewModel extends BaseViewModel {
   bool confirmShowPassword = false;
   bool passwordVisible = false;
 
-  LwaAuthorizeResult lwaAuth;
+  // LwaAuthorizeResult lwaAuth;
 
   GlobalKey<ScaffoldState> scaffoldKey;
   var globalKey;
@@ -104,9 +104,12 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 
+
+
   ///login with Google and stored credential in firebase
   Future<void> loginWithGoogle(BuildContext context) async {
     String message = await authService.signInWithGoogle();
+
     /*await UserBloc().getUserData();
     await loginNavigation(message, context);*/
     if(message == 'Success'){
@@ -121,7 +124,7 @@ class LoginViewModel extends BaseViewModel {
 
   ///login with Facebook and stored credential in firebase
   Future<void> loginWithFacebook(BuildContext context) async {
-    String message = await authService.initiateFacebookLogin();
+    String message = 'test';//await authService.initiateFacebookLogin();
 
     if(message == 'Success'){
       await UserBloc().getUserData();
@@ -148,32 +151,32 @@ class LoginViewModel extends BaseViewModel {
 
   ///Registration and Sign in with amazon
   Future<void> loginWithAmazon(BuildContext context) async {
-    String message = await authService.signInWithAmazon(context);
+    // String message = await authService.signInWithAmazon(context);
     /*await UserBloc().getUserData();
     await loginNavigation(message, context);*/
-    if(message == 'Success'){
-      await UserBloc().getUserData();
-      await loginNavigation(message, context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-      ));
-    }
+    // if(message == 'Success'){
+    //   await UserBloc().getUserData();
+    //   await loginNavigation(message, context);
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text(message, textAlign: TextAlign.center),
+    //   ));
+    // }
   }
 
 
   Future<void> loginWithApple(BuildContext context) async {
-    String message = await authService.signInWithApple(context);
+    // String message = await authService.signInWithApple(context);
     /*await UserBloc().getUserData();
     await loginNavigation(message, context);*/
-    if(message == 'Success'){
-      await UserBloc().getUserData();
-      await loginNavigation(message, context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-      ));
-    }
+    // if(message == 'Success'){
+    //   await UserBloc().getUserData();
+    //   await loginNavigation(message, context);
+    // } else {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //     content: Text(message, textAlign: TextAlign.center),
+    //   ));
+    // }
   }
 
   Future<void> loginNavigation(String message, BuildContext context) async {

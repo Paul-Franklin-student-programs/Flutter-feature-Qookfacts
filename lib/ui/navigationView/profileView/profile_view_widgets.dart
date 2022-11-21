@@ -17,10 +17,18 @@ class OrderTile extends ViewModelWidget<ProfileViewModel> {
   @override
   Widget build(BuildContext context, model) {
     return ListTile(
-      title: Text('Item #$index'),
+      title: Text(
+        'Item #$index',
+        style: TextStyle(
+          fontFamily: 'opensans_bold',
+        ),
+      ),
       subtitle: Text(
         'ORDERED 9.24',
-        style: TextStyle(fontWeight: FontWeight.w300),
+        style: TextStyle(
+          fontWeight: FontWeight.w300,
+          fontFamily: 'opensans',
+        ),
       ),
       trailing: Icon(Icons.arrow_forward_ios),
     );
@@ -38,11 +46,7 @@ class FlexibleProfileBar extends ViewModelWidget<ProfileViewModel> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ProfileImage(),
-              ProfileInfo(),
-              SettingsIcon()
-            ],
+            children: [ProfileImage(), ProfileInfo(), SettingsIcon()],
           ),
         );
       },
@@ -63,12 +67,12 @@ class _SettingsIconState extends State<SettingsIcon> {
         'assets/images/settings_icon.svg',
         color: Colors.black,
       ),
-      onTap: (){
+      onTap: () {
         /*ExtendedNavigator.named('nestedNav').push(NavigationViewRoutes.settingsView);*/
-        Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(builder: (context) => SettingsView())).then((value){
-          setState(() {
-
-          });
+        Navigator.of(context, rootNavigator: true)
+            .push(MaterialPageRoute(builder: (context) => SettingsView()))
+            .then((value) {
+          setState(() {});
         });
         print('Click');
       },
@@ -87,16 +91,15 @@ class ProfileImage extends ViewModelWidget<ProfileViewModel> {
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-              //shape: BoxShape.circle,
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(color: Colors.blue),
+            //shape: BoxShape.circle,
+            color: Colors.amber,
+            borderRadius: BorderRadius.circular(50),
+            border: Border.all(color: Colors.blue),
             /*image: DecorationImage(
               image: NetworkImage(hiveService.userBox.get(UserService.profileImage, defaultValue: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png')),
               fit: BoxFit.cover,
             ),*/
           ),
-
         ),
       ),
     );
@@ -104,21 +107,20 @@ class ProfileImage extends ViewModelWidget<ProfileViewModel> {
 }
 
 class ProfileInfo extends ViewModelBuilderWidget<ProfileViewModel> {
-
   ProfileInfo();
 
   @override
   Widget builder(BuildContext context, ProfileViewModel model, Widget child) {
     return Expanded(
       child: LayoutBuilder(
-        builder:(context, constraints) =>  Container(
+        builder: (context, constraints) => Container(
           margin: EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if(constraints.heightConstraints().maxHeight > 70)FullName(),
+              if (constraints.heightConstraints().maxHeight > 70) FullName(),
               Preferences(constraints.maxWidth),
             ],
           ),
@@ -138,7 +140,7 @@ class FullName extends ViewModelWidget<ProfileViewModel> {
       child: Text(
         hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen'),
         style: headerStyle.copyWith(
-          fontSize: 24
+          fontSize: 4,
         ),
       ),
     );
@@ -164,7 +166,6 @@ class Preferences extends ViewModelWidget<ProfileViewModel> {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Chip(
         labelPadding: EdgeInsets.all(0),
-
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         label: Row(
@@ -173,13 +174,16 @@ class Preferences extends ViewModelWidget<ProfileViewModel> {
             ConstrainedBox(
               constraints: BoxConstraints(
                 minWidth: 20,
-                maxWidth: availWidth/4,
+                maxWidth: availWidth / 4,
               ),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
                   label,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(
+                      fontFamily: 'opensans',
+                      color: Colors.white,
+                      fontSize: 10),
                 ),
               ),
             ),

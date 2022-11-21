@@ -7,7 +7,8 @@ import 'forgot_password_components.dart';
 class ForgotPasswordView extends StatelessWidget {
   static const String id = 'forgot_password_screen';
 
-  static final GlobalKey<FormState> _forgotpasswordFormKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _forgotpasswordFormKey =
+      GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,9 @@ class ForgotPasswordView extends StatelessWidget {
         body: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration:  BoxDecoration(
-              image:  DecorationImage(
-                image:  ExactAssetImage('assets/images/forgotbg.png'),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: ExactAssetImage('assets/images/forgotbg.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -36,7 +37,8 @@ class ForgotPasswordView extends StatelessWidget {
                         margin: EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Colors.white.withAlpha(230),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0) //                 <--- border radius here
+                          borderRadius: BorderRadius.all(Radius.circular(
+                                  10.0) //                 <--- border radius here
                               ),
                         ),
                         child: Column(
@@ -72,7 +74,7 @@ class ForgotPasswordView extends StatelessWidget {
                                     color: Colors.black,
                                     fontSize: 23,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'sofia_bold',
+                                    fontFamily: 'lato_regular',
                                   ),
                                 ),
                                 SizedBox(
@@ -91,6 +93,7 @@ class ForgotPasswordView extends StatelessWidget {
                                       left: 20, right: 20, top: 10, bottom: 10),
                                   child: TextFormField(
                                     controller: model.txtEmailId,
+                                    style: TextStyle(fontFamily: 'opensans'),
                                     maxLength: 100,
                                     keyboardType: TextInputType.emailAddress,
                                     textInputAction: TextInputAction.done,
@@ -105,9 +108,13 @@ class ForgotPasswordView extends StatelessWidget {
                                       hintText: 'Enter Email ID',
                                       labelText: 'Email ID',
                                       counterText: '',
-                                      labelStyle:  TextStyle(
+
+                                      errorStyle:
+                                          TextStyle(fontFamily: 'lato_regular'),
+
+                                      labelStyle: TextStyle(
                                           fontFamily: 'opensans', fontSize: 14),
-                                      hintStyle:  TextStyle(
+                                      hintStyle: TextStyle(
                                           fontFamily: 'opensans', fontSize: 14),
                                     ),
                                   ),
@@ -115,8 +122,9 @@ class ForgotPasswordView extends StatelessWidget {
                                 SizedBox(
                                   height: 80,
                                 ),
-                                if(!model.emailSent)SendEmailButton(_forgotpasswordFormKey),
-                                if(model.emailSent) BackToLoginButton()
+                                if (!model.emailSent)
+                                  SendEmailButton(_forgotpasswordFormKey),
+                                if (model.emailSent) BackToLoginButton()
                               ],
                             ),
                             SizedBox(
@@ -136,7 +144,7 @@ class ForgotPasswordView extends StatelessWidget {
   String emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regex =  RegExp(pattern);
+    RegExp regex = RegExp(pattern);
     if (!regex.hasMatch(value)) {
       return 'Email format is invalid';
     } else {

@@ -6,7 +6,6 @@ import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.
 import 'package:stacked/stacked.dart';
 
 class DietPreferencesView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<DietPreferencesViewModel>.reactive(
@@ -67,9 +66,7 @@ Widget DietOption(String label, BuildContext context,
       decoration: BoxDecoration(
           color: box.containsKey(label) ? Colors.black : Colors.white,
           border: Border.all(
-              color: box.containsKey(label)
-                  ? Colors.black
-                  : Colors.grey)),
+              color: box.containsKey(label) ? Colors.black : Colors.grey)),
       child: Center(
         child: Text(
           label,
@@ -78,7 +75,7 @@ Widget DietOption(String label, BuildContext context,
             fontSize: 15,
             height: 1.1,
             fontWeight: FontWeight.w600,
-            fontFamily: 'sofia_bold',
+            fontFamily: 'opensans',
           ),
         ),
       ),

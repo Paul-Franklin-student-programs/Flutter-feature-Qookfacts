@@ -13,10 +13,11 @@ class ForgotPasswordButton extends ViewModelWidget<LoginViewModel> {
           margin: EdgeInsets.only(right: 20),
           child: InkWell(
             child: Container(
-              padding: EdgeInsets.only(top:16,bottom: 16),
+              padding: EdgeInsets.only(top: 16, bottom: 16),
               child: Text(
                 'Forgot Password?',
                 style: TextStyle(
+                  fontFamily: 'opensans',
                   shadows: [Shadow(color: Colors.black, offset: Offset(0, -8))],
                   color: Colors.transparent,
                   decoration: TextDecoration.underline,
@@ -48,9 +49,9 @@ class NoAccountRow extends ViewModelWidget<LoginViewModel> {
           child: Text(
             "Don't have an Account?",
             style: TextStyle(
-              color: Colors.black54,
+              color: Colors.black87,
               fontSize: 14,
-              fontWeight: FontWeight.w600,
+              // fontWeight: FontWeight.w600,
               fontFamily: 'opensans',
             ),
           ),
@@ -86,10 +87,14 @@ class NoAccountRow extends ViewModelWidget<LoginViewModel> {
 }
 
 class ThirdPartyIcons extends ViewModelWidget<LoginViewModel> {
-  ThirdParty amazon = ThirdParty(image: 'assets/images/amazone_icon.png', label: 'Amazon');
-  ThirdParty facebook = ThirdParty(image: 'assets/images/facebook_icon.png', label: 'Facebook');
-  ThirdParty google = ThirdParty(image: 'assets/images/google_icon.png', label: 'Google');
-  ThirdParty apple = ThirdParty(image: 'assets/images/apple_icon.png', label: 'Apple');
+  ThirdParty amazon =
+      ThirdParty(image: 'assets/images/amazone_icon.png', label: 'Amazon');
+  ThirdParty facebook =
+      ThirdParty(image: 'assets/images/facebook_icon.png', label: 'Facebook');
+  ThirdParty google =
+      ThirdParty(image: 'assets/images/google_icon.png', label: 'Google');
+  ThirdParty apple =
+      ThirdParty(image: 'assets/images/apple_icon.png', label: 'Apple');
 
   @override
   Widget build(BuildContext context, model) {

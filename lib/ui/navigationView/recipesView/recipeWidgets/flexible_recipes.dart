@@ -32,7 +32,6 @@ class FlexibleRecipesContent extends StatelessWidget {
       ],
     );
   }
-
 }
 
 class FlexibleRecipesHeader extends ViewModelWidget<RecipesViewModel> {
@@ -53,7 +52,10 @@ class FlexibleRecipesHeader extends ViewModelWidget<RecipesViewModel> {
         indicatorSize: TabBarIndicatorSize.label,
         indicatorColor: Colors.amber,
         labelColor: Colors.amber,
-        labelStyle: TextStyle(color: Colors.amber, fontWeight: FontWeight.w600),
+        labelStyle: TextStyle(
+            fontFamily: 'opensans_bold',
+            color: Colors.amber,
+            fontWeight: FontWeight.w600),
         unselectedLabelColor: Colors.black,
         tabs: [
           Tab(text: 'ALL'),

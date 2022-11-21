@@ -3,14 +3,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:qookit/models/itemlist.dart';
 import 'package:qookit/models/recipe.dart';
 import 'package:qookit/models/user.dart';
 import 'package:qookit/services/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../models/checkditem.dart';
+
 @singleton
 class UsersService {
   static const String endpoint = '/v1/user';
+  static const  String ditemendpoint = '/v1/ingredients';
 
   Future<UserRoot> getUserInfo(String userId) async {
     UserRoot thisUser;
@@ -29,9 +33,50 @@ class UsersService {
     );
 
     thisUser = UserRoot.fromJson(jsonDecode(userResponse.body));
+    print(".....................................//////..........................");
+    print(thisUser);
 
     return thisUser;
   }
+
+  Future<CheckDitem> detectedItem() async {
+    CheckDitem thisUser;
+    var uri = Uri.https(
+      elasticService.domain,
+      ditemendpoint,
+    );
+    var token = await authService.token;
+
+    var userResponse = await http.get(
+      uri,
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
+    );
+
+    print('response body:============ ' + userResponse.body);
+
+    thisUser = CheckDitem.fromJson(jsonDecode(userResponse.body));
+    print(".....................................//////..........................");
+
+    // for(int i = 0; i<thisUser.items.length; i++)
+    //   {
+    //     print(thisUser.items[i].name);
+    //     print(thisUser.items[i].imageUrl);
+    //   }
+    //
+    // print(thisUser.items[0].name);
+
+    return thisUser;
+  }
+
+
+
+
+
+
+
 
   Future<List<Recipe>> getUserRecipes(String userId) async {
     UserRoot thisUser;

@@ -1,4 +1,3 @@
-apple-golden-delicious
 apple-granny-smith
 apple-pink-lady
 apple-red-delicious
@@ -23,6 +22,7 @@ carrot-regular
 cereal
 cheese-mozzarella-pearls
 chips
+apple-golden-delicious
 chocolate
 coffee
 corn

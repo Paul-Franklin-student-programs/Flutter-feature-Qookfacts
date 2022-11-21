@@ -1,19 +1,67 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
-//import 'package:firebase_ml_custom/firebase_ml_custom.dart';
+// import 'package:firebase_ml_custom/firebase_ml_custom.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:observable_ish/observable_ish.dart';
+import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
 
 /// https://github.com/am15h/tflite_flutter_plugin/issues/48
-@singleton
-class MlService with ReactiveServiceMixin{
+// var localModelPath;
 
-  MlService(){
+@singleton
+class MlService with ReactiveServiceMixin {
+  static var localModelPath;
+  MlService() {
     listenToReactiveValues([modelFile]);
   }
 
- RxValue<File> modelFile = RxValue<File>(File(""));
+  RxValue<File> modelFile = RxValue<File>(File(""));
+  static Reference storageRef = FirebaseStorage.instance.ref();
+  static String imageUrl;
+  static dynamic readdata;
+
+  static dynamic firebasemodeldownloder() {
+    FirebaseModelDownloader.instance
+        .getModel(
+            'tflitelatestmodel',
+            FirebaseModelDownloadType.localModel,
+            FirebaseModelDownloadConditions(
+              iosAllowsCellularAccess: true,
+              iosAllowsBackgroundDownloading: false,
+              androidChargingRequired: false,
+              androidWifiRequired: false,
+              androidDeviceIdleRequired: false,
+            ))
+        .then((customModel) {
+      // Download complete. Depending on your app, you could enable the ML
+      // feature, or switch from the local model to the remote model, etc.
+
+      // The CustomModel object contains the local path of the model file,
+      // which you can use to instantiate a TensorFlow Lite interpreter.
+      // localModelPath = customModel.file;
+      localModelPath = customModel.file;
+
+      // ...
+    });
+  }
+
+  static dynamic downloadlabelfile() async {
+    final islandRef = storageRef.child("groceries.txt");
+
+    try {
+      final Uint8List data = await islandRef.getData();
+      print(data);
+      print(utf8.decode(data));
+
+      readdata = utf8.decode(data);
+    } on FirebaseException catch (e) {}
+
+  }
 
   /*FirebaseCustomRemoteModel get groceryModel {
     return FirebaseCustomRemoteModel('groceries-yolov4-tflite');
@@ -21,11 +69,11 @@ class MlService with ReactiveServiceMixin{
 
   FirebaseModelDownloadConditions get conditions {
     return FirebaseModelDownloadConditions(
-       *//* androidRequireWifi: false,
+       */ /* androidRequireWifi: false,
         androidRequireDeviceIdle: true,
         androidRequireCharging: true,
         iosAllowCellularAccess: true,
-        iosAllowBackgroundDownloading: true*//*
+        iosAllowBackgroundDownloading: true*/ /*
     );
   }
 

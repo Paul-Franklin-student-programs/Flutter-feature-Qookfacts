@@ -18,18 +18,28 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
                 Icon(Icons.shopping_cart_outlined),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'ITEMS YOU NEED',
-                    style: GoogleFonts.openSans(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
+                  child: Text('ITEMS YOU NEED',
+                      style: TextStyle(
+                          fontFamily: 'lato_bold',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15)
+
+                      // GoogleFonts.openSans(
+                      //     fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
                 ),
               ],
             ),
             trailing: TextButton(
-              child: Text(
-                'SELECT ALL',
-                style: GoogleFonts.openSans(fontWeight: FontWeight.w300, color: Colors.black),
-              ),
+              child: Text('SELECT ALL',
+                  style: TextStyle(
+                      fontFamily: 'lato_regular',
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black)
+
+                  //  GoogleFonts.openSans(
+                  //     fontWeight: FontWeight.w300, color: Colors.black),
+                  ),
               onPressed: () {
                 model.addAllNeeded();
               },
@@ -40,8 +50,12 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(ing.quantity ?? '', style: GoogleFonts.openSans(fontSize: 15)),
-                  Text(ing.unit ?? '', style: GoogleFonts.openSans(fontSize: 15)),
+                  Text(ing.quantity ?? '',
+                      style: GoogleFonts.openSans(fontSize: 15)),
+                  Text(ing.unit ?? '',
+                      style: GoogleFonts.openSans(
+                        fontSize: 15,
+                      )),
                 ],
               ),
               onTap: () {
@@ -49,15 +63,19 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
               },
               title: Text(
                 ing.text,
-                style: GoogleFonts.openSans(fontSize: 15),
+                style: GoogleFonts.openSans(
+                  fontSize: 15,
+                ),
               ),
               trailing: IconButton(
                 onPressed: () {
                   model.toggleItem(ing);
                 },
                 icon: !model.added.contains(ing.text)
-                    ? SvgPicture.asset('assets/images/circle_checkbox_empty.svg')
-                    : SvgPicture.asset('assets/images/circle_checkbox_checked.svg'),
+                    ? SvgPicture.asset(
+                        'assets/images/circle_checkbox_empty.svg')
+                    : SvgPicture.asset(
+                        'assets/images/circle_checkbox_checked.svg'),
               ),
             ),
           ListTile(
@@ -67,18 +85,32 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
                 Icon(Icons.fastfood_outlined),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'IN YOUR PANTRY',
-                    style: GoogleFonts.openSans(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
+                  child: Text('IN YOUR PANTRY',
+                      style: TextStyle(
+                          fontFamily: 'lato_bold',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15)
+
+                      //  GoogleFonts.openSans(
+                      //     fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
                 ),
               ],
             ),
             trailing: TextButton(
-              child: Text(
-                'RESTOCK ALL',
-                style: GoogleFonts.openSans(fontSize: 13, fontWeight: FontWeight.w300, color: Colors.black),
-              ),
+              child: Text('RESTOCK ALL',
+                  style: TextStyle(
+                      fontFamily: 'lato_regular',
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                      fontSize: 13)
+
+                  //  GoogleFonts.openSans(
+                  //     fontSize: 13,
+                  //     fontWeight: FontWeight.w300,
+                  //     color: Colors.black
+                  //     ),
+                  ),
               onPressed: () {
                 model.addAllPantry();
               },
@@ -88,28 +120,35 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
             ListTile(
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text(ing.quantity.toString(),
-                    style: GoogleFonts.openSans(
-                        fontSize: 15
-                    )), Text(ing.unit,
-                    style: GoogleFonts.openSans(
-                        fontSize: 15
-                    ))],
+                children: [
+                  Text(ing.quantity.toString(),
+                      style: TextStyle(
+                          fontFamily: 'lato_bold',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15.0)),
+                  Text(ing.unit,
+                      style: TextStyle(
+                          fontFamily: 'lato_bold',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15.0))
+                ],
               ),
               onTap: () {
                 model.toggleItem(ing);
               },
               title: Text(ing.text,
                   style: GoogleFonts.openSans(
-                      fontSize: 15
+                    fontSize: 15,
                   )),
               trailing: IconButton(
                 onPressed: () {
                   model.toggleItem(ing);
                 },
                 icon: !model.added.contains(ing.text)
-                    ? SvgPicture.asset('assets/images/circle_checkbox_empty.svg')
-                    : SvgPicture.asset('assets/images/circle_checkbox_checked.svg'),
+                    ? SvgPicture.asset(
+                        'assets/images/circle_checkbox_empty.svg')
+                    : SvgPicture.asset(
+                        'assets/images/circle_checkbox_checked.svg'),
               ),
             ),
         ],
@@ -119,17 +158,61 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          return ListTile(
-            leading: Column(
+          return Padding(
+            padding: const EdgeInsets.only(left: 17.0, right: 20.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  index.toString(),
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 28),
+                Container(
+                  width: 28.0,
+                  //color: Colors.cyan,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      '${index + 1}',
+                      style: TextStyle(
+                          fontFamily: 'georgia_bold',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 23),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(12.0),
+                ),
+                Flexible(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Text(
+                            model.instructions[index],
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'opensans',
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ]),
                 ),
               ],
             ),
-            title: Text(model.instructions[index]),
           );
+
+          //     ListTile(
+          //   leading: Text(
+          //     '${index + 1}',
+          //     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 28),
+          //   ),
+          //   title: Text(
+          //     model.instructions[index],
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontFamily: 'opensans',
+          //     ),
+          //   ),
+          // );
         },
         separatorBuilder: (context, index) {
           return Divider();

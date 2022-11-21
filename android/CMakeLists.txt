@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4.1)  # for example
+cmake_minimum_required(VERSION 3.7.1)  # for example
 add_library( convertImage
     # Sets the library as a shared library.
     SHARED

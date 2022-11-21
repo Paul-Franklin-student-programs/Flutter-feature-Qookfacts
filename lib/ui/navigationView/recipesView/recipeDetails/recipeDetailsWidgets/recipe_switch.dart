@@ -10,7 +10,9 @@ class RecipeSwitch extends ViewModelWidget<RecipeDetailsViewModel> {
         width: 400,
         height: 40,
         margin: EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), border: Border.all(color: Colors.black, width: 2)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(color: Colors.black, width: 2)),
         child: Stack(
           children: [
             AnimatedPositioned(
@@ -42,11 +44,16 @@ class RecipeSwitch extends ViewModelWidget<RecipeDetailsViewModel> {
                         child: Center(
                           child: AnimatedDefaultTextStyle(
                             style: GoogleFonts.openSans(
-                                color: model.selectedTab == 'ingredients' ? Colors.white : Colors.black,
-                                fontWeight: model.selectedTab == 'ingredients' ? FontWeight.w600 : FontWeight.w400),
+                                color: model.selectedTab == 'ingredients'
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: model.selectedTab == 'ingredients'
+                                    ? FontWeight.w600
+                                    : FontWeight.w400),
                             duration: kThemeAnimationDuration,
                             child: Text(
-                              'Ingredients',
+                              'Ingredients'.toUpperCase(),
+                              style: TextStyle(fontSize: 15.0,fontFamily: 'lato_bold'),
                             ),
                           ),
                         ),
@@ -67,10 +74,15 @@ class RecipeSwitch extends ViewModelWidget<RecipeDetailsViewModel> {
                           child: AnimatedDefaultTextStyle(
                             duration: kThemeAnimationDuration,
                             style: GoogleFonts.openSans(
-                                color: model.selectedTab == 'instructions' ? Colors.white : Colors.black,
-                                fontWeight: model.selectedTab == 'instructions' ? FontWeight.w600 : FontWeight.w400),
+                                color: model.selectedTab == 'instructions'
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontWeight: model.selectedTab == 'instructions'
+                                    ? FontWeight.w600
+                                    : FontWeight.w400),
                             child: Text(
-                              'Instructions',
+                              'Instructions'.toUpperCase(),
+                              style: TextStyle(fontSize: 15.0,fontFamily: 'lato_bold'),
                             ),
                           ),
                         ),

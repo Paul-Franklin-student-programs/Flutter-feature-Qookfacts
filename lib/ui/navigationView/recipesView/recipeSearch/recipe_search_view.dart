@@ -16,7 +16,8 @@ class RecipeSearchView extends StatelessWidget {
     return ViewModelBuilder<RecipeSearchViewModel>.reactive(
         viewModelBuilder: () => RecipeSearchViewModel(),
         onModelReady: (model) {
-          RecipeSearchViewArguments arg = ModalRoute.of(context).settings.arguments;
+          RecipeSearchViewArguments arg =
+              ModalRoute.of(context).settings.arguments;
           model.initializeModel(arg?.searchTerm);
         },
         builder: (context, model, child) {
@@ -35,8 +36,12 @@ class RecipeSearchView extends StatelessWidget {
                     ),
                     SliverGrid(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, crossAxisSpacing: 4, mainAxisSpacing: 4, childAspectRatio: .9),
-                        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 4,
+                            mainAxisSpacing: 4,
+                            childAspectRatio: .9),
+                        delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index) {
                           return RecipeCard(
                             recipe: model.data[index],
                           );
@@ -50,9 +55,16 @@ class RecipeSearchView extends StatelessWidget {
                   builder: (context, scrollController) {
                     return Container(
                       decoration: BoxDecoration(
-                          boxShadow: [BoxShadow(color: Colors.black45, offset: Offset(1, 1), blurRadius: 2)],
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black45,
+                                offset: Offset(1, 1),
+                                blurRadius: 2)
+                          ],
                           color: Colors.white,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8))),
                       child: ListView(
                         shrinkWrap: true,
                         padding: EdgeInsets.all(8),
@@ -62,7 +74,9 @@ class RecipeSearchView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(8)),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(8)),
                                 child: Container(
                                   height: 10,
                                   width: 50,
@@ -76,6 +90,7 @@ class RecipeSearchView extends StatelessWidget {
                               child: Text(
                                 'Filter',
                                 style: TextStyle(
+                                  fontFamily: 'georgia_bold',
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
@@ -95,12 +110,18 @@ class RecipeSearchView extends StatelessWidget {
                                   crossAxisCount: 2,
                                   childAspectRatio: 4,
                                   children: [
-                                    for (String filter in group.filters) Row(
-                                      children: [
-                                        Checkbox(value: false, onChanged: null),
-                                        Text(filter),
-                                      ],
-                                    ),
+                                    for (String filter in group.filters)
+                                      Row(
+                                        children: [
+                                          Checkbox(
+                                              value: false, onChanged: null),
+                                          Text(
+                                            filter,
+                                            style: TextStyle(
+                                                fontFamily: 'opensans'),
+                                          ),
+                                        ],
+                                      ),
                                   ],
                                 )
                               ],

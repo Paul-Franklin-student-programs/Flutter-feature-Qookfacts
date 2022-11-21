@@ -7,7 +7,6 @@ import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginView extends StatelessWidget {
-
   static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
   String fullName = '';
@@ -27,10 +26,10 @@ class LoginView extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: ExactAssetImage('assets/images/loginbg.png'),
-                    fit: BoxFit.cover,
-                  )),
+                    image: DecorationImage(
+                  image: ExactAssetImage('assets/images/loginbg.png'),
+                  fit: BoxFit.cover,
+                )),
                 child: Container()),
             Column(
               children: [
@@ -63,7 +62,8 @@ class LoginView extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: 'sofia_bold',
+                                      fontFamily: 'georgia_bold',
+                                      // fontFamily: 'SquarePeg-Regular',
                                     ),
                                   ),
                                 ],
@@ -73,7 +73,7 @@ class LoginView extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 15,
-                                    fontFamily: 'opensans',
+                                    fontFamily: 'opemsans',
                                   )),
                               SizedBox(height: 20),
                               ThirdPartyIcons(),
@@ -83,7 +83,7 @@ class LoginView extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
-                                  fontFamily: 'opensans',
+                                  fontFamily: 'opemsans',
                                 ),
                               ),
                               SizedBox(
@@ -113,6 +113,11 @@ class LoginView extends StatelessWidget {
                                         bottom: 10),
                                     child: TextFormField(
                                       controller: model.txtEmailId,
+                                      style: TextStyle(
+                                        fontFamily: 'opensans',
+                                      ),
+                                      textCapitalization:
+                                          TextCapitalization.sentences,
                                       maxLength: 100,
                                       keyboardType: TextInputType.emailAddress,
                                       textInputAction: TextInputAction.next,
@@ -132,6 +137,8 @@ class LoginView extends StatelessWidget {
                                         hintText: 'Enter Email ID',
                                         labelText: 'Email ID',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -152,6 +159,7 @@ class LoginView extends StatelessWidget {
                                         bottom: 10),
                                     child: TextFormField(
                                       controller: model.txtPassword,
+                                      style: TextStyle(fontFamily: 'opensans'),
                                       maxLength: 20,
                                       obscureText: !model.passwordVisible,
                                       textInputAction: TextInputAction.done,
@@ -176,6 +184,8 @@ class LoginView extends StatelessWidget {
                                         hintText: 'Enter Password',
                                         labelText: 'Password',
                                         counterText: '',
+                                        errorStyle: TextStyle(
+                                            fontFamily: 'lato_regular'),
                                         labelStyle: TextStyle(
                                             fontFamily: 'opensans',
                                             fontSize: 14),
@@ -195,7 +205,8 @@ class LoginView extends StatelessWidget {
                                       text: 'LOG IN',
                                       color: colorTheme,
                                       onPressed: () {
-                                        if (_loginFormKey.currentState.validate()) {
+                                        if (_loginFormKey.currentState
+                                            .validate()) {
                                           model.loginWithEmail(context);
                                         }
                                       },

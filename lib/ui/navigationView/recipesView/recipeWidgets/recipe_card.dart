@@ -7,17 +7,18 @@ import 'package:qookit/ui/navigationView/recipesView/recipeWidgets/recipe_image.
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:stacked/stacked.dart';
 
-
 class RecipeCard extends StatelessWidget {
   // TODO: Add dimension parameters
   final Recipe recipe;
   final bool showTitle;
 
-  const RecipeCard({Key key, this.recipe, this.showTitle = true}) : super(key: key);
+  const RecipeCard({Key key, this.recipe, this.showTitle = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var containsImage = (recipe.sourceDetail != null && recipe.sourceDetail.imageUrls.isNotEmpty);
+    var containsImage = (recipe.sourceDetail != null &&
+        recipe.sourceDetail.imageUrls.isNotEmpty);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -32,7 +33,8 @@ class RecipeCard extends StatelessWidget {
           child: Stack(
             children: [
               RecipeImage(
-                imageUrl: containsImage ? recipe.sourceDetail.imageUrls.first : null,
+                imageUrl:
+                    containsImage ? recipe.sourceDetail.imageUrls.first : null,
               ),
               Positioned(
                   bottom: 8,
@@ -63,14 +65,17 @@ class RecipeCard extends StatelessWidget {
         if (showTitle)
           Container(
             width: Dimensions.recipeCardTitleWidth,
-            child: Text(
-              recipe.title,
-              textAlign: TextAlign.left,
-              maxLines: 2,
-              style: subheaderStyle.copyWith(
-                fontSize: 15
-              ),
-            ),
+            child: Text(recipe.title,
+                textAlign: TextAlign.left,
+                maxLines: 2,
+                style: TextStyle(
+                    fontFamily: 'opensans',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14)
+                //  subheaderStyle.copyWith(
+                //   fontSize: 15
+                // ),
+                ),
           )
       ],
     );

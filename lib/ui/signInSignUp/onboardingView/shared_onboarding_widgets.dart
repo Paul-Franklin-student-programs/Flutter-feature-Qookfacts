@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:qookit/app/theme/colors.dart';
 import 'package:qookit/models/location.dart';
@@ -47,7 +46,7 @@ class BackgroundImage extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
-                    fontFamily: 'sofia_bold',
+                    fontFamily: 'georgia_bold',
                   ),
                 ),
               ),
@@ -58,12 +57,11 @@ class BackgroundImage extends StatelessWidget {
       ],
     );
   }
-
 }
 
 Widget OnboardingTitle(String title) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 30,vertical: 24),
+    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 24),
     child: Row(
       children: [
         Flexible(
@@ -73,7 +71,7 @@ Widget OnboardingTitle(String title) {
               color: Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.w600,
-              fontFamily: 'sofia_bold',
+              fontFamily: 'lato_bold',
             ),
           ),
         ),
@@ -84,11 +82,12 @@ Widget OnboardingTitle(String title) {
 
 Widget OnboardingSubtitle(String subtitle) {
   return Padding(
-    padding: EdgeInsets.only(left: 30,right: 30,bottom: 8),
+    padding: EdgeInsets.only(left: 30, right: 30, bottom: 8),
     child: Text(
       subtitle,
       textAlign: TextAlign.justify,
       style: TextStyle(
+        fontFamily: 'opensans',
         color: Colors.black,
         fontSize: 13,
       ),
@@ -111,11 +110,11 @@ class OnboardingButtons extends StatelessWidget {
         text: !last ? 'NEXT' : 'SAVE MY PREFERENCES',
         color: colorTheme,
         onPressed: () async {
-          if(!last){
+          if (!last) {
             await ExtendedNavigator.named('topNav').push(nextRoute);
-          } else{
+          } else {
             await hiveService.userBox.put(UserService.finishedOnboarding, true);
-            //usersService.addUserToElastic();
+            usersService.addUserToElastic();
             await usersService.addUserToElastic(
               addUser: UserRoot(
                 displayName: 'empty',
@@ -129,13 +128,13 @@ class OnboardingButtons extends StatelessWidget {
                   email: authService.user.email,
                   firstName: 'empty',
                   lastName: 'empty',
-                  fullName: 'empty' ' '  'empty',
+                  fullName: 'empty' ' ' 'empty',
                   aboutMe: 'Hello',
                   homeUrl: '',
                   location: Location(
                     city: 'empty',
                     country: 'empty',
-                    gps: 'empty',
+                    gps: 'null',
                     ipAddr: 'empty',
                     state: 'empty',
                     zip: 'empty',
@@ -148,9 +147,9 @@ class OnboardingButtons extends StatelessWidget {
                 pantryItems: [],
               ),
             );
-           await ExtendedNavigator.named('topNav').pushAndRemoveUntil(nextRoute, (route) => false); // Go to first screen
+            await ExtendedNavigator.named('topNav').pushAndRemoveUntil(
+                nextRoute, (route) => false); // Go to first screen
           }
-
         },
       ),
       SizedBox(
@@ -212,7 +211,7 @@ class BlockButtonWidget extends StatelessWidget {
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'opensans',
                   ),
                 ),
               ),

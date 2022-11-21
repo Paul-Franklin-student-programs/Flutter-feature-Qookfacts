@@ -64,13 +64,24 @@ class _ProfileViewState extends State<ProfileView> {
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    if (constraints.heightConstraints().maxHeight >70)
+                                    if (constraints
+                                            .heightConstraints()
+                                            .maxHeight >
+                                        70)
                                       Flexible(
-                                        child: Text(
-                                          hiveService.userBox.get(UserService.displayName, defaultValue: 'Karen'),
-                                          style: headerStyle.copyWith(
-                                              fontSize: 24
-                                          ))),
+                                          child: Text(
+                                              hiveService.userBox.get(
+                                                  UserService.displayName,
+                                                  defaultValue: 'Karen'),
+                                              style: TextStyle(
+                                                  fontFamily: 'opensans',
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 24)
+
+                                              // headerStyle.copyWith(
+
+                                              //     fontSize: 24)
+                                              )),
                                     Preferences(constraints.maxWidth),
                                   ],
                                 ),
@@ -79,11 +90,13 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           InkWell(
                             child: SvgPicture.asset(
-                              'assets/images/settings_icon.svg',
-                              color: Colors.black),
+                                'assets/images/settings_icon.svg',
+                                color: Colors.black),
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true).push(
-                                  MaterialPageRoute(builder: (context) => SettingsView())).then((value) {
+                              Navigator.of(context, rootNavigator: true)
+                                  .push(MaterialPageRoute(
+                                      builder: (context) => SettingsView()))
+                                  .then((value) {
                                 setState(() {
                                   UserBloc().getUserData();
                                   print('setting click');
