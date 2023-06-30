@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:qookit/models/itemlist.dart';
 import 'package:qookit/models/recipe.dart';
 import 'package:qookit/models/user.dart';
 import 'package:qookit/services/services.dart';
@@ -33,7 +31,7 @@ class UsersService {
     );
 
     thisUser = UserRoot.fromJson(jsonDecode(userResponse.body));
-    print(".....................................//////..........................");
+    print('.....................................//////..........................');
     print(thisUser);
 
     return thisUser;
@@ -58,7 +56,7 @@ class UsersService {
     print('response body:============ ' + userResponse.body);
 
     thisUser = CheckDitem.fromJson(jsonDecode(userResponse.body));
-    print(".....................................//////..........................");
+    print('.....................................//////..........................');
 
     // for(int i = 0; i<thisUser.items.length; i++)
     //   {
@@ -126,8 +124,8 @@ class UsersService {
     }
   };*/
 
-  Future<void> addUserToElastic({@required UserRoot addUser}) async {
-    UserRoot thisUser;
+  Future<UserRoot> addUserToElastic({required UserRoot addUser}) async {
+    UserRoot thisUser = UserRoot.empty();
     /*UserRoot testUser = UserRoot(
       displayName: 'test',
       userName: 'testUser',

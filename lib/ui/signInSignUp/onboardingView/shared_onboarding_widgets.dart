@@ -111,10 +111,10 @@ class OnboardingButtons extends StatelessWidget {
         color: colorTheme,
         onPressed: () async {
           if (!last) {
-            await ExtendedNavigator.named('topNav').push(nextRoute);
+            await ExtendedNavigator.named('topNav')?.push(nextRoute);
           } else {
             await hiveService.userBox.put(UserService.finishedOnboarding, true);
-            usersService.addUserToElastic();
+            await usersService.addUserToElastic(addUser: UserRoot.empty());
             await usersService.addUserToElastic(
               addUser: UserRoot(
                 displayName: 'empty',
@@ -125,7 +125,7 @@ class OnboardingButtons extends StatelessWidget {
                   recipe: [],
                 ),
                 personal: Personal(
-                  email: authService.user.email,
+                  email: authService.user!.email ?? '',
                   firstName: 'empty',
                   lastName: 'empty',
                   fullName: 'empty' ' ' 'empty',
@@ -147,7 +147,7 @@ class OnboardingButtons extends StatelessWidget {
                 pantryItems: [],
               ),
             );
-            await ExtendedNavigator.named('topNav').pushAndRemoveUntil(
+            await ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(
                 nextRoute, (route) => false); // Go to first screen
           }
         },
@@ -169,7 +169,7 @@ class OnboardingButtons extends StatelessWidget {
             ),
             onTap: () {
               //navigateToLoginPage(context);
-              ExtendedNavigator.named('topNav').push(nextRoute);
+              ExtendedNavigator.named('topNav')?.push(nextRoute);
             },
           ),
         ),
@@ -179,10 +179,10 @@ class OnboardingButtons extends StatelessWidget {
 
 class BlockButtonWidget extends StatelessWidget {
   const BlockButtonWidget(
-      {Key key,
-      @required this.color,
-      @required this.text,
-      @required this.onPressed})
+      {Key? key,
+      required this.color,
+      required this.text,
+      required this.onPressed})
       : super(key: key);
 
   final Color color;

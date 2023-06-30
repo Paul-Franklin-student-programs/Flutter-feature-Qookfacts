@@ -14,10 +14,10 @@ class RecipeGroup extends StatelessWidget {
   final List<Recipe> recipes;
 
   const RecipeGroup({
-    Key key,
-    @required this.title,
-    @required this.subtitle,
-    @required this.recipes,
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.recipes,
   }) : super(key: key);
 
   @override

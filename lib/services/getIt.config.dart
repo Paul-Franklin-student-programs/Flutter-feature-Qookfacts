@@ -4,6 +4,11 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_lambdas
+// ignore_for_file: lines_longer_than_80_chars
+// coverage:ignore-file
+
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -18,13 +23,21 @@ import 'settings/settings_service.dart' as _i10;
 import 'system/hive_service.dart' as _i5;
 import 'system/system_service.dart' as _i11;
 import 'theme/theme_service.dart' as _i12;
-import 'user/user_service.dart' as _i13; // ignore_for_file: unnecessary_lambdas
+import 'user/user_service.dart' as _i13;
 
+// ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
-/// initializes the registration of provided dependencies inside of [GetIt]
-_i1.GetIt $initGetIt(_i1.GetIt get,
-    {String environment, _i2.EnvironmentFilter environmentFilter}) {
-  final gh = _i2.GetItHelper(get, environment, environmentFilter);
+// initializes the registration of main-scope dependencies inside of GetIt
+_i1.GetIt $initGetIt(
+  _i1.GetIt getIt, {
+  String? environment,
+  _i2.EnvironmentFilter? environmentFilter,
+}) {
+  final gh = _i2.GetItHelper(
+    getIt,
+    environment,
+    environmentFilter,
+  );
   gh.singleton<_i3.AuthService>(_i3.AuthService());
   gh.factory<_i4.ElasticService>(() => _i4.ElasticService());
   gh.singleton<_i5.HiveService>(_i5.HiveService());
@@ -37,5 +50,5 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i12.ThemeService>(() => _i12.ThemeService());
   gh.singleton<_i13.UserService>(_i13.UserService());
   gh.singleton<_i14.UsersService>(_i14.UsersService());
-  return get;
+  return getIt;
 }

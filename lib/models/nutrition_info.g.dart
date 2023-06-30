@@ -6,34 +6,32 @@ part of 'nutrition_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NutritionInfo _$NutritionInfoFromJson(Map<String, dynamic> json) {
-  return NutritionInfo()
-    ..caloriesFromFat = json['caloriesFromFat'] as int
-    ..cholesterol = json['cholesterol'] as int
-    ..cholesterolPct = json['cholesterolPct'] as int
-    ..dietaryFiber = json['dietaryFiber'] as int
-    ..dietaryFiberPct = json['dietaryFiberPct'] as int
-    ..dietLabels =
-        (json['dietLabels'] as List)?.map((e) => e as String)?.toList()
-    ..healthLabels =
-        (json['healthLabels'] as List)?.map((e) => e as String)?.toList()
-    ..monoFat = json['monoFat'] as int
-    ..polyFat = json['polyFat'] as int
-    ..potassium = json['potassium'] as int
-    ..potassiumPct = json['potassiumPct'] as int
-    ..protein = json['protein'] as int
-    ..proteinPct = json['proteinPct'] as int
-    ..singularYieldUnit = json['singularYieldUnit'] as String
-    ..sodium = json['sodium'] as int
-    ..sodiumPct = json['sodiumPct'] as int
-    ..sugar = json['sugar'] as int
-    ..totalCalories = json['totalCalories'] as int
-    ..totalCarbs = json['totalCarbs'] as int
-    ..totalCarbsPct = json['totalCarbsPct'] as int
-    ..totalFat = json['totalFat'] as int
-    ..totalFatPct = json['totalFatPct'] as int
-    ..transFat = json['transFat'] as int;
-}
+NutritionInfo _$NutritionInfoFromJson(Map<String, dynamic> json) =>
+    NutritionInfo(
+      json['caloriesFromFat'] as int,
+      json['cholesterol'] as int,
+      json['cholesterolPct'] as int,
+      json['dietaryFiber'] as int,
+      json['dietaryFiberPct'] as int,
+      (json['dietLabels'] as List<dynamic>).map((e) => e as String).toList(),
+      (json['healthLabels'] as List<dynamic>).map((e) => e as String).toList(),
+      json['monoFat'] as int,
+      json['polyFat'] as int,
+      json['potassium'] as int,
+      json['potassiumPct'] as int,
+      json['protein'] as int,
+      json['proteinPct'] as int,
+      json['singularYieldUnit'] as String,
+      json['sodium'] as int,
+      json['sodiumPct'] as int,
+      json['sugar'] as int,
+      json['totalCalories'] as int,
+      json['totalCarbs'] as int,
+      json['totalCarbsPct'] as int,
+      json['totalFat'] as int,
+      json['totalFatPct'] as int,
+      json['transFat'] as int,
+    );
 
 Map<String, dynamic> _$NutritionInfoToJson(NutritionInfo instance) =>
     <String, dynamic>{

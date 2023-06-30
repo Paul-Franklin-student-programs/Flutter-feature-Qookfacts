@@ -19,7 +19,7 @@ class FavoritesView extends StatelessWidget {
             return Center(
               child: Column(
                 children: [
-                  Text(model.error().toString()),
+                  Text(model.error('').toString()),
                   LinearProgressIndicator(),
                 ],
               ),
@@ -38,9 +38,9 @@ class FavoritesView extends StatelessWidget {
                     childAspectRatio: .8),
                 delegate: SliverChildBuilderDelegate(
                         (BuildContext context, int index) {
-                        return MyRecipeCard(recipe: model.data[index]);
+                        return MyRecipeCard(recipe: model.data![index]);
                     },
-                    childCount: model.data.length
+                    childCount: model.data!.length
                 ),
               )
             ]);

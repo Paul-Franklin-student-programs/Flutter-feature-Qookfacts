@@ -23,16 +23,28 @@ class UserRoot {
   String userName;
 
   UserRoot({
-    this.backgroundUrl,
-    this.displayName,
-    this.id,
-    this.pantryItems,
-    this.personal,
-    this.photoUrl,
-    this.preferences,
-    this.recipes,
-    this.userName,
+    required this.backgroundUrl,
+    required this.displayName,
+    required this.id,
+    required this.pantryItems,
+    required this.personal,
+    required this.photoUrl,
+    required this.preferences,
+    required this.recipes,
+    required this.userName,
   });
+
+  static UserRoot empty() => UserRoot(
+      backgroundUrl: '',
+      displayName: '',
+      id: '',
+      pantryItems: [],
+      personal: Personal.empty(),
+      photoUrl: '',
+      preferences: Preference.empty(),
+      recipes: [],
+      userName: '',
+  );
 
   factory UserRoot.fromJson(Map<String, dynamic> json) => _$UserRootFromJson(json);
 

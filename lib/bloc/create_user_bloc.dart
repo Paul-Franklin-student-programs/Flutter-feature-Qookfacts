@@ -9,8 +9,8 @@ import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';
 
 class CreateUserBloc {
-  ElasticService elasticService;
-  StreamController<Response<UnmatchUserReportRequestModel>> postCreateUserBlocController;
+  ElasticService elasticService = ElasticService();
+  StreamController<Response<UnmatchUserReportRequestModel>> postCreateUserBlocController = StreamController<Response<UnmatchUserReportRequestModel>>();
 
   StreamSink<Response<UnmatchUserReportRequestModel>> get dataSink => postCreateUserBlocController.sink;
 

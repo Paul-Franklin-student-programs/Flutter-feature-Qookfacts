@@ -1,16 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 // import 'package:flutter_lwa/lwa.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/bloc/create_user_bloc.dart';
 import 'package:qookit/services/getIt.dart';
-import 'package:http/http.dart' as http;
 import 'package:qookit/services/utilities/string_service.dart';
 // import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
@@ -21,31 +17,32 @@ import 'package:stacked/stacked.dart';
 @singleton
 class AuthService extends ChangeNotifier {
 
-  String currentLatLag;
+  String currentLatLag = '';
   FirebaseAuth get auth {
     return FirebaseAuth.instance;
   }
 
   String get uid {
-    return FirebaseAuth.instance.currentUser.uid;
+    return FirebaseAuth.instance.currentUser!.uid;
   }
 
-  User get user {
+  User? get user {
     return FirebaseAuth.instance.currentUser;
   }
 
   // Firebase auth automatically keeps token updated
   // https://stackoverflow.com/questions/49656489/is-the-firebase-access-token-refreshed-automatically?rq=1#:~:text=Firebase%20automatically%20refreshes%20if%20it,cause%20that%20listener%20to%20trigger.
   Future<String> get token async {
-    String value = await  auth.currentUser.getIdToken();
+    String value = await  auth.currentUser!.getIdToken();
     print('Token ' +value);
     return value;
   }
 
   void addAuthListener(BuildContext context) {
-    auth.authStateChanges().listen((User user) {
+    auth.authStateChanges().listen((User? user) {
       if (user == null) {
-        ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
+
+        // ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
       }
     });
   }
@@ -57,7 +54,8 @@ class AuthService extends ChangeNotifier {
         .navigateToFirstScreen(route: SplashScreenView.id, context: context);*/
     //FacebookLogin().logOut();
     // LoginWithAmazon().signOut();
-    ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.loginView, (route) => false);
+    context.router.push(PageRouteInfo('loginView.dart', path: '../../ui/signInSignUp/registerView/register_view.dart'));
+    // ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(Routes.loginView, (route) => false);
     notifyListeners();
   }
 
@@ -65,7 +63,7 @@ class AuthService extends ChangeNotifier {
   // Sign In Methods
   // **************************************************************************
   Future<String> signInWithEmail(BuildContext context, String email, String password) async {
-    String message;
+    String message = '';
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)/*.then((value) => updateUserDataToBackend(value))*/;
       // Successfully signed in
@@ -144,6 +142,7 @@ class AuthService extends ChangeNotifier {
     //     return 'Failed';
     //   }
     // }
+    return '';
   }
 
   Future<String> signInWithApple(BuildContext context) async {
@@ -215,15 +214,16 @@ class AuthService extends ChangeNotifier {
     //
     //   return 'Success';
     // }
+    return '';
   }
 
   Future<String> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     print('googleUser ' + googleUser.toString());
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
 
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+    final OAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
@@ -300,7 +300,7 @@ class AuthService extends ChangeNotifier {
   // **************************************************************************
   Future<String> signUpWithEmail(BuildContext context, String email, String password, String name) async {
 
-    String message;
+    String message = '';
     try {
       ///add user data entry in firebase.
       var userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
@@ -341,7 +341,7 @@ class AuthService extends ChangeNotifier {
       } catch (e) {
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(e,
+          content: Text(e.toString(),
             textAlign: TextAlign.center,
           ),
         ));
@@ -361,9 +361,9 @@ class AuthService extends ChangeNotifier {
   void initDynamicLinks(BuildContext context) async {
     FirebaseDynamicLinks.instance.onLink;
 
-    final PendingDynamicLinkData data =
+    final PendingDynamicLinkData? data =
         await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri deepLink = data?.link;
+    final Uri? deepLink = data?.link;
 
     if (deepLink != null) {
       await Navigator.pushNamed(context, deepLink.path);
@@ -373,18 +373,18 @@ class AuthService extends ChangeNotifier {
   Future<void> updateUserDataToBackend(UserCredential value, {String name = ''})  async {
 
 
-    print("------------------------------------------------signup------------------------------------------------");
+    print('------------------------------------------------signup------------------------------------------------');
     print(value);
    await CreateUserBloc().postUserData({
-     'userName': name.isNotEmpty? name : value.user.displayName,
-     'photoUrl': value.user.photoURL,
+     'userName': name.isNotEmpty? name : value.user?.displayName.toString(),
+     'photoUrl': value.user?.photoURL ?? '',
      'backgroundUrl': 'String',
-     'displayName': name.isNotEmpty? name : value.user.displayName,
+     'displayName': name.isNotEmpty? name : value.user?.displayName,
      'personal': {
        'firstName': 'String',
        'lastName': 'String',
        'fullName': 'String',
-       'email': value.user.email,
+       'email': value.user?.email,
        'aboutMe': 'String',
        'homeUrl': 'String',
        'location': {

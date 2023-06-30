@@ -4,7 +4,7 @@ import 'package:qookit/services/services.dart';
 import 'package:stacked/stacked.dart';
 
 class RecipeSearchViewModel extends FutureViewModel<List<Recipe>> {
-  String searchTerm;
+  String searchTerm = '';
 
   List<FilterGroup> categories = [
     FilterGroup('COURSES', [
@@ -94,7 +94,7 @@ class RecipeSearchViewModel extends FutureViewModel<List<Recipe>> {
   Future<List<Recipe>> futureToRun() async {
     if (searchTerm != null) {
       return recipeService.getRecipeFromSearch(
-        RecipeParameters(searchString: searchTerm),
+        RecipeParameters(searchString: searchTerm, cuisine:[], cookMethod: [], dietLabels: [],dishTypes: []),
       );
     } else {
       return await [];

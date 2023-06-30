@@ -8,8 +8,8 @@ import 'package:qookit/services/user/user_service.dart';
 
 class UserBloc{
 
-  ElasticService elasticService;
-  StreamController<Response<UserDataModel>> UserBlocController;
+  ElasticService elasticService = ElasticService();
+  StreamController<Response<UserDataModel>> UserBlocController = StreamController<Response<UserDataModel>>();
 
   StreamSink<Response<UserDataModel>> get dataSink => UserBlocController.sink;
   Stream<Response<UserDataModel>> get dataStream => UserBlocController.stream;
@@ -29,7 +29,7 @@ class UserBloc{
       await hiveService.setupHive();
       await hiveService.userBox.put(UserService.fullName, userDataModel.userName);
       await hiveService.userBox.put(UserService.displayName, userDataModel.displayName);
-      await hiveService.userBox.put(UserService.userEmail, userDataModel.personal.email);
+      await hiveService.userBox.put(UserService.userEmail, userDataModel.personal?.email);
       await hiveService.userBox.put(UserService.userId, userDataModel.id);
 
       print('save data '+ hiveService.userBox.put(UserService.fullName, userDataModel.userName).toString());

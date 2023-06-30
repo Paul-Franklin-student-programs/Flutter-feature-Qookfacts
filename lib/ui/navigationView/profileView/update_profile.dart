@@ -11,7 +11,7 @@ import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 class UpdateProfile extends StatefulWidget {
-  const UpdateProfile({Key key}) : super(key: key);
+  const UpdateProfile({Key? key}) : super(key: key);
 
   @override
   State<UpdateProfile> createState() => _UpdateProfileState();
@@ -20,8 +20,8 @@ class UpdateProfile extends StatefulWidget {
 class _UpdateProfileState extends State<UpdateProfile> {
   static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
-  String urlimg1;
-  String document_path1;
+  String urlimg1 = '';
+  String document_path1 = '';
 
   TextEditingController nameController = TextEditingController(
       text: hiveService.userBox
@@ -176,7 +176,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     color: colorTheme,
                                     onPressed: () {
                                       if (_loginFormKey.currentState
-                                          .validate()) {
+                                          !.validate()) {
                                         ///Update profile method
                                         updateProfile(model);
                                       }
@@ -196,7 +196,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
   }
 
-  Future<void> updateProfile(LoginViewModel model) async {
+  Future<http.Response> updateProfile(LoginViewModel model) async {
     var userId = hiveService.userBox.get(UserService.userId);
 
     var token = await authService.token;

@@ -19,13 +19,15 @@ class Location {
   String zip;
 
   Location({
-    this.city,
-    this.country,
-    this.gps,
-    this.ipAddr,
-    this.state,
-    this.zip,
+    required this.city,
+    required this.country,
+    required this.gps,
+    required this.ipAddr,
+    required this.state,
+    required this.zip,
   });
+
+  static Location empty() => Location(city: '', country: '', gps: '', ipAddr: '', state: '', zip: '');
 
   factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
 

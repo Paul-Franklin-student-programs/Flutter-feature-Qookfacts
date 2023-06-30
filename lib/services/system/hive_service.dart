@@ -5,15 +5,15 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 @singleton
 class  HiveService {
-  Box userBox;
-  Box dietsBox;
-  Box recipesBox;
-  Box recommendationsBox;
-  Box pantryBox;
-  Box freezerBox;
-  Box fridgeBox;
-  Box myRecipesBox;
-  Box favoriteRecipesBox;
+  late Box userBox;
+  late Box dietsBox;
+  late Box recipesBox;
+  late Box recommendationsBox;
+  late Box pantryBox;
+  late Box freezerBox;
+  late Box fridgeBox;
+  late Box myRecipesBox;
+  late Box favoriteRecipesBox;
 
   Future<void> setupHive() async {
     await Hive.openBox('user_${authService.uid}');

@@ -16,7 +16,7 @@ class SendEmailButton extends ViewModelWidget<ForgotPasswordViewModel> {
         text: 'SEND EMAIL',
         color: Colors.black,
         onPressed: () {
-          if (_loginFormKey.currentState.validate()) {
+          if (_loginFormKey.currentState?.validate() ?? false) {
             model.sendResetPasswordEmail(context);
           }
         },
@@ -33,7 +33,11 @@ class BackToLoginButton extends ViewModelWidget<ForgotPasswordViewModel> {
         text: 'LOG IN',
         color: Colors.black,
         onPressed: () {
-          ExtendedNavigator.named('topNav').pop(Routes.loginView);
+          context.router.push(PageRouteInfo(
+            'LoginView.dart',
+            path: '../loginView/login_components.dart',
+          ));
+          // ExtendedNavigator.named('topNav')?.pop(Routes.loginView);
         },
       ),
     );

@@ -11,11 +11,11 @@ import '../utils/image_utils.dart';
 class IsolateUtils {
   static const String DEBUG_NAME = 'InferenceIsolate';
 
-  Isolate _isolate;
+  Isolate? _isolate;
   final ReceivePort _receivePort = ReceivePort();
-  SendPort _sendPort;
+  SendPort? _sendPort;
 
-  SendPort get sendPort => _sendPort;
+  SendPort? get sendPort => _sendPort;
 
   Future<void> start() async {
     _isolate = await Isolate.spawn<SendPort>(
@@ -32,32 +32,53 @@ class IsolateUtils {
     sendPort.send(port.sendPort);
 
     await for (final IsolateData isolateData in port) {
-      if (isolateData != null) {
-        Classifier classifier = Classifier(
+      /*Classifier classifier = Classifier(
             interpreter: Interpreter.fromAddress(isolateData.interpreterAddress),
-            labels: isolateData.labels);
-        imgLib.Image image =
-            ImageUtils.convertCameraImage(isolateData.cameraImage);
-        if (Platform.isAndroid) {
-          image = imgLib.copyRotate(image, 90);
-        }
-        Map<String, dynamic> results = classifier.predict(image);
-        isolateData.responsePort.send(results);
+            labels: isolateData.labels,
+      );*/
+      Classifier classifier = Classifier(
+          Interpreter.fromAddress(isolateData.interpreterAddress),
+          0,
+          false,
+          false,
+          [],
+          null,
+          0,
+          [],
+          [],
+          [],
+          interpreter: Interpreter.fromAddress(isolateData.interpreterAddress),
+          labels: []
+      );
+
+      imgLib.Image? image =
+          ImageUtils.convertCameraImage(isolateData.cameraImage!);
+      if (Platform.isAndroid) {
+        image = imgLib.copyRotate(image!, 90);
       }
+      Map<String, dynamic>? results = classifier.predict(image!);
+      isolateData.responsePort!.send(results);
     }
   }
 }
 
 /// Bundles data to pass between Isolate
 class IsolateData {
-  CameraImage cameraImage;
-  int interpreterAddress;
-  List<String> labels;
-  SendPort responsePort;
+  CameraImage? cameraImage;
+  int interpreterAddress = 0;
+  List<String> labels = [];
+  SendPort? responsePort;
 
   IsolateData(
     this.cameraImage,
     this.interpreterAddress,
     this.labels,
   );
+
+  static IsolateData empty() => IsolateData(
+    null,
+    0,
+    [],
+  );
+
 }

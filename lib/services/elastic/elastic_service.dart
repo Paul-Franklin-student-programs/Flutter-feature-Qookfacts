@@ -40,9 +40,7 @@ class ElasticService {
     var responseJson;
     var uri = Uri.https(elasticService.domain, endpoint);
     var token;
-    if(authService!=null && authService.token!=null){
-      token = await authService.token;
-    }
+    token = await authService.token;
 
     var recipeResponse = await http.get(uri,
       headers: token != null ? {
@@ -61,9 +59,7 @@ class ElasticService {
     var responseJson;
     var uri = Uri.https(elasticService.domain, endpoint);
     var token;
-    if(authService!=null && authService.token!=null){
-      token = await authService.token;
-    }
+    token = await authService.token;
 
     var recipeResponse = await http.post(uri,
         headers: token!=null ? {

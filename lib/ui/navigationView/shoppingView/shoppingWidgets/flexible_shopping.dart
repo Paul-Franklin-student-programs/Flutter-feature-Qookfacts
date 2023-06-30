@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_compare.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_recipes.dart';
 import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/shopping_title.dart';
@@ -185,6 +184,8 @@ class FlexibleShoppingContent extends ViewModelWidget<ShoppingViewModel> {
       return ShoppingRecipes();
     } else if (viewModel.screenMode == 'compare') {
       return ShoppingCompare();
+    }else{
+      return Container();
     }
   }
 }

@@ -1,28 +1,40 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_ml_model_downloader/firebase_ml_model_downloader.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/models/expiry_group.dart';
 import 'package:qookit/models/pantry_item.dart';
 import 'package:qookit/services/getIt.dart';
 import 'package:qookit/services/ml/ml_service.dart';
+import 'package:qookit/services/navigation/navigation_service.dart';
+import 'package:qookit/services/services.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/tflite_test/ui/home_view.dart';
+import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
+import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
+import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
+import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
+import 'app/app_router.dart';
 import 'models/itemlist.dart';
 
 bool preview = false;
 
 Future<void> main() async {
+  // NavigationService().setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   configureDependencies();
 
-  print('just before model setup');
   // unawaited(mlService.setupModel());
 
   MlService.firebasemodeldownloder();
@@ -46,7 +58,7 @@ Future<void> main() async {
     SystemUiOverlay.top,
   ]);
 
-  await SystemChrome.setSystemUIOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
   runApp(
@@ -55,6 +67,7 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return ThemeBuilder(
@@ -67,42 +80,38 @@ class App extends StatelessWidget {
             theme: regularTheme,
             darkTheme: darkTheme,
             themeMode: themeMode,
-            home: Container(),
-            builder: (context, nativeNavigator) {
+            color: (kIsWeb) ? Colors.green : Colors.red,
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case '/':
+                  return MaterialPageRoute(builder: (_) => SplashScreenView());
+                case '/login':
+                  return MaterialPageRoute(builder: (_) => LoginView());
+                case '/register':
+                  return MaterialPageRoute(builder: (_) => RegisterView());
+                case '/forgotPassword':
+                  return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+                case '/homeScreen':
+                  return MaterialPageRoute(builder: (_) => HomeView());
+                default:
+                  return null; // Handle other routes or show a default screen
+              }
+            },
+            showSemanticsDebugger: false,
+
+            /*builder: (context, nativeNavigator) {
               return ExtendedNavigator.builder<AppRouter>(
+                  initialRoute: '/login-view',
                   router: AppRouter(),
                   name: 'topNav',
-                  builder: (context, child) => child)(context, nativeNavigator);
-            },
-            color: Colors.red,
+                  builder: (context, child) {
+                    return child ?? Container();
+                  },
+              )
+                (context, nativeNavigator);
+            },*/
+
           );
         });
   }
 }
-
-
-/*
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:qookit/tflite_test/ui/home_view.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Object Detection TFLite',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: HomeView(),
-    );
-  }
-}
-*/

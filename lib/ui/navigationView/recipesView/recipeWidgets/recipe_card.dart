@@ -4,7 +4,6 @@ import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/app/dimensions.dart';
 import 'package:qookit/models/recipe.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeWidgets/recipe_image.dart';
-import 'package:qookit/services/theme/theme_service.dart';
 import 'package:stacked/stacked.dart';
 
 class RecipeCard extends StatelessWidget {
@@ -12,29 +11,29 @@ class RecipeCard extends StatelessWidget {
   final Recipe recipe;
   final bool showTitle;
 
-  const RecipeCard({Key key, this.recipe, this.showTitle = true})
+  const RecipeCard({Key? key,required this.recipe, this.showTitle = true})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var containsImage = (recipe.sourceDetail != null &&
-        recipe.sourceDetail.imageUrls.isNotEmpty);
+    var containsImage = (recipe.sourceDetail.imageUrls.isNotEmpty);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         GestureDetector(
           onTap: () {
-            ExtendedNavigator.named('nestedNav').push(
-              NavigationViewRoutes.recipeDetailsView,
-              arguments: RecipeDetailsViewArguments(recipe: recipe),
-            );
+
+            // ExtendedNavigator.named('nestedNav')?.push(
+            //   NavigationViewRoutes.recipeDetailsView,
+            //   arguments: RecipeDetailsViewArguments(recipe: recipe, key: Key('4651')),
+            // );
           },
           child: Stack(
             children: [
               RecipeImage(
                 imageUrl:
-                    containsImage ? recipe.sourceDetail.imageUrls.first : null,
+                    containsImage ? recipe.sourceDetail.imageUrls.first : '',
               ),
               Positioned(
                   bottom: 8,
@@ -42,7 +41,7 @@ class RecipeCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        recipe.likesCount ?? '2K',
+                        recipe.likesCount.toString() ?? '2K',
                         style: GoogleFonts.lato(
                           color: Colors.white,
                           fontSize: 16,

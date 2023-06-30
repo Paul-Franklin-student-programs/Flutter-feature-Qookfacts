@@ -3,6 +3,9 @@ import 'package:qookit/ui/navigationView/shoppingView/shoppingWidgets/flexible_s
 import 'package:qookit/ui/navigationView/shoppingView/shopping_view_model.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class ShoppingView extends StatelessWidget {
 
   @override

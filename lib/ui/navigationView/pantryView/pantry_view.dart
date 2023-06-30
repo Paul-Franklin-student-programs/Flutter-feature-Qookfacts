@@ -9,6 +9,9 @@ import '../../../models/checkditem.dart';
 import '../../../models/itemlist.dart';
 import '../../../services/services.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class PantryView extends StatefulWidget {
   @override
   State<PantryView> createState() => _PantryViewState();
@@ -16,9 +19,10 @@ class PantryView extends StatefulWidget {
 
 class _PantryViewState extends State<PantryView> {
   @override
-  CheckDitem respons;
-  Box box;
+  CheckDitem respons = CheckDitem.empty();
+  Box? box;
 
+  @override
   void initState() {
 
     // TODO: implement initState
@@ -35,7 +39,7 @@ class _PantryViewState extends State<PantryView> {
     var dir = await getApplicationDocumentsDirectory();
     Hive.init(dir.path);
     box = await Hive.openBox('ApiItem');
-         box.clear();
+         await box!.clear();
     for(int i=0; i<respons.items.length; i++)
       {
     //     var  respo = Person(name: respons.items[i].name,url: respons.items[i].name);
@@ -44,7 +48,7 @@ class _PantryViewState extends State<PantryView> {
     //
 
 
-       await  box.add(ItemList(name: respons.items[i].name,url: respons.items[i].imageUrl));
+       await  box!.add(ItemList(name: respons.items[i].name,url: respons.items[i].imageUrl));
       }
         // await box.put('CompareItem', respons);
     // for (int i = 0; i < respons.items.length; i++) {

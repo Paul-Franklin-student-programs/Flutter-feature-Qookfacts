@@ -13,9 +13,11 @@ class Author {
   String fullName;
   String userId;
 
-  Author();
+  Author(this.extUserId, this.fullName, this.userId);
 
   factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthorToJson(this);
+
+  static Author empty() => Author('', '', '');
 }

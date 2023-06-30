@@ -19,14 +19,24 @@ class Personal {
   Location location;
 
   Personal({
-    this.aboutMe,
-    this.email,
-    this.firstName,
-    this.fullName,
-    this.homeUrl,
-    this.lastName,
-    this.location,
+    required this.aboutMe,
+    required this.email,
+    required this.firstName,
+    required this.fullName,
+    required this.homeUrl,
+    required this.lastName,
+    required this.location,
   });
+
+  static Personal empty() => Personal(
+      aboutMe: '',
+      email: '',
+      firstName: '',
+      fullName: '',
+      homeUrl: '',
+      lastName: '',
+      location: Location.empty(),
+  );
 
   factory Personal.fromJson(Map<String, dynamic> json) => _$PersonalFromJson(json);
 

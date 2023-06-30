@@ -22,8 +22,6 @@ class ThemeService {
 ThemeData qookitLight = ThemeData(
   /// Colors
   primaryColor: Color(0xFFFFD53F),
-  backgroundColor: Color(0xFFEAEAEA),
-  errorColor: Color(0xFFBE3944),
 
   fontFamily: 'kabel',
 
@@ -38,8 +36,7 @@ ThemeData qookitLight = ThemeData(
         fontFamily: 'opensans'),
   ),
 
-  indicatorColor: Colors.amber,
-  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)),
+  indicatorColor: Colors.amber, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)).copyWith(background: Color(0xFFEAEAEA)).copyWith(error: Color(0xFFBE3944)),
 
   /// Text
   /*textTheme: TextTheme(

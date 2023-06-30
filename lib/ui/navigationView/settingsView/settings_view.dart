@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/app/theme/colors.dart';
 import 'package:qookit/services/services.dart';
-import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/navigationView/profileView/update_profile.dart';
 import 'package:qookit/ui/navigationView/settingsView/setting_view_widgets.dart';
 import 'package:qookit/ui/navigationView/settingsView/settings_view_model.dart';
 import 'package:stacked/stacked.dart';
+
+import 'package:auto_route/annotations.dart';
+
 
 class SettingsView extends StatefulWidget {
   @override

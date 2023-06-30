@@ -14,10 +14,13 @@ class Stats {
   int preProcessingTime;
 
   Stats(
-      {this.totalPredictTime,
-      this.totalElapsedTime,
-      this.inferenceTime,
-      this.preProcessingTime});
+      {
+      required this.totalPredictTime,
+      required this.totalElapsedTime,
+      required this.inferenceTime,
+      required this.preProcessingTime});
+
+  static Stats empty() => Stats(totalPredictTime: 0, totalElapsedTime: 0, inferenceTime: 0, preProcessingTime: 0);
 
   @override
   String toString() {

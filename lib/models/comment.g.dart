@@ -6,15 +6,14 @@ part of 'comment.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Comment _$CommentFromJson(Map<String, dynamic> json) {
-  return Comment()
-    ..createdDate = json['createdDate'] as String
-    ..modifiedDate = json['modifiedDate'] as String
-    ..name = json['name'] as String
-    ..rating = json['rating'] as String
-    ..text = json['text'] as String
-    ..userId = json['userId'] as String;
-}
+Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
+      json['createdDate'] as String,
+      json['modifiedDate'] as String,
+      json['name'] as String,
+      json['rating'] as String,
+      json['text'] as String,
+      json['userId'] as String,
+    );
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'createdDate': instance.createdDate,

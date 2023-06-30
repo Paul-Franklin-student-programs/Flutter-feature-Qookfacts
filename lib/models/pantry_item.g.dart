@@ -22,7 +22,7 @@ class PantryItemAdapter extends TypeAdapter<PantryItem> {
       isRefrigerated: fields[2] as bool,
       name: fields[3] as String,
       notes: fields[4] as String,
-      photoUrl: fields[5] as String,
+      photoUrl: fields[5] as String, expiryGroups: [], ingredientId: '',
     );
   }
 
@@ -59,21 +59,18 @@ class PantryItemAdapter extends TypeAdapter<PantryItem> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-PantryItem _$PantryItemFromJson(Map<String, dynamic> json) {
-  return PantryItem(
-    category: json['category'] as String,
-    expiryGroups: (json['expiryGroups'] as List)
-        ?.map((e) =>
-            e == null ? null : ExpiryGroup.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    ingredientId: json['ingredientId'] as String,
-    isFrozen: json['isFrozen'] as bool,
-    isRefrigerated: json['isRefrigerated'] as bool,
-    name: json['name'] as String,
-    notes: json['notes'] as String,
-    photoUrl: json['photoUrl'] as String,
-  );
-}
+PantryItem _$PantryItemFromJson(Map<String, dynamic> json) => PantryItem(
+      category: json['category'] as String,
+      expiryGroups: (json['expiryGroups'] as List<dynamic>)
+          .map((e) => ExpiryGroup.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      ingredientId: json['ingredientId'] as String,
+      isFrozen: json['isFrozen'] as bool,
+      isRefrigerated: json['isRefrigerated'] as bool,
+      name: json['name'] as String,
+      notes: json['notes'] as String,
+      photoUrl: json['photoUrl'] as String,
+    );
 
 Map<String, dynamic> _$PantryItemToJson(PantryItem instance) =>
     <String, dynamic>{

@@ -19,5 +19,5 @@ class Item {
 
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 
-  Item();
+  Item(this.icon, this.imageUrl, this.name, this.nutritionInfo);
 }

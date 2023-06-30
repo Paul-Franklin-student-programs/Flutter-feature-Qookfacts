@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 
 Color colorOne = Colors.red;
-Color colorTwo = Colors.red[300];
-Color colorThree = Colors.red[100];
+// Color colorTwo = Colors.red[300];
+Color colorTwo = Colors.red.withOpacity(0.3);
+// Color colorThree = Colors.red[100];
+Color colorThree = Colors.red.withOpacity(0.1);
 Color colorTheme = Color(0xFF374251);
 Color colorTheme2 = Color(0xFF98e055);
 Color colorTheme2fent = Color(0xFFD3F2B6);

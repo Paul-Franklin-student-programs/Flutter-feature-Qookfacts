@@ -6,14 +6,13 @@ part of 'detected_location.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DetectedLocation _$DetectedLocationFromJson(Map<String, dynamic> json) {
-  return DetectedLocation(
-    bottom: (json['bottom'] as num)?.toDouble(),
-    left: (json['left'] as num)?.toDouble(),
-    right: (json['right'] as num)?.toDouble(),
-    top: (json['top'] as num)?.toDouble(),
-  );
-}
+DetectedLocation _$DetectedLocationFromJson(Map<String, dynamic> json) =>
+    DetectedLocation(
+      bottom: (json['bottom'] as num).toDouble(),
+      left: (json['left'] as num).toDouble(),
+      right: (json['right'] as num).toDouble(),
+      top: (json['top'] as num).toDouble(),
+    );
 
 Map<String, dynamic> _$DetectedLocationToJson(DetectedLocation instance) =>
     <String, dynamic>{

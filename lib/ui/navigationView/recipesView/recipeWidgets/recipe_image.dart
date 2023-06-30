@@ -6,12 +6,12 @@ class RecipeImage extends StatelessWidget {
   final String imageUrl;
 
   const RecipeImage(
-      {Key key, this.imageUrl,})
+      {Key? key,required this.imageUrl,})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String fixedUrl;
+    String fixedUrl = '';
 
     if(imageUrl == null){
       fixedUrl = 'https://health.clevelandclinic.org/wp-content/uploads/sites/3/2019/06/cropped-GettyImages-643764514.jpg';

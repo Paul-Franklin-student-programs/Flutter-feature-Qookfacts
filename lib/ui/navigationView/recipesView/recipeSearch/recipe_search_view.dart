@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeSearch/recipeSearchWidgets/search_label.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeSearch/recipe_search_view_model.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeWidgets/recipe_card.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeWidgets/recipes_search_header.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class RecipeSearchView extends StatelessWidget {
   final String searchTerm;
 
-  const RecipeSearchView({Key key, this.searchTerm}) : super(key: key);
+  const RecipeSearchView({Key? key,required this.searchTerm}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RecipeSearchViewModel>.reactive(
         viewModelBuilder: () => RecipeSearchViewModel(),
         onModelReady: (model) {
-          RecipeSearchViewArguments arg =
-              ModalRoute.of(context).settings.arguments;
-          model.initializeModel(arg?.searchTerm);
+          dynamic arg =
+              ModalRoute.of(context)?.settings.arguments;
+          model.initializeModel(arg!.searchTerm.toString());
         },
         builder: (context, model, child) {
           if (!model.isBusy) {
@@ -43,9 +45,9 @@ class RecipeSearchView extends StatelessWidget {
                         delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {
                           return RecipeCard(
-                            recipe: model.data[index],
+                            recipe: model.data![index],
                           );
-                        }, childCount: model.data.length))
+                        }, childCount: model.data!.length))
                   ],
                 ),
                 DraggableScrollableSheet(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BottomLineButtonWidget extends StatelessWidget {
-  const BottomLineButtonWidget({Key key, @required this.color, @required this.text, @required this.onPressed}) : super(key: key);
+  const BottomLineButtonWidget({Key? key, required this.color, required this.text, required this.onPressed}) : super(key: key);
 
   final Color color;
   final String text;
@@ -21,11 +21,11 @@ class BottomLineButtonWidget extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Divider()),
-            FlatButton(
+            IconButton(
               onPressed: onPressed,
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
               color: Colors.black12,
-              child: Text(
+              icon: Text(
                 text,
                 style: TextStyle(
                   color: Colors.black,

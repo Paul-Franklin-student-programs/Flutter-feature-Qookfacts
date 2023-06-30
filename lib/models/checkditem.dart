@@ -1,34 +1,34 @@
 class CheckDitem {
-  List<Items> items;
-  int itemCount;
+  List<Items> items = [];
+  int itemCount = 0;
 
-  CheckDitem({ this.items, this.itemCount});
+  CheckDitem({required this.items,required this.itemCount});
+
+  static CheckDitem empty() => CheckDitem(items: [], itemCount: 0);
 
   CheckDitem.fromJson(Map<String, dynamic> json) {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items.add(Items.fromJson(v));
       });
     }
     itemCount = json['itemCount'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
-    }
-    data['itemCount'] = this.itemCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['items'] = items.map((v) => v.toJson()).toList();
+    data['itemCount'] = itemCount;
     return data;
   }
 }
 
 class Items {
-  String name;
-  String imageUrl;
+  String name = '';
+  String imageUrl = '';
 
-  Items({this.name, this.imageUrl});
+  Items({required this.name, required this.imageUrl});
 
   Items.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -36,9 +36,9 @@ class Items {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['imageUrl'] = this.imageUrl;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
+    data['imageUrl'] = imageUrl;
     return data;
   }
 }

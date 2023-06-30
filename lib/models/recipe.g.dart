@@ -6,54 +6,42 @@ part of 'recipe.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Recipe _$RecipeFromJson(Map<String, dynamic> json) {
-  return Recipe()
-    ..author = json['author'] == null
-        ? null
-        : Author.fromJson(json['author'] as Map<String, dynamic>)
-    ..chefNotes = (json['chefNotes'] as List)?.map((e) => e as String)?.toList()
-    ..comments = json['comments'] == null
-        ? null
-        : Comment.fromJson(json['comments'] as Map<String, dynamic>)
-    ..cookMethod =
-        (json['cookMethod'] as List)?.map((e) => e as String)?.toList()
-    ..cookTime = json['cookTime'] as int
-    ..createdBy = json['createdBy'] as String
-    ..createdDate = json['createdDate'] as String
-    ..cuisines = (json['cuisines'] as List)?.map((e) => e as String)?.toList()
-    ..description = json['description'] as String
-    ..difficultyRating = json['difficultyRating'] as int
-    ..dishName = (json['dishName'] as List)?.map((e) => e as String)?.toList()
-    ..dishTypes = (json['dishTypes'] as List)?.map((e) => e as String)?.toList()
-    ..id = json['id'] as String
-    ..ingredients = (json['ingredients'] as List)
-        ?.map((e) =>
-            e == null ? null : Ingredient.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..instructions = (json['instructions'] as List)
-        ?.map((e) =>
-            e == null ? null : Instruction.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..isPrivate = json['isPrivate'] as bool
-    ..isSponsored = json['isSponsored'] as bool
-    ..likesCount = json['likesCount'] as int
-    ..modifiedBy = json['modifiedBy'] as String
-    ..modifiedDate = json['modifiedDate'] as String
-    ..nutritionInfo = json['nutritionInfo'] == null
-        ? null
-        : NutritionInfo.fromJson(json['nutritionInfo'] as Map<String, dynamic>)
-    ..prepTime = json['prepTime'] as int
-    ..rating = json['rating'] as int
-    ..ratingCount = json['ratingCount'] as int
-    ..reviewCount = json['reviewCount'] as int
-    ..servingsMax = json['servingsMax'] as int
-    ..servinsMin = json['servinsMin'] as int
-    ..sourceDetail = json['sourceDetail'] == null
-        ? null
-        : SourceDetail.fromJson(json['sourceDetail'] as Map<String, dynamic>)
-    ..title = json['title'] as String
-    ..totalTime = json['totalTime'] as int;
-}
+Recipe _$RecipeFromJson(Map<String, dynamic> json) => Recipe(
+      Author.fromJson(json['author'] as Map<String, dynamic>),
+      (json['chefNotes'] as List<dynamic>).map((e) => e as String).toList(),
+      Comment.fromJson(json['comments'] as Map<String, dynamic>),
+      (json['cookMethod'] as List<dynamic>).map((e) => e as String).toList(),
+      json['cookTime'] as int,
+      json['createdBy'] as String,
+      json['createdDate'] as String,
+      (json['cuisines'] as List<dynamic>).map((e) => e as String).toList(),
+      json['description'] as String,
+      json['difficultyRating'] as int,
+      (json['dishName'] as List<dynamic>).map((e) => e as String).toList(),
+      (json['dishTypes'] as List<dynamic>).map((e) => e as String).toList(),
+      json['id'] as String,
+      (json['ingredients'] as List<dynamic>)
+          .map((e) => Ingredient.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['instructions'] as List<dynamic>)
+          .map((e) => Instruction.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['isPrivate'] as bool,
+      json['isSponsored'] as bool,
+      json['likesCount'] as int,
+      json['modifiedBy'] as String,
+      json['modifiedDate'] as String,
+      NutritionInfo.fromJson(json['nutritionInfo'] as Map<String, dynamic>),
+      json['prepTime'] as int,
+      json['rating'] as int,
+      json['ratingCount'] as int,
+      json['reviewCount'] as int,
+      json['servingsMax'] as int,
+      json['servinsMin'] as int,
+      SourceDetail.fromJson(json['sourceDetail'] as Map<String, dynamic>),
+      json['title'] as String,
+      json['totalTime'] as int,
+    );
 
 Map<String, dynamic> _$RecipeToJson(Recipe instance) => <String, dynamic>{
       'author': instance.author,

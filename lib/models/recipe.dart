@@ -15,7 +15,7 @@ part 'recipe.g.dart';
 
 @JsonSerializable()
 class Recipe {
-  Author author;
+  Author author = Author.empty();
   List<String> chefNotes;
   Comment comments;
   List<String> cookMethod;
@@ -50,5 +50,68 @@ class Recipe {
 
   Map<String, dynamic> toJson() => _$RecipeToJson(this);
 
-  Recipe();
+  static Recipe empty() => Recipe(
+      Author.empty(),
+      [],
+      Comment.empty(),
+      [],
+      0,
+      '',
+      '',
+      [],
+      '',
+      0,
+      [],
+      [],
+      '',
+      [],
+      [],
+      false,
+      false,
+      0,
+      '',
+      '',
+      NutritionInfo.empty(),
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      SourceDetail.empty(),
+      '',
+      0
+  );
+
+  Recipe(
+      this.author,
+      this.chefNotes,
+      this.comments,
+      this.cookMethod,
+      this.cookTime,
+      this.createdBy,
+      this.createdDate,
+      this.cuisines,
+      this.description,
+      this.difficultyRating,
+      this.dishName,
+      this.dishTypes,
+      this.id,
+      this.ingredients,
+      this.instructions,
+      this.isPrivate,
+      this.isSponsored,
+      this.likesCount,
+      this.modifiedBy,
+      this.modifiedDate,
+      this.nutritionInfo,
+      this.prepTime,
+      this.rating,
+      this.ratingCount,
+      this.reviewCount,
+      this.servingsMax,
+      this.servinsMin,
+      this.sourceDetail,
+      this.title,
+      this.totalTime);
 }

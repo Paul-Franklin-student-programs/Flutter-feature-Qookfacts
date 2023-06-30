@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'detected_location.g.dart';
@@ -10,9 +9,10 @@ class DetectedLocation {
   double right;
   double top;
 
-  DetectedLocation({this.bottom, this.left, this.right, this.top});
+  DetectedLocation({required this.bottom,required this.left,required this.right,required this.top});
 
-  factory DetectedLocation.fromJson(Map<String, dynamic> json) => _$DetectedLocationFromJson(json);
+  factory DetectedLocation.fromJson(Map<String, dynamic> json) =>
+      _$DetectedLocationFromJson(json);
 
   Map<String, dynamic> toJson() => _$DetectedLocationToJson(this);
 }

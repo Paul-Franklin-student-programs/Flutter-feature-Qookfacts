@@ -37,5 +37,30 @@ class NutritionInfo {
 
   Map<String, dynamic> toJson() => _$NutritionInfoToJson(this);
 
-  NutritionInfo();
+  NutritionInfo(
+      this.caloriesFromFat,
+      this.cholesterol,
+      this.cholesterolPct,
+      this.dietaryFiber,
+      this.dietaryFiberPct,
+      this.dietLabels,
+      this.healthLabels,
+      this.monoFat,
+      this.polyFat,
+      this.potassium,
+      this.potassiumPct,
+      this.protein,
+      this.proteinPct,
+      this.singularYieldUnit,
+      this.sodium,
+      this.sodiumPct,
+      this.sugar,
+      this.totalCalories,
+      this.totalCarbs,
+      this.totalCarbsPct,
+      this.totalFat,
+      this.totalFatPct,
+      this.transFat);
+
+  static NutritionInfo empty() => NutritionInfo(0,0,0,0,0,[],[],0,00,0,0,00,0,'',0,0,0,0,0,0,0,0,0,);
 }

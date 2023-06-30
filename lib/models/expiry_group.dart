@@ -26,5 +26,6 @@ class ExpiryGroup {
 
   Map<String, dynamic> toJson() => _$ExpiryGroupToJson(this);
 
-  ExpiryGroup();
+  ExpiryGroup(this.createdDate, this.expiresDate, this.purchasedDate,
+      this.quantity, this.unit);
 }

@@ -17,9 +17,12 @@ class Comment {
   String text;
   String userId;
 
-  Comment();
+  Comment(this.createdDate, this.modifiedDate, this.name, this.rating,
+      this.text, this.userId);
 
   factory Comment.fromJson(Map<String, dynamic> json) => _$CommentFromJson(json);
 
   Map<String, dynamic> toJson() => _$CommentToJson(this);
+
+  static Comment empty() => Comment('', '', '', '', '', '');
 }
