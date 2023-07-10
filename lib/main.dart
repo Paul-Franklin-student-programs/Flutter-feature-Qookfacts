@@ -25,6 +25,9 @@ import 'package:stacked_themes/stacked_themes.dart';
 
 import 'app/app_router.dart';
 import 'models/itemlist.dart';
+import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
+import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
+import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
 
 bool preview = false;
 
@@ -67,7 +70,6 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ThemeBuilder(
@@ -87,11 +89,21 @@ class App extends StatelessWidget {
                   return MaterialPageRoute(builder: (_) => SplashScreenView());
                 case '/login':
                   return MaterialPageRoute(builder: (_) => LoginView());
+                case '/forgot-password-view':
+                  return MaterialPageRoute(
+                      builder: (_) => ForgotPasswordView());
+                case '/diet-preferences-view':
+                  return MaterialPageRoute(
+                      builder: (_) => DietPreferencesView());
+                case '/recipe-preferences-view':
+                  return MaterialPageRoute(
+                      builder: (_) => RecipePreferencesView());
+                case '/recommendation-preferences-view':
+                  return MaterialPageRoute(
+                      builder: (_) => RecommendationPreferences());
                 case '/register':
                   return MaterialPageRoute(builder: (_) => RegisterView());
-                case '/forgotPassword':
-                  return MaterialPageRoute(builder: (_) => ForgotPasswordView());
-                case '/homeScreen':
+                case '/home-view':
                   return MaterialPageRoute(builder: (_) => HomeView());
                 default:
                   return null; // Handle other routes or show a default screen
@@ -110,7 +122,6 @@ class App extends StatelessWidget {
               )
                 (context, nativeNavigator);
             },*/
-
           );
         });
   }
