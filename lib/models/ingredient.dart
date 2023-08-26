@@ -16,9 +16,17 @@ class Ingredient {
   String text;
   String unit;
 
-  Ingredient({this.ingredientId, this.name, this.prepNote, this.quantity, this.text, this.unit});
+  Ingredient(
+      {
+      required this.ingredientId,
+      required this.name,
+      required this.prepNote,
+      required this.quantity,
+      required this.text,
+      required this.unit});
 
-  factory Ingredient.fromJson(Map<String, dynamic> json) => _$IngredientFromJson(json);
+  factory Ingredient.fromJson(Map<String, dynamic> json) =>
+      _$IngredientFromJson(json);
 
   Map<String, dynamic> toJson() => _$IngredientToJson(this);
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/ui/navigationView/drawer/drawer_view.dart';
 import 'package:qookit/ui/navigationView/navigation_view_model.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class NavigationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class NavigationView extends StatelessWidget {
                       onPressed: () {
                         if (!model.showOverlay) {
                           model.updateOverlay(true);
-                          Overlay.of(context).insert(model.firstFabOverlay);
+                          if(model.firstFabOverlay != null) Overlay.of(context).insert(model.firstFabOverlay!);
                         } else {
                           model.updateOverlay(false);
-                          model.fabOverlay.remove();
+                          model.fabOverlay?.remove();
                         }
                       },
                       child: Stack(
@@ -136,4 +138,15 @@ class NavigationView extends StatelessWidget {
       ),
     );
   }
+}
+
+class NavigationViewRouter extends RouterBase{
+  @override
+  // TODO: implement pagesMap
+  Map<Type, StackedRouteFactory> get pagesMap => throw UnimplementedError();
+
+  @override
+  // TODO: implement routes
+  List<RouteDef> get routes => throw UnimplementedError();
+
 }

@@ -6,13 +6,12 @@ part of 'preference.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Preference _$PreferenceFromJson(Map<String, dynamic> json) {
-  return Preference(
-    diet: (json['diet'] as List)?.map((e) => e as String)?.toList(),
-    recipe: (json['recipe'] as List)?.map((e) => e as String)?.toList(),
-    units: json['units'] as String,
-  );
-}
+Preference _$PreferenceFromJson(Map<String, dynamic> json) => Preference(
+      diet: (json['diet'] as List<dynamic>).map((e) => e as String).toList(),
+      recipe:
+          (json['recipe'] as List<dynamic>).map((e) => e as String).toList(),
+      units: json['units'] as String,
+    );
 
 Map<String, dynamic> _$PreferenceToJson(Preference instance) =>
     <String, dynamic>{

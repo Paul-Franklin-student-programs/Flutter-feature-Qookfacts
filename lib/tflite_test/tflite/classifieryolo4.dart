@@ -14,12 +14,12 @@ import 'stats.dart';
 /// Classifier
 class Classifier {
   /// Instance of Interpreter
-  Interpreter _interpreter;
+  Interpreter? _interpreter;
 
   //Interpreter Options (Settings)
-  final int numThreads = 4;
-  final bool isNNAPI = false;
-  final bool isGPU = false; //true
+  int numThreads = 4;
+  bool isNNAPI = false;
+  bool isGPU = false; //true
 
   /// Labels file loaded as list
   List<String> _labels;
@@ -60,16 +60,24 @@ class Classifier {
 
   var labelnames = [];
 
-  Classifier({
-    Interpreter interpreter,
-    List<String> labels,
+  Classifier(
+      this.numThreads,
+      this.isNNAPI,
+      this.isGPU,
+      this._labels,
+      this.imageProcessor,
+      this.padSize,
+      this._outputShapes,
+      this._outputTypes,{
+    required Interpreter? interpreter,
+    required List<String> labels,
   }) {
     loadModel(interpreter: interpreter);
     loadLabels(labels: labels);
   }
 
   /// Loads interpreter from asset
-  void loadModel({Interpreter interpreter}) async {
+  void loadModel({required Interpreter? interpreter}) async {
     try {
       //Still working on it                                                                          *     *
       /*InterpreterOptions myOptions = new InterpreterOptions();                                   *    *    *
@@ -94,7 +102,7 @@ class Classifier {
             options: InterpreterOptions()..threads = numThreads, //myOptions,
           );
 
-      var outputTensors = _interpreter.getOutputTensors();
+      var outputTensors = (_interpreter != null) ? _interpreter!.getOutputTensors() : [];
       // print("the length of the ouput Tensors is ${outputTensors.length}");
       _outputShapes = [];
       _outputTypes = [];
@@ -104,17 +112,17 @@ class Classifier {
         _outputTypes.add(tensor.type);
       });
     } catch (e) {
-      print("Error while creating interpreter: $e");
+      print('Error while creating interpreter: $e');
     }
   }
 
   /// Loads labels from assets
-  void loadLabels({List<String> labels}) async {
+  void loadLabels({required List<String> labels}) async {
     try {
       _labels =
-          labels ?? await FileUtil.loadLabels("assets/" + LABEL_FILE_NAME);
+          labels ?? await FileUtil.loadLabels('assets/' + LABEL_FILE_NAME);
     } catch (e) {
-      print("Error while loading labels: $e");
+      print('Error while loading labels: $e');
     }
   }
 
@@ -122,12 +130,10 @@ class Classifier {
   /// Only does something to the image if it doesn't meet the specified input sizes.
   TensorImage getProcessedImage(TensorImage inputImage) {
     padSize = max(inputImage.height, inputImage.width); //padSize=320
-    if (imageProcessor == null) {
-      imageProcessor = ImageProcessorBuilder()
+    imageProcessor ??= ImageProcessorBuilder()
           .add(ResizeWithCropOrPadOp(padSize, padSize))
           .add(ResizeOp(INPUT_SIZE, INPUT_SIZE, ResizeMethod.BILINEAR))
           .build();
-    }
     inputImage = imageProcessor.process(inputImage);
     return inputImage;
   }
@@ -136,10 +142,10 @@ class Classifier {
   List<Recognition> nms(
       List<Recognition> list) // Turned from Java's ArrayList to Dart's List.
   {
-    List<Recognition> nmsList = new List<Recognition>();
+    List<Recognition> nmsList = [];
     for (int k = 0; k < _labels.length; k++) {
       // 1.find max confidence per class
-      PriorityQueue<Recognition> pq = new HeapPriorityQueue<Recognition>();
+      PriorityQueue<Recognition> pq = HeapPriorityQueue<Recognition>();
 
       for (int i = 0; i < list.length; ++i) {
         if (list[i].label == _labels[k]) {
@@ -157,7 +163,7 @@ class Classifier {
         pq.clear();
         for (int j = 1; j < detections.length; j++) {
           Recognition detection = detections[j];
-          Rect b = detection.location;
+          Rect? b = detection.location;
           if (boxIou(max.location, b) < mNmsThresh) {
             pq.add(detection);
           }
@@ -168,8 +174,12 @@ class Classifier {
     return nmsList;
   }
 
-  double boxIou(Rect a, Rect b) {
-    return boxIntersection(a, b) / boxUnion(a, b);
+  double boxIou(Rect? a, Rect? b) {
+    if(a != null && b != null){
+      return boxIntersection(a, b) / boxUnion(a, b);
+    }else{
+      return 0.0;
+    }
   }
 
   double boxIntersection(Rect a, Rect b) {
@@ -203,7 +213,7 @@ class Classifier {
   }
 
   /// Runs object detection on the input image
-  Map<String, dynamic> predict(imageLib.Image image) {
+  Map<String, dynamic>? predict(imageLib.Image image) {
     var predictStartTime = DateTime.now().millisecondsSinceEpoch;
 
     if (_interpreter == null) {
@@ -235,10 +245,10 @@ class Classifier {
     TensorBuffer outputLocations = TensorBufferFloat(
         _outputShapes[0]); // The location of each detected object
 
-    List<List<List<double>>> outputClassScores = new List.generate(
+    List<List<List<double>>> outputClassScores = List.generate(
         _outputShapes[1][0],
-        (_) => new List.generate(_outputShapes[1][1],
-            (_) => new List.filled(_outputShapes[1][2], 0.0),
+        (_) => List.generate(_outputShapes[1][1],
+            (_) => List.filled(_outputShapes[1][2], 0.0),
             growable: false),
         growable: false);
 
@@ -257,7 +267,7 @@ class Classifier {
     var inferenceTimeStart = DateTime.now().millisecondsSinceEpoch;
 
     // run inference
-    _interpreter.runForMultipleInputs(inputs, outputs);
+    _interpreter!.runForMultipleInputs(inputs, outputs);
 
     var inferenceTimeElapsed =
         DateTime.now().millisecondsSinceEpoch - inferenceTimeStart;
@@ -396,16 +406,16 @@ class Classifier {
         DateTime.now().millisecondsSinceEpoch - predictStartTime;
 
     return {
-      "recognitions": recognitionsNMS,
-      "stats": Stats(
+      'recognitions': recognitionsNMS,
+      'stats': Stats(
           totalPredictTime: predictElapsedTime,
           inferenceTime: inferenceTimeElapsed,
-          preProcessingTime: preProcessElapsedTime)
+          preProcessingTime: preProcessElapsedTime, totalElapsedTime: 0)
     };
   }
 
   /// Gets the interpreter instance
-  Interpreter get interpreter => _interpreter;
+  Interpreter get interpreter => _interpreter!;
 
   /// Gets the loaded labels
   List<String> get labels => _labels;

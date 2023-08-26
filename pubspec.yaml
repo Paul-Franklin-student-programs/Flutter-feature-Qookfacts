@@ -6,56 +6,73 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.0+11
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.17.0 <=3.0.5"
 
 dependencies:
-  auto_route: ^3.2.1
+#  auto_route: ^3.2.1
+  auto_route: ^7.5.0
   cached_network_image: ^3.2.0
   camera: ^0.9.4+10
-  carousel_slider: ^2.3.1
+  #  carousel_slider: ^2.3.1
+  carousel_slider: any
   dotted_border: ^2.0.0+2
-  double_back_to_close_app: 0.1.2
-  email_validator: 0.1.4
-  ffi: ^1.1.2
-  firebase_analytics: ^9.3.3
-  firebase_auth: ^3.3.5
-  firebase_auth_web: ^3.3.6
-  firebase_core: ^1.21.1
-  firebase_dynamic_links: ^4.0.4
-  firebase_ml_model_downloader: ^0.1.1+6
-  firebase_storage: ^10.3.7
+  #  double_back_to_close_app: 0.1.2
+  double_back_to_close_app: any
+  #  email_validator: 0.1.4
+  email_validator: any
+#  ffi: ^1.1.2
+#  web_ffi: ^0.7.2
+#  drift: ^2.9.0
+  analyzer: any
+  firebase_analytics: ^10.4.3
+  firebase_auth: ^4.6.3
+  firebase_auth_web: ^5.5.3
+  firebase_core: ^2.14.0
+  firebase_dynamic_links: ^5.3.3
+  firebase_storage: ^11.2.3
   flutter:
     sdk: flutter
-  flutter_slidable: ^0.5.7
+  flutter_slidable: ^0.6.0
+  #  flutter_slidable: any
   flutter_svg: ^1.0.1
-  flutter_toggle_tab: ^0.0.3+2
-  font_awesome_flutter: ^8.10.0
-  get_it: ^7.1.3
-  google_fonts: ^2.2.0
+  #  flutter_toggle_tab: ^0.0.3+2
+  flutter_toggle_tab: any
+  #  font_awesome_flutter: ^8.10.0
+  font_awesome_flutter: any
+#  get_it: ^7.1.3
+  get_it: ^7.5.0
+#  google_fonts: ^2.2.0
+  google_fonts: any
   google_sign_in: ^5.2.0
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   http: ^0.13.4
   image: ^3.1.1
-  injectable: ^1.0.5
+#  injectable: ^1.0.5
+  injectable: any
   intl: ^0.17.0
   intro_slider: ^2.3.3
-  json_annotation: ^4.4.0
+  json_annotation: ^4.8.0
+#  json_annotation: any
   observable_ish: ^3.0.1
   path_provider: ^2.0.8
   pedantic: ^1.9.2
-  pinput: ^0.2.6
+  #  pinput: ^0.2.6
+  pinput: any
   platform: ^3.1.0
-  rich_alert: ^0.1.32
-  shimmer: ^1.1.2
-  stacked: ^2.2.7+1
-  stacked_themes: ^0.3.8+1
-  tflite_flutter: ^0.9.0
+  #  rich_alert: ^0.1.32
+  #  rich_alert: any
+  #  shimmer: ^1.1.2
+  shimmer: any
+  stacked: ^3.4.1
+  stacked_themes: ^0.3.11
+  tflite_flutter: any
   tflite_flutter_helper: #^0.3.1
     git:
       url: https://github.com/elephantum/tflite_flutter_helper.git
       ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
-  google_ml_kit: ^0.12.0
+  google_ml_kit: ^0.14.0
+  firebase_ml_model_downloader: ^0.2.3+3
 #  url_launcher: ^6.0.18
 #  video_player: ^1.0.1
 
@@ -63,13 +80,17 @@ dependencies:
 #  flutter_lwa: ^2.0.0
 #  sign_in_with_apple: ^3.3.0
 dev_dependencies:
-  build_runner: ^2.1.7
+  build_runner: ^2.4.5
   flutter_launcher_icons: ^0.9.2
+  auto_route_generator: ^7.1.1
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.1.2
-  injectable_generator: ^1.0.6
-  json_serializable: ^6.1.4
+  hive_generator: any
+#  injectable_generator: ^1.0.6
+  injectable_generator: ^2.0.0
+#  injectable_generator: any
+  json_serializable: ^6.6.2
+#  json_serializable: any
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # flutter pub run flutter_launcher_icons:main

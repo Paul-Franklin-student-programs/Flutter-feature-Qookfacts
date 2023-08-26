@@ -1,4 +1,5 @@
 import 'package:qookit/models/recipe.dart';
+import 'package:qookit/services/elastic/endpoints/recipes_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:stacked/stacked.dart';
 
@@ -16,10 +17,10 @@ class RecipesViewModel extends MultipleFutureViewModel  {
   bool get fetchingFood => busy(_FoodFuture);
 
   // Future Getters **************************************************************************
-  List<Recipe> get suggestedRecipes => dataMap[_SuggestedFuture];
-  List<Recipe> get seasonalRecipes => dataMap[_SeasonalFuture];
-  List<Recipe> get dietRecipes => dataMap[_DietFuture];
-  List<Recipe> get foodRecipes => dataMap[_FoodFuture];
+  List<Recipe> get suggestedRecipes => dataMap?[_SuggestedFuture];
+  List<Recipe> get seasonalRecipes => dataMap?[_SeasonalFuture];
+  List<Recipe> get dietRecipes => dataMap?[_DietFuture];
+  List<Recipe> get foodRecipes => dataMap?[_FoodFuture];
 
   bool showSearchBar = false;
 
@@ -32,9 +33,9 @@ class RecipesViewModel extends MultipleFutureViewModel  {
 
   @override
   Map<String, Future Function()> get futuresMap => {
-    _SuggestedFuture : () => recipeService.getSuggestedRecipes(),
-    _SeasonalFuture : () => recipeService.getSuggestedRecipes(),
-    _DietFuture : () => recipeService.getSuggestedRecipes(),
-    _FoodFuture : () => recipeService.getSuggestedRecipes(),
+    _SuggestedFuture : () => recipeService.getSuggestedRecipes(recipeParameters: RecipeParameters.empty()),
+    _SeasonalFuture : () => recipeService.getSuggestedRecipes(recipeParameters: RecipeParameters.empty()),
+    _DietFuture : () => recipeService.getSuggestedRecipes(recipeParameters: RecipeParameters.empty()),
+    _FoodFuture : () => recipeService.getSuggestedRecipes(recipeParameters: RecipeParameters.empty()),
   };
 }

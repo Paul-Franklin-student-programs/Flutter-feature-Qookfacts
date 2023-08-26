@@ -1,14 +1,24 @@
+import 'dart:developer' as d;
+
+import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import '../../services/navigation/navigation_service.dart';
+import '../../ui/signInSignUp/loginView/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:qookit/app/app_router.gr.dart';
+// import 'package:qookit/app/app_router.gr.dart';
+import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/splashscreenView/splashscreen_view_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:auto_route/annotations.dart';
 
+
+@RoutePage()
 class SplashScreenView extends StatelessWidget {
   List<Slide> slides = [];
 
-  Function goToTab;
+  // Function goToTab;
 
   final List<String> imgList = [
     'assets/images/splash1.png',
@@ -24,10 +34,11 @@ class SplashScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return Container();
     return ViewModelBuilder<SplashScreenViewModel>.reactive(
       viewModelBuilder: () => SplashScreenViewModel(),
       onModelReady: (model) async => await model.initialize(),
-      builder: (context, model, builder) => Scaffold(
+      builder: (ctx, model, builder) => Scaffold(
           body: model.isBusy
               ? Center(
                   child: CircularProgressIndicator(),
@@ -94,27 +105,35 @@ class SplashScreenView extends StatelessWidget {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * 0.45,
                             ),
-                            GetStartedButton(context),
+                            GetStartedButton(context, model),
                             SizedBox(
                               height: 15,
                             ),
-                            LoginButton(context),
+                            LoginButton(context, model),
                             SizedBox(
                               height: 15,
                             ),
                             Center(
                               child: InkWell(
-                                child: Text(
-                                  'Maybe Later',
-                                  style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'opensans'),
+                                child: IgnorePointer(
+                                  child: Text(
+                                    'Maybe Later',
+                                    style: TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'opensans'),
+                                  ),
                                 ),
                                 onTap: () {
-                                  ExtendedNavigator.named('topNav')
-                                      .push(Routes.loginView);
+                                  // ExtendedNavigator.named('topNav')
+                                  //     ?.push(Routes.loginView);
+                                  // context.router.push(PageRouteInfo('Home',path: 'logIn'));
+                                  // Navigator.push(context, MaterialPageRoute(builder: (_)=>LoginView()));
+                                  // model.navigateToHomeScreenScreen(context);
+                                  model.navigateToLogInScreen(
+                                    context: context,
+                                    );
                                 },
                               ),
                             )
@@ -127,7 +146,7 @@ class SplashScreenView extends StatelessWidget {
     );
   }
 
-  Widget GetStartedButton(BuildContext context) {
+  Widget GetStartedButton(BuildContext context,SplashScreenViewModel model) {
     return Padding(
       padding: EdgeInsets.only(left: 10, top: 5, right: 10),
       child: InkWell(
@@ -149,35 +168,52 @@ class SplashScreenView extends StatelessWidget {
           ),
         ),
         onTap: () {
-          ExtendedNavigator.named('topNav').push(Routes.registerView);
+          // context.router.push(PageRouteInfo('RegisterView.dart', path: '../../ui/signInSignUp/registerView/register_view.dart'));
+          // ExtendedNavigator.named('topNav')?.push(Routes.registerView);
+          model.navigateToRegisterScreen(context);
         },
       ),
     );
   }
 
-  Widget LoginButton(BuildContext context) {
+  Widget LoginButton(BuildContext ctx, SplashScreenViewModel model) {
     return Padding(
       padding: EdgeInsets.only(left: 10, top: 5, right: 10),
       child: InkWell(
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white, border: Border.all(color: Colors.amber)),
-          width: 250,
-          height: 45,
-          child: Center(
-            child: Text(
-              'LOG IN',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                fontFamily: 'opensans',
-                fontWeight: FontWeight.w700,
+        child: IgnorePointer(
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white, border: Border.all(color: Colors.amber)),
+            width: 250,
+            height: 45,
+            child: Center(
+              child: Text(
+                'LOG IN',
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16,
+                  fontFamily: 'opensans',
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
         ),
         onTap: () {
-          ExtendedNavigator.named('topNav').push(Routes.loginView);
+          d.log('login clicked !!!!!!!!!');
+          // ExtendedNavigator.named('topNav')?.push(Routes.loginView);
+          // context.router.push(PageRouteInfo('LoginView.dart', path: '/login'));
+          // navigatorKey.currentState?.pushNamed('/your_route_name');
+          // navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) => LoginView() ));
+
+          // Navigator.push(ctx, MaterialPageRoute(builder: (_)=>LoginView()));
+          // await navigatorKey.navigateToRoute(MaterialPageRoute(builder: (_) => LoginView()));
+          // await NavigationService.instance.navigateToRoute(MaterialPageRoute(builder: (_) => LoginView()));
+          // Navigator.push(ctx, MaterialPageRoute(builder: (context) => LoginView()));
+          model.navigateToLogInScreen(
+            context: ctx,);
+          d.log('After');
+
         },
       ),
     );

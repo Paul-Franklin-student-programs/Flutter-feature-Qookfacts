@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/navigationView/profileView/profile_view_model.dart';
@@ -110,7 +109,7 @@ class ProfileInfo extends ViewModelBuilderWidget<ProfileViewModel> {
   ProfileInfo();
 
   @override
-  Widget builder(BuildContext context, ProfileViewModel model, Widget child) {
+  Widget builder(BuildContext context, ProfileViewModel model, Widget? child) {
     return Expanded(
       child: LayoutBuilder(
         builder: (context, constraints) => Container(

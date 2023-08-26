@@ -14,10 +14,16 @@ class Preference {
   String units;
 
   Preference({
-    this.diet,
-    this.recipe,
-    this.units,
+    required this.diet,
+    required this.recipe,
+    required this.units,
   });
+
+  static Preference empty() => Preference(
+    diet: [],
+    recipe: [],
+    units: '',
+  );
 
   factory Preference.fromJson(Map<String, dynamic> json) => _$PreferenceFromJson(json);
 

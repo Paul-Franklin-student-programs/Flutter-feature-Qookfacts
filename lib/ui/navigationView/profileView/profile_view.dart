@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qookit/bloc/user_bloc.dart';
 import 'package:qookit/services/services.dart';
-import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/navigationView/profileView/profile_view_widgets.dart';
 import 'package:qookit/ui/navigationView/profileView/profile_view_model.dart';
 import 'package:qookit/ui/navigationView/settingsView/settings_view.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class ProfileView extends StatefulWidget {
-  ProfileView({Key key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
 
   @override
   State<ProfileView> createState() => _ProfileViewState();

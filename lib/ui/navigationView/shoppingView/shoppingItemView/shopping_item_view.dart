@@ -149,7 +149,7 @@ class ShoppingItemView extends StatelessWidget {
                                   padding: const EdgeInsets.only(top: 4.0),
                                   child: Text('PRODUCE'),
                                 ),
-                                title: null,
+                                title: Container(),
                                 children: [
                                   Slidable(
                                     actionPane: SlidableScrollActionPane(),

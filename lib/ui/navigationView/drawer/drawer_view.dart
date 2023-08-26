@@ -59,7 +59,7 @@ class NavDrawer extends StatelessWidget {
                 ),
                 onTap: () {
                   RecipeParameters queryParameters =
-                      RecipeParameters(searchString: 'kale');
+                      RecipeParameters(searchString: 'kale', cuisine: [], dishTypes: [], cookMethod: [], dietLabels: []);
                   elasticService.recipesEndpoint
                       .getRecipeFromSearch(queryParameters);
                 },

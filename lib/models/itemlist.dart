@@ -11,9 +11,8 @@ part 'itemlist.g.dart';
 @HiveType(typeId: 77 )
 class ItemList extends HiveObject {
   ItemList({
-     this.name,
-     this.url,
-
+     required this.name,
+     required this.url,
   });
 
   @HiveField(0)

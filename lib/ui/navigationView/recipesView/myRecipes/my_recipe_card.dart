@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/app/dimensions.dart';
 import 'package:qookit/models/recipe.dart';
@@ -8,7 +7,7 @@ import 'package:stacked/stacked.dart';
 class MyRecipeCard extends StatelessWidget {
   final Recipe recipe;
 
-  const MyRecipeCard({Key key, this.recipe}) : super(key: key);
+  const MyRecipeCard({Key? key,required this.recipe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +18,22 @@ class MyRecipeCard extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            ExtendedNavigator.named('nestedNav').push(
+            context.router.push(PageRouteInfo(
+                'PantryView.dart',
+                path: '../../ui/navigationView/pantryView/pantry_view.dart',
+                args: {
+                    recipe: recipe,
+                    key: Key('564'),
+                  },
+            ));
+
+            /*ExtendedNavigator.named('nestedNav')?.push(
               NavigationViewRoutes.recipeDetailsView,
               arguments: RecipeDetailsViewArguments(
                 recipe: recipe,
+                key: Key('564'),
               ),
-            );
+            );*/
           },
           child: Container(
             margin: EdgeInsets.all(16),

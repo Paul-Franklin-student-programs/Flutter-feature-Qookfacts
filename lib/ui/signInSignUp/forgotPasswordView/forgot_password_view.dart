@@ -3,7 +3,9 @@ import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view_m
 import 'package:stacked/stacked.dart';
 
 import 'forgot_password_components.dart';
+import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 class ForgotPasswordView extends StatelessWidget {
   static const String id = 'forgot_password_screen';
 
@@ -141,14 +143,14 @@ class ForgotPasswordView extends StatelessWidget {
   }
 
   //EMAIL VALIDATION
-  String emailValidator(String value) {
-    Pattern pattern =
+  String emailValidator(String? value) {
+    String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value)) {
+    if (!regex.hasMatch(value ?? '')) {
       return 'Email format is invalid';
     } else {
-      return null;
+      return '';
     }
   }
 }

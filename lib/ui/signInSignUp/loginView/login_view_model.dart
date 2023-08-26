@@ -9,17 +9,17 @@ import 'package:stacked/stacked.dart';
 
 class LoginViewModel extends BaseViewModel {
 
-  String email;
-  String password;
-  String confirmPassword;
-  String name;
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
+  String name = '';
   bool showPassword = false;
   bool confirmShowPassword = false;
   bool passwordVisible = false;
 
   // LwaAuthorizeResult lwaAuth;
 
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
   var globalKey;
 
   FocusNode focusNumber = FocusNode();
@@ -39,8 +39,8 @@ class LoginViewModel extends BaseViewModel {
 
   String receivedOtp = '';
   String receivedUserId = '';
-  Function callback;
-  Function callbackOpenPasswordChangedDialog;
+  Function callback = () {};
+  Function callbackOpenPasswordChangedDialog = () {};
 
   void init(callback1, callback2) {
     callback = callback1;
@@ -95,7 +95,8 @@ class LoginViewModel extends BaseViewModel {
     String message = await authService.signInWithEmail(context, email, password);
     if (message == 'Success') {
       await UserBloc().getUserData();
-      await ExtendedNavigator.named('topNav').pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
+
+      // await ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(Routes.splashScreenView, (route) => false);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message, textAlign: TextAlign.center),
@@ -181,8 +182,9 @@ class LoginViewModel extends BaseViewModel {
 
   Future<void> loginNavigation(String message, BuildContext context) async {
     if (message == 'Success') {
-      await ExtendedNavigator.named('topNav')
-          .pushAndRemoveUntil(Routes.splashScreenView, (route) => true);
+      // await ExtendedNavigator.named('topNav')
+      //     ?.pushAndRemoveUntil(Routes.splashScreenView, (route) => true);
+      await Navigator.pushNamed(context, '/splashScreen');
     } else {
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -190,4 +192,13 @@ class LoginViewModel extends BaseViewModel {
       ));
     }
   }
+
+  void navigateToSignUp(BuildContext context){
+    Navigator.pushNamed(context, '/register');
+  }
+
+  void navigateToForgotPassword(BuildContext context){
+    Navigator.pushNamed(context, '/forgotPassword');
+  }
+
 }

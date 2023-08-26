@@ -1,19 +1,17 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:stacked/stacked.dart';
-import '../../models/itemlist.dart';
-import '../../services/hivedb/hivedb.dart';
-import '../../ui/navigationView/pantryView/pantry_view_widgets.dart';
+import '../../ui/navigationView/navigation_view_model.dart';
 import '../tflite/recognition.dart';
 import '../tflite/stats.dart';
 import '../ui/box_widget.dart';
 import 'camera_view.dart';
-import 'camera_view_singleton.dart';
+import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 /// [HomeView] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
 class HomeView extends StatefulWidget {
   @override
@@ -27,18 +25,18 @@ class _HomeViewState extends State<HomeView> {
   List<Recognition> results = [];
   List<dynamic> apiitemlist = [];
   List<String> lablestring = [
-    "Dill",
-    "Garden onion",
-    "Leek",
-    "Allium",
-    "Angelica"
+    'Dill',
+    'Garden onion',
+    'Leek',
+    'Allium',
+    'Angelica'
   ];
 
   // List<String> mylabel=[];
   // int i=0;
   /// Realtime stats
-  Stats stats;
-  Box box;
+  Stats stats = Stats.empty();
+  Box? box;
 
   /// Scaffold Key
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
@@ -67,10 +65,10 @@ class _HomeViewState extends State<HomeView> {
     final apibox = await Hive.openBox('ApiItem');
     apiitemlist = apibox.values.toList();
     print(
-        "--------------------------------------respons--------------------------------");
+        '--------------------------------------respons--------------------------------');
     for (int i = 0; i < apiitemlist.length; i++) {
       print(
-          "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+          '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
       print(apiitemlist[i].name);
       // print(apiitemlist[i].url);
 
@@ -236,7 +234,7 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.amber,
+                                backgroundColor: Colors.amber,
                                 textStyle: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold)),
@@ -300,17 +298,17 @@ class _HomeViewState extends State<HomeView> {
 
                               for (int i = 0; i < results.length; i++) {
 
-                                box.add(results[i].label.toString());
+                                box!.add(results[i].label.toString());
                                 print(results[i]);
                               }
 
                               if (results.isNotEmpty) {
-                                ExtendedNavigator.named("nestedNav")
-                                    .push(NavigationViewRoutes.pantryView);
+                                ExtendedNavigator.named('nestedNav')
+                                    ?.push(NavigationViewRoutes.pantryView);
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.amber,
+                                backgroundColor: Colors.amber,
                                 textStyle: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold)),
@@ -327,7 +325,7 @@ class _HomeViewState extends State<HomeView> {
                                 // TODO: clear ingredients
                                 //  model.detectedObjects = [];
                                 // model.notifyListeners();
-                                box.deleteFromDisk();
+                                await box!.deleteFromDisk();
                               }),
                         ),
                       ],

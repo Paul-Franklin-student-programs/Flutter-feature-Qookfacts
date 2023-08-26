@@ -50,7 +50,7 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
               leading: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(ing.quantity ?? '',
+                  Text(ing.quantity.toString() ?? '',
                       style: GoogleFonts.openSans(fontSize: 15)),
                   Text(ing.unit ?? '',
                       style: GoogleFonts.openSans(

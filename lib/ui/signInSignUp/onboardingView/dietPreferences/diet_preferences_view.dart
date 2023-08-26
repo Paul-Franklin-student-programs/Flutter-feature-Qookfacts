@@ -5,6 +5,9 @@ import 'package:qookit/ui/signInSignUp/onboardingView/dietPreferences/diet_prefe
 import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class DietPreferencesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,7 @@ Widget Diets(DietPreferencesViewModel model, BuildContext context) {
               mainAxisSpacing: 10,
               children: [
                 for (String diet in model.diets)
-                  DietOption(diet, context, model, box)
+                  DietOption(diet, context, model, box as Box<dynamic>)
               ],
             ),
           ),

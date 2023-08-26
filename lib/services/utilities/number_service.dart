@@ -8,11 +8,11 @@ extension Range on num {
   List<num> to(num endPoint) {
     var numbers = <num>[];
     if (endPoint > this) {
-      for (int i = this; i <= endPoint; i++) {
+      for (num i = this; i <= endPoint; i++) {
         numbers.add(i);
       }
     } else {
-      for (int i = this; i >= endPoint; i--) {
+      for (num i = this; i >= endPoint; i--) {
         numbers.add(i);
       }
     }

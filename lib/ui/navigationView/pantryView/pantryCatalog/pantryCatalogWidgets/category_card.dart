@@ -4,7 +4,7 @@ import 'package:qookit/ui/navigationView/pantryView/pantryCatalog/pantry_catalog
 class CategoryCard extends StatelessWidget {
   final PantryCategory category;
 
-  const CategoryCard({Key key, @required this.category}) : super(key: key);
+  const CategoryCard({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

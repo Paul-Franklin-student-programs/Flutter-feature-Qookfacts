@@ -4,6 +4,9 @@ import 'package:qookit/ui/navigationView/recipesView/myRecipes/my_recipe_card.da
 import 'package:qookit/ui/navigationView/recipesView/myRecipes/my_recipes_view_model.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class MyRecipesView extends StatelessWidget {
   //ValueListenable myRecipes = userService.myRecipesListenable;
 
@@ -20,7 +23,7 @@ class MyRecipesView extends StatelessWidget {
             return Center(
               child: Column(
                 children: [
-                  Text(model.error().toString()),
+                  Text(model.error('').toString()),
                   LinearProgressIndicator(),
                 ],
               ),
@@ -41,10 +44,10 @@ class MyRecipesView extends StatelessWidget {
                     if (index == 0) {
                       return AddRecipeCard();
                     } else {
-                      return MyRecipeCard(recipe: model.data[index]);
+                      return MyRecipeCard(recipe: model.data![index]);
                     }
                   },
-                  childCount: model.data.length - 1
+                  childCount: model.data!.length - 1
                 ),
               )
             ]);

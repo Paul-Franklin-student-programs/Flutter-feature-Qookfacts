@@ -2,9 +2,11 @@ import 'package:qookit/models/recipe.dart';
 import 'package:qookit/services/services.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../services/elastic/endpoints/recipes_service.dart';
+
 class FavoritesViewModel extends FutureViewModel<List<Recipe>> {
   @override
-  Future<List<Recipe>> futureToRun() => recipeService.getSuggestedRecipes();
+  Future<List<Recipe>> futureToRun() => recipeService.getSuggestedRecipes(recipeParameters: RecipeParameters.empty());
 
   // TODO: get user favorites
   Future<List<Recipe>> getUserRecipes() async {

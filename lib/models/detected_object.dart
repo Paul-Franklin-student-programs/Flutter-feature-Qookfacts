@@ -8,12 +8,20 @@ class DetectedObject {
   double confidence;
   int detectedClass;
   String id;
-  DetectedLocation location;
+  DetectedLocation? location;
   String title;
 
-  DetectedObject({this.confidence, this.detectedClass, this.id, this.location, this.title});
+  DetectedObject(
+      {
+      required this.confidence,
+      required this.detectedClass,
+      required this.id,
+      required this.location,
+      required this.title
+      });
 
-  factory DetectedObject.fromJson(Map<String, dynamic> json) => _$DetectedObjectFromJson(json);
+  factory DetectedObject.fromJson(Map<String, dynamic> json) =>
+      _$DetectedObjectFromJson(json);
 
   Map<String, dynamic> toJson() => _$DetectedObjectToJson(this);
 }

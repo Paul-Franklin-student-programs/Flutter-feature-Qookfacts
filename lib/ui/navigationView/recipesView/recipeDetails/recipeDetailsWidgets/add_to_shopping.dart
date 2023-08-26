@@ -6,8 +6,8 @@ class AddToShoppingList extends ViewModelWidget<RecipeDetailsViewModel> {
   @override
   Widget build(BuildContext context, RecipeDetailsViewModel model) {
     return Center(
-      child: RaisedButton(
-        child: Text('ADD TO SHOPPING LIST'),
+      child: IconButton(
+        icon: Text('ADD TO SHOPPING LIST'),
         color: Colors.amber,
         onPressed: (){
 

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../../../../models/checkditem.dart';
-import '../../../../services/elastic/endpoints/users_service.dart';
-import '../../../../services/services.dart';
 
 class GiveItATry extends StatefulWidget {
   @override
@@ -14,7 +11,7 @@ class GiveItATry extends StatefulWidget {
 class _GiveItATryState extends State<GiveItATry> {
   List<dynamic> apiitemlist = [];
   List<dynamic> ditemlist = [];
-  Box ditembox;
+  Box? ditembox;
 
   // CheckDitem hiverespons;
 
@@ -55,7 +52,7 @@ class _GiveItATryState extends State<GiveItATry> {
     // final apibox = await Hive.openBox('ApiItem');
 
     // apiitemlist =  apibox.values.toList();
-    ditemlist = ditembox.values.toList();
+    ditemlist = ((ditembox != null) ? ditembox?.values.toList() : [])!;
     setState(() {});
     // print(
     //     "--------------------------------------0--------------------------------");
@@ -131,7 +128,7 @@ class _GiveItATryState extends State<GiveItATry> {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  ditembox.deleteAt(index);
+                                  ditembox!.deleteAt(index);
                                   ditemlist.removeAt(index);
                                   setState(() {});
                                 },

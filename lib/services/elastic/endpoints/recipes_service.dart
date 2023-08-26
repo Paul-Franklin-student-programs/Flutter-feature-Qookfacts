@@ -57,10 +57,10 @@ class RecipesService {
   }
 
   Future<List<Recipe>> getSuggestedRecipes(
-      {RecipeParameters recipeParameters}) async {
+      {required RecipeParameters recipeParameters}) async {
     RecipeParameters queryParameters;
     if (recipeParameters == null) {
-      queryParameters = RecipeParameters(searchString: 'beef');
+      queryParameters = RecipeParameters(searchString: 'beef', cuisine: [], dishTypes: [], cookMethod: [], dietLabels: [],);
     } else {
       queryParameters = recipeParameters;
     }
@@ -69,7 +69,7 @@ class RecipesService {
     var uri =
         Uri.https(elasticService.domain, endpoint, queryParameters.toMap());
     var token = await authService.token;
-    print("----------------------------------------");
+    print('----------------------------------------');
     var recipeResponse = await http.get(
       uri,
       headers: {
@@ -98,33 +98,40 @@ class RecipesService {
 }
 
 class RecipeParameters {
-  final String searchString;
-  final String dishName;
-  final List<String> cuisine;
-  final List<String> dishTypes;
-  final List<String> cookMethod;
-  final int maxTotalTime;
-  final int minRating;
-  final int maxTotalCalories;
-  final List<String> dietLabels;
-  final int pageSize;
-  final String pageToken;
-  final String include;
+  String searchString = '';
+  String dishName = '';
+  List<String> cuisine= [];
+  List<String> dishTypes= [];
+  List<String> cookMethod= [];
+  int maxTotalTime = 0;
+  int minRating = 0;
+  int maxTotalCalories = 0;
+  List<String> dietLabels;
+  int pageSize = 0;
+  String pageToken = '';
+  String include = '';
 
   RecipeParameters({
-    this.searchString,
-    this.dishName,
-    this.cuisine,
-    this.dishTypes,
-    this.cookMethod,
-    this.maxTotalTime,
-    this.minRating,
-    this.maxTotalCalories,
-    this.dietLabels,
-    this.pageSize,
-    this.pageToken,
-    this.include,
+    this.searchString = '',
+    this.dishName = '',
+    required this.cuisine,
+    required this.dishTypes,
+    required this.cookMethod,
+    this.maxTotalTime = 0,
+    this.minRating  = 0,
+    this.maxTotalCalories  = 0,
+    required this.dietLabels,
+    this.pageSize = 0,
+    this.pageToken = '',
+    this.include = '',
   });
+
+  static RecipeParameters empty() => RecipeParameters(
+      cuisine: [],
+      dishTypes: [],
+      cookMethod: [],
+      dietLabels: []
+  );
 
   Map<String, String> toMap() {
     return {

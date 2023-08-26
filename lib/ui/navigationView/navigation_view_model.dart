@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:qookit/app/app_router.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/navigationView/navigation_widgets.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../app/app_router.gr.dart';
+
 class NavigationViewModel extends BaseViewModel {
   final navigatorKey = GlobalKey<NavigatorState>();
-  String screenId;
+  String screenId = '';
   int selectedIndex = 0; // The current page selected by the user
   bool initiated = false;
 
   bool showOverlay = false;
   GlobalKey fabKey = GlobalObjectKey('fab');
 
-  OverlayEntry fabOverlay;
+  OverlayEntry? fabOverlay;
 
-  OverlayEntry get firstFabOverlay {
-    fabOverlay = showFabActions(fabKey.currentContext, this);
+  OverlayEntry? get firstFabOverlay {
+    if(fabKey.currentContext != null){
+      fabOverlay = showFabActions(fabKey.currentContext!, this);
+    }
     return fabOverlay;
   }
 
@@ -26,7 +31,7 @@ class NavigationViewModel extends BaseViewModel {
     screenId = hiveService.userBox.get(
       UserService.lastScreen
     ); //defaultValue: PantryView.id);
-    selectedIndex = routeMap.indexOf(screenId);
+    // selectedIndex = routeMap.indexOf(screenId);
   }
 
   bool get hideNav {
@@ -60,10 +65,10 @@ class NavigationViewModel extends BaseViewModel {
 
     } else {
       selectedIndex = index;
-      screenId = routeMap[selectedIndex];
+      // screenId = routeMap[selectedIndex];
       hiveService.userBox.put(UserService.lastScreen, screenId);
-      print('Index: $index Route: ${routeMap[selectedIndex]} ScreenID: $screenId');
-      ExtendedNavigator.named('nestedNav').push(screenId);
+      // print('Index: $index Route: ${routeMap[selectedIndex]} ScreenID: $screenId');
+      ExtendedNavigator.named('nestedNav')?.push(screenId);
       notifyListeners();
     }
   }
@@ -92,13 +97,14 @@ class NavigationViewModel extends BaseViewModel {
   Future<bool> onWillPop(BuildContext context) async {
     print('on will POP');
     // If the nested navigator can pop, pop
-    if (navigatorKey.currentState.canPop()) {
-      navigatorKey.currentState.pop();
+    if (navigatorKey.currentState != null && navigatorKey.currentState!.canPop()) {
+      navigatorKey.currentState!.pop();
       return false;
     }
     // Else exit app (after approval)
     else {
-      return showDialog(
+      bool isPop = false;
+      await showDialog(
             context: context,
             builder: (context) => AlertDialog(
               title: Text('Are you sure?'),
@@ -115,10 +121,23 @@ class NavigationViewModel extends BaseViewModel {
                 ),
               ],
             ),
-          ) ??
-          false;
+          ).then((value) {
+            return false;
+      });
+      return false;
     }
   }
+}
+
+class NavigationViewRoutes {
+  static var cameraView = 'cameraView';
+  static var recipeSearchView = 'recipeSearchView';
+  static var pantryCatalogView = 'pantryCatalogView';
+
+  static var pantryView = 'pantryView';
+  static var recipesView = 'recipesView';
+  static var shoppingView = 'shoppingView';
+  static var profileView = 'profileView';
 }
 
 class BottomItem {
@@ -135,55 +154,55 @@ class NavigationObserver extends RouteObserver {
   final NavigationViewModel model;
 
   @override
-  void didReplace({Route newRoute, Route oldRoute}) {
-    print('replace');
-    var newIndex = getNewIndex(newRoute.settings.name);
-    print('new index: ${newRoute.settings.name}');
-    model.updateSelectedItem(newIndex);
-    model.updateScreen(newRoute.settings.name);
+  void didReplace({Route? newRoute,Route? oldRoute}) {
+    // print('replace');
     super.didReplace();
+    var newIndex = getNewIndex(newRoute!.settings.name ?? '');
+    // print('new index: ${newRoute.settings.name}');
+    model.updateSelectedItem(newIndex);
+    model.updateScreen(newRoute.settings.name ?? '');
   }
 
   // Update the nav bar index based on the current route
   @override
-  void didPop(Route route, Route previousRoute) {
-    print('Route: ${route.settings.name}');
-    print('Previous: ${previousRoute.settings.name}');
+  void didPop(Route? route, Route? previousRoute) {
+    print('Route: ${route!.settings.name}');
+    print('Previous: ${previousRoute!.settings.name}');
     print('Nested nav pop');
-    int newIndex = getNewIndex(previousRoute.settings.name);
+    int newIndex = getNewIndex(previousRoute.settings.name ?? '');
     model.updateSelectedItem(newIndex);
-    model.updateScreen(previousRoute.settings.name);
+    model.updateScreen(previousRoute.settings.name ?? '');
     super.didPop(route, previousRoute);
   }
 
   @override
-  void didPush(Route route, Route previousRoute) {
+  void didPush(Route? route, Route? previousRoute) {
     print('');
     // Don't rebuild model the first time it opens...causes crash
     if (model.initiated) {
-      int newIndex = getNewIndex(route.settings.name);
-      print('new index: ${route.settings.name}');
+      int newIndex = getNewIndex(route?.settings.name ?? '');
+      print('new index: ${route?.settings.name}');
       model.updateSelectedItem(newIndex);
-      model.updateScreen(route.settings.name);
+      model.updateScreen(route?.settings.name ?? '');
     } else {
       model.initiateNavigator();
     }
-    super.didPush(route, previousRoute);
+    super.didPush(route!, previousRoute);
   }
 
   int getNewIndex(String routeName) {
     int newIndex = 0;
     switch (routeName) {
-      case NavigationViewRoutes.pantryView:
+      case 'PantryView.dart':
         newIndex = 0;
         break;
-      case NavigationViewRoutes.recipesView:
+      case 'RecipesView.dart':
         newIndex = 1;
         break;
-      case NavigationViewRoutes.shoppingView:
+      case 'ShoppingView.dart':
         newIndex = 2;
         break;
-      case NavigationViewRoutes.profileView:
+      case 'ProfileView.dart':
         newIndex = 3;
         break;
     }

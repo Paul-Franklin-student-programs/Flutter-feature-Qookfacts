@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qookit/app/app_router.gr.dart';
@@ -7,12 +9,21 @@ import 'package:stacked/stacked.dart';
 class RecipesSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Random random = Random();
     return TextField(
       textInputAction: TextInputAction.search,
       onSubmitted: (searchTerm) {
-        ExtendedNavigator.named('nestedNav').push(
-            NavigationViewRoutes.recipeSearchView,
-            arguments: RecipeSearchViewArguments(searchTerm: searchTerm));
+        context.router.push(PageRouteInfo(
+          'PantryView.dart',
+          path: '../../ui/navigationView/pantryView/pantry_view.dart',
+          args: {
+            searchTerm: searchTerm,
+            key: Key('2345'),
+          },
+        ));
+        // ExtendedNavigator.named('nestedNav')?.push(
+        //     NavigationViewRoutes.recipeSearchView,
+        //     arguments: RecipeSearchViewArguments(searchTerm: searchTerm, key: Key('2345')));
       },
       decoration: InputDecoration(
         fillColor: Colors.grey.shade200,
@@ -27,8 +38,12 @@ class RecipesSearchBar extends StatelessWidget {
         suffixIcon: IconButton(
           icon: FaIcon(FontAwesomeIcons.slidersH),
           onPressed: () {
-            ExtendedNavigator.named('nestedNav')
-                .push(NavigationViewRoutes.recipeSearchView);
+            context.router.push(PageRouteInfo(
+              'PantryView.dart',
+              path: '../../ui/navigationView/pantryView/pantry_view.dart',
+            ));
+            // ExtendedNavigator.named('nestedNav')
+            //     ?.push(NavigationViewRoutes.recipeSearchView);
           },
         ),
         contentPadding: EdgeInsets.all(0),

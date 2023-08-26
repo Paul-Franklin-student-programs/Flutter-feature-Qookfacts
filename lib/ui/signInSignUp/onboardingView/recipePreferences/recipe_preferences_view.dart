@@ -4,7 +4,9 @@ import 'package:qookit/services/services.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view_model.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 class RecipePreferencesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class RecipePreferencesView extends StatelessWidget {
                 mainAxisSpacing: 10,
                 children: [
                   for (String recipe in model.recipes)
-                    RecipeOption(recipe, context, model, box)
+                    RecipeOption(recipe, context, model, box as Box<dynamic>)
                 ],
               ),
             ),

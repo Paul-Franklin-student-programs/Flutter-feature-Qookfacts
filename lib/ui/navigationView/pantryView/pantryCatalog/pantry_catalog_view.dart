@@ -3,6 +3,9 @@ import 'package:qookit/ui/navigationView/pantryView/pantryCatalog/pantryCatalogW
 import 'package:qookit/ui/navigationView/pantryView/pantryCatalog/pantry_catalog_view_model.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auto_route/annotations.dart';
+
+@RoutePage()
 class PantryCatalogView extends StatelessWidget {
 
   @override

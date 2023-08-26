@@ -4,7 +4,7 @@ import 'package:qookit/services/getIt.dart';
 import 'package:stacked/stacked.dart';
 
 class ForgotPasswordViewModel extends BaseViewModel{
-  String email;
+  String email = '';
   bool emailSent = false;
   String emailMessage = 'Enter your email address below to reset password';
 
@@ -12,7 +12,7 @@ class ForgotPasswordViewModel extends BaseViewModel{
     scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
-  GlobalKey<ScaffoldState> scaffoldKey;
+  GlobalKey<ScaffoldState>? scaffoldKey;
   var globalKey;
 
   final TextEditingController txtEmailId = TextEditingController();
@@ -28,8 +28,8 @@ class ForgotPasswordViewModel extends BaseViewModel{
   String btnText = 'Login';
   String receivedOtp = '';
   String receivedUserId = '';
-  Function callback;
-  Function callbackOpenPasswordChangedDialog;
+  Function callback = (){};
+  Function callbackOpenPasswordChangedDialog = (){};
 
   void updateEmail(String newEmail){
     email = newEmail;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qookit/app/app_router.gr.dart';
+import '../forgotPasswordView/forgot_password_view.dart';
+import '../registerView/register_view.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
 
@@ -28,7 +30,8 @@ class ForgotPasswordButton extends ViewModelWidget<LoginViewModel> {
               ),
             ),
             onTap: () {
-              ExtendedNavigator.named('topNav').push(Routes.forgotPasswordView);
+              // ExtendedNavigator.named('topNav')?.push(Routes.forgotPasswordView);
+              model.navigateToForgotPassword(context);
             },
           ),
         ),
@@ -78,7 +81,13 @@ class NoAccountRow extends ViewModelWidget<LoginViewModel> {
             padding: EdgeInsets.all(10),
           ),
           onTap: () {
-            ExtendedNavigator.named('topNav').replace(Routes.registerView);
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterView()));
+            /*context.router.push(PageRouteInfo(
+              'RegisterView.dart',
+              path: '../registerView/register_view.dart',
+            ));*/
+            // ExtendedNavigator.named('topNav')?.replace(Routes.registerView);
+            model.navigateToSignUp(context);
           },
         )
       ],
@@ -148,5 +157,5 @@ class ThirdParty {
   String image;
   String label;
 
-  ThirdParty({this.image, this.label});
+  ThirdParty({required this.image,required this.label});
 }

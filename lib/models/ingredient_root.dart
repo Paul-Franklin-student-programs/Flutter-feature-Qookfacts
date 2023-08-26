@@ -23,5 +23,13 @@ class IngredientRoot {
 
   Map<String, dynamic> toJson() => _$IngredientRootToJson(this);
 
-  IngredientRoot();
+  IngredientRoot(
+      this.firstPageToken,
+      this.itemCount,
+      this.items,
+      this.lastPageToken,
+      this.nextPageToken,
+      this.prevPageToken,
+      this.totalItemCount,
+      this.totalPageCount);
 }

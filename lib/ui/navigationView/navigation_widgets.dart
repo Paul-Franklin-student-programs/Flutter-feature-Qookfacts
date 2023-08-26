@@ -7,7 +7,7 @@ import 'package:qookit/ui/navigationView/navigation_view_model.dart';
 import 'package:stacked/stacked.dart';
 
 OverlayEntry showFabActions(BuildContext context, NavigationViewModel model) {
-  RenderBox renderBox = context.findRenderObject();
+  final RenderBox renderBox = context.findRenderObject() as RenderBox;
   var size = renderBox.size;
   var offset = renderBox.localToGlobal(Offset.zero);
 
@@ -75,7 +75,7 @@ Widget cancelFab(NavigationViewModel model) {
       backgroundColor: Colors.amber,
       onPressed: () {
         model.updateOverlay(false);
-        model.fabOverlay.remove();
+        model.fabOverlay!.remove();
       },
     ),
   );
@@ -99,10 +99,14 @@ Widget fabOption(
             onPressed: () {
               // Navigate to camera, send scan type with navigation
               model.updateOverlay(false);
-              model.fabOverlay.remove();
+              model.fabOverlay!.remove();
 
-              ExtendedNavigator.named('nestedNav')
-                  .push(NavigationViewRoutes.cameraView);
+              context.router.push(PageRouteInfo(
+                'PantryView.dart',
+                path: '../../ui/navigationView/pantryView/pantry_view.dart',
+              ));
+              // ExtendedNavigator.named('nestedNav')
+              //     ?.push(NavigationViewRoutes.cameraView);
             },
           ),
           Padding(

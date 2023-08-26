@@ -27,17 +27,27 @@ class PantryItem {
   @HiveField(5)
   String photoUrl;
 
-  factory PantryItem.fromJson(Map<String, dynamic> json) => _$PantryItemFromJson(json);
+  factory PantryItem.fromJson(Map<String, dynamic> json) =>
+      _$PantryItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$PantryItemToJson(this);
 
   PantryItem(
-      {this.category,
-      this.expiryGroups,
-      this.ingredientId,
-      this.isFrozen,
-      this.isRefrigerated,
-      this.name,
-      this.notes,
-      this.photoUrl});
+      {required this.category,
+      required this.expiryGroups,
+      required this.ingredientId,
+      required this.isFrozen,
+      required this.isRefrigerated,
+      required this.name,
+      required this.notes,
+      required this.photoUrl});
+  static PantryItem empty() => PantryItem(
+      category: '',
+      expiryGroups: [],
+      ingredientId: '',
+      isFrozen: false,
+      isRefrigerated: false,
+      name: '',
+      notes: '',
+      photoUrl: '');
 }

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/app/strings.dart';
@@ -82,8 +81,13 @@ class PantryHeader extends ViewModelWidget<PantryViewModel> {
                       child: GestureDetector(
                         onTap: () {
                           print('tapped');
-                          ExtendedNavigator.named('nestedNav')
-                              .push(NavigationViewRoutes.pantryCatalogView);
+                          context.router.push(PageRouteInfo(
+                              'PantryView.dart',
+                              path: '../../ui/navigationView/pantryView/pantry_view.dart'
+                          ));
+
+                          // ExtendedNavigator.named('nestedNav')
+                          //     ?.push(NavigationViewRoutes.pantryCatalogView);
                         },
                         child: TextField(
                           enabled: false,
@@ -204,7 +208,7 @@ class FreezerPantry extends ViewModelWidget<PantryViewModel> {
 class PantryList extends ViewModelWidget<PantryViewModel> {
   final ValueListenable<Box<dynamic>> pantryBox;
 
-  PantryList({this.pantryBox});
+  PantryList({required this.pantryBox});
 
   @override
   Widget build(BuildContext context, PantryViewModel viewModel) {
@@ -236,10 +240,10 @@ class PantryList extends ViewModelWidget<PantryViewModel> {
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
                                   viewModel.categories[index].toUpperCase(),
-                                  style: Theme.of(context).textTheme.headline5,
+                                  style: Theme.of(context).textTheme.headlineSmall,
                                 ),
                               ),
-                              title: null,
+                              title: Container(),
                               children: [
                                 for (PantryItem item
                                     in pantryBox.value.values.where((element) {
@@ -268,7 +272,7 @@ class PantryList extends ViewModelWidget<PantryViewModel> {
                                           item.name,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .titleLarge,
                                         ),
                                         subtitle: Text('WHOLEFOODS * EXP 9/24'),
                                         leading: FlutterLogo(),

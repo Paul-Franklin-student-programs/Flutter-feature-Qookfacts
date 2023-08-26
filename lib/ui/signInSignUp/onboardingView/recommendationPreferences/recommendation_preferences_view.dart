@@ -5,7 +5,9 @@ import 'package:qookit/services/user/user_service.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view_model.dart';
 import 'package:qookit/ui/signInSignUp/onboardingView/shared_onboarding_widgets.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 class RecommendationPreferences extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class RecommendationPreferences extends StatelessWidget {
           shrinkWrap: true,
           children: [
             for (String rec in model.recs)
-              RecommendationOption(rec, context, model, box)
+              RecommendationOption(rec, context, model, box as Box<dynamic>)
           ],
         ));
       },

@@ -3,7 +3,7 @@ import 'package:qookit/models/recipe.dart';
 import 'package:stacked/stacked.dart';
 
 class RecipeDetailsViewModel extends BaseViewModel {
-  Recipe recipe;
+  Recipe recipe = Recipe.empty();
   String selectedTab = 'ingredients';
   int servings = 6;
 
@@ -27,19 +27,19 @@ class RecipeDetailsViewModel extends BaseViewModel {
           name: 'Basil',
           text: 'Several sprigs of fresh basil',
           quantity: 2,
-          unit: 'cups',
+          unit: 'cups', ingredientId: '', prepNote: '',
         ),
         Ingredient(
           name: 'Olive Oil',
           text: 'extra-virgin olive oil',
           quantity: 1,
-          unit: 'cup',
+          unit: 'cup', ingredientId: '', prepNote: '',
         ),
         Ingredient(
           name: 'Tomatoes',
           text: 'garlic cloves',
           quantity: 8,
-          unit: 'oz',
+          unit: 'oz', ingredientId: '', prepNote: '',
         ),
       ];
     }
@@ -52,10 +52,10 @@ class RecipeDetailsViewModel extends BaseViewModel {
       name: 'Basil',
       text: 'Several sprigs of fresh basil',
       quantity: 2,
-      unit: 'cups',
+      unit: 'cups', ingredientId: '', prepNote: '',
     ),
-    Ingredient(name: 'Olive Oil', text: 'extra-virgin olive oil', quantity: 1, unit: 'cup'),
-    Ingredient(name: 'Tomatoes', text: 'garlic cloves', quantity: 8, unit: 'oz'),
+    Ingredient(name: 'Olive Oil', text: 'extra-virgin olive oil', quantity: 1, unit: 'cup', ingredientId: '', prepNote: '',),
+    Ingredient(name: 'Tomatoes', text: 'garlic cloves', quantity: 8, unit: 'oz', ingredientId: '', prepNote: '',),
   ];
 
   List<String> get instructions {

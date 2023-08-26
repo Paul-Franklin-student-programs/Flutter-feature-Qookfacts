@@ -6,7 +6,9 @@ import 'package:qookit/services/utilities/string_service.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_components.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/annotations.dart';
 
+@RoutePage()
 class RegisterView extends StatelessWidget {
   static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
@@ -285,7 +287,7 @@ class RegisterView extends StatelessWidget {
                                     text: 'SIGN UP',
                                     color: colorTheme,
                                     onPressed: () {
-                                      if (_loginFormKey.currentState
+                                      if (_loginFormKey.currentState != null && _loginFormKey.currentState!
                                           .validate()) {
                                         model.signUpWithEmail(context);
                                       }
@@ -515,7 +517,7 @@ class RegisterView extends StatelessWidget {
                                           ],
                                         ),
                                       ));
-                            } else if (!Validator.EmailValidator.Validate(
+                            } else if (!Validator.EmailValidator.validate(
                                 model.txtEmailIDForgotPassword.text.trim())) {
                               showDialog(
                                   context: context,

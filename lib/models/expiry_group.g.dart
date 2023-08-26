@@ -16,13 +16,15 @@ class ExpiryGroupAdapter extends TypeAdapter<ExpiryGroup> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return ExpiryGroup()
-      ..createdDate = fields[0] as String
-      ..expiresDate = fields[1] as String
-      ..purchasedDate = fields[2] as String
-      ..quantity = fields[3] as int
-      ..unit = fields[4] as String;
+    return ExpiryGroup(
+      fields[0] as String,
+      fields[1] as String,
+      fields[2] as String,
+      fields[3] as int,
+      fields[4] as String,
+    );
   }
+
   @override
   void write(BinaryWriter writer, ExpiryGroup obj) {
     writer
@@ -54,14 +56,13 @@ class ExpiryGroupAdapter extends TypeAdapter<ExpiryGroup> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-ExpiryGroup _$ExpiryGroupFromJson(Map<String, dynamic> json) {
-  return ExpiryGroup()
-    ..createdDate = json['createdDate'] as String
-    ..expiresDate = json['expiresDate'] as String
-    ..purchasedDate = json['purchasedDate'] as String
-    ..quantity = json['quantity'] as int
-    ..unit = json['unit'] as String;
-}
+ExpiryGroup _$ExpiryGroupFromJson(Map<String, dynamic> json) => ExpiryGroup(
+      json['createdDate'] as String,
+      json['expiresDate'] as String,
+      json['purchasedDate'] as String,
+      json['quantity'] as int,
+      json['unit'] as String,
+    );
 
 Map<String, dynamic> _$ExpiryGroupToJson(ExpiryGroup instance) =>
     <String, dynamic>{

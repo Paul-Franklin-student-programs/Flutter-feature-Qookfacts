@@ -5,9 +5,9 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as imageLib;
-import 'package:qookit/main.dart';
 import 'package:qookit/services/ml/ml_service.dart';
 import 'package:qookit/tflite_test/tflite/recognition.dart';
+import 'package:qookit/tflite_test/utils/isolate_utils.dart';
 // import 'package:object_detection/tflite/recognition.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
@@ -20,9 +20,9 @@ class Classifier {
   Interpreter _interpreter;
 
   //Interpreter Options (Settings)
-  final int numThreads = 4;
-  final bool isNNAPI = false;
-  final bool isGPU = true;
+  int numThreads = 4;
+  bool isNNAPI = false;
+  bool isGPU = true;
 
   /// Labels file loaded as list
   List<String> _labels;
@@ -37,7 +37,7 @@ class Classifier {
   static double mNmsThresh = 0.6;
 
   /// [ImageProcessor] used to pre-process the image
-  ImageProcessor imageProcessor;
+  ImageProcessor? imageProcessor;
 
   /// Padding the image to transform into square
   int padSize;
@@ -52,16 +52,41 @@ class Classifier {
   static const int NUM_RESULTS = 10;
   var labelnames = [];
 
-  Classifier({
-    Interpreter interpreter,
-    List<String> labels,
+  Classifier(
+  this._interpreter,
+  this.numThreads,
+  this.isNNAPI,
+  this.isGPU,
+  this._labels,
+  this.imageProcessor,
+  this.padSize,
+  this._outputShapes,
+  this._outputTypes,
+  this.labelnames,{
+    required Interpreter? interpreter,
+    required List<String> labels,
   }) {
     loadModel(interpreter: interpreter);
     loadLabels(labels: labels);
   }
+  static IsolateData isolateData = IsolateData.empty();
+  static Classifier empty() => Classifier(
+      Interpreter.fromAddress(isolateData.interpreterAddress),
+      0,
+      false,
+      false,
+      [],
+      null,
+      0,
+      [],
+      [],
+      [],
+      interpreter: Interpreter.fromAddress(isolateData.interpreterAddress),
+      labels: []
+  );
 
   /// Loads interpreter from asset
-  void loadModel({Interpreter interpreter}) async {
+  void loadModel({required Interpreter? interpreter}) async {
     try {
       //Still working on it
       /* InterpreterOptions myOptions = new InterpreterOptions();
@@ -99,19 +124,19 @@ class Classifier {
         _outputTypes.add(tensor.type);
       });
     } catch (e) {
-      print("Error while creating interpreter: $e");
+      print('Error while creating interpreter: $e');
     }
   }
 
   /// Loads labels from assets
-  void loadLabels({List<String> labels}) async {
+  void loadLabels({required List<String> labels}) async {
     try {
 
       _labels =
           labels ?? await FileUtil.labelListFromString(MlService.readdata);
 
     } catch (e) {
-      print("Error while loading labels: $e");
+      print('Error while loading labels: $e');
     }
   }
 
@@ -119,14 +144,12 @@ class Classifier {
   /// Only does something to the image if it doesn't meet the specified input sizes.
   TensorImage getProcessedImage(TensorImage inputImage) {
     padSize = max(inputImage.height, inputImage.width);
-    if (imageProcessor == null) {
-      imageProcessor = ImageProcessorBuilder()
+    imageProcessor ??= ImageProcessorBuilder()
           .add(ResizeWithCropOrPadOp(padSize, padSize))
           .add(ResizeOp(INPUT_SIZE, INPUT_SIZE, ResizeMethod.BILINEAR))
           .add(DequantizeOp(0, 255.0))
           .build();
-    }
-    inputImage = imageProcessor.process(inputImage);
+    inputImage = imageProcessor!.process(inputImage);
     return inputImage;
   }
 
@@ -134,11 +157,11 @@ class Classifier {
   List<Recognition> nms(
       List<Recognition> list) // Turned from Java's ArrayList to Dart's List.
   {
-    List<Recognition> nmsList = new List<Recognition>();
+    List<Recognition> nmsList = [];
 
     for (int k = 0; k < _labels.length; k++) {
       // 1.find max confidence per class
-      PriorityQueue<Recognition> pq = new HeapPriorityQueue<Recognition>();
+      PriorityQueue<Recognition> pq = HeapPriorityQueue<Recognition>();
       for (int i = 0; i < list.length; ++i) {
         if (list[i].label == _labels[k]) {
           // Changed from comparing #th class to class to string to string
@@ -155,7 +178,7 @@ class Classifier {
         pq.clear();
         for (int j = 1; j < detections.length; j++) {
           Recognition detection = detections[j];
-          Rect b = detection.location;
+          Rect? b = detection.location;
           if (boxIou(max.location, b) < mNmsThresh) {
             pq.add(detection);
           }
@@ -166,8 +189,12 @@ class Classifier {
     return nmsList;
   }
 
-  double boxIou(Rect a, Rect b) {
-    return boxIntersection(a, b) / boxUnion(a, b);
+  double boxIou(Rect? a, Rect? b) {
+    if(a != null && b != null){
+      return boxIntersection(a, b) / boxUnion(a, b);
+    }else{
+      return 0.0;
+    }
   }
 
   double boxIntersection(Rect a, Rect b) {
@@ -201,7 +228,7 @@ class Classifier {
   }
 
   /// Runs object detection on the input image
-  Map<String, dynamic> predict(imageLib.Image image) {
+  Map<String, dynamic>? predict(imageLib.Image image) {
     var predictStartTime = DateTime.now().millisecondsSinceEpoch;
 
     if (_interpreter == null) {
@@ -231,10 +258,10 @@ class Classifier {
     TensorBuffer outputLocations = TensorBufferFloat(
         _outputShapes[0]); // The location of each detected object
 
-    List<List<List<double>>> outputClassScores = new List.generate(
+    List<List<List<double>>> outputClassScores = List.generate(
         _outputShapes[1][0],
-        (_) => new List.generate(_outputShapes[1][1],
-            (_) => new List.filled(_outputShapes[1][2], 0.0),
+        (_) => List.generate(_outputShapes[1][1],
+            (_) => List.filled(_outputShapes[1][2], 0.0),
             growable: false),
         growable: false);
 
@@ -317,11 +344,11 @@ class Classifier {
               min(INPUT_SIZE + 0.0, locations[i].bottom));
 
           // Gets the coordinates based on the original image if anything was done to it.
-          Rect transformedRect = imageProcessor.inverseTransformRect(
-              rectAti, image.height, image.width);
+          Rect? transformedRect = (imageProcessor != null) ? imageProcessor!.inverseTransformRect(
+              rectAti, image.height, image.width) : null;
 
           recognitions.add(
-            Recognition(i, label, score, transformedRect),
+            Recognition(i, label, score, transformedRect!),
           );
         }
       }
@@ -332,11 +359,12 @@ class Classifier {
 
     return {
       // "recognitions": recognitionsNMS,
-      "recognitions": recognitions,
-      "stats": Stats(
+      'recognitions': recognitions,
+      'stats': Stats(
           totalPredictTime: predictElapsedTime,
           inferenceTime: inferenceTimeElapsed,
-          preProcessingTime: preProcessElapsedTime)
+          preProcessingTime: preProcessElapsedTime,
+          totalElapsedTime: 0)
     };
   }
 

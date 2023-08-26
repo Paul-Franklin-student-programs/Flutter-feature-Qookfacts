@@ -7,9 +7,9 @@ PARAMETERS: input - string
 
 String EmailFormValidator(String email){
   if(email.isValidEmail()){
-    return null;
+    return '';
   } else{
-    return "Please enter a valid email";
+    return 'Please enter a valid email';
   }
 }
 
@@ -40,51 +40,51 @@ extension PasswordValidator on String {
 }
 
 //EMAIL VALIDATION
-String emailValidator(String value) {
-  Pattern pattern =
+String emailValidator(String? value) {
+  String pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regex = new RegExp(pattern);
-  if (!regex.hasMatch(value)) {
+  RegExp regex = RegExp(pattern);
+  if (!regex.hasMatch(value ?? '')) {
     return 'Email format is invalid';
   } else {
-    return null;
+    return '';
   }
 }
 
 //PASSWORD VALIDATION
-String pwdValidator(String value) {
-  if (value.isEmpty) {
+String pwdValidator(String? value) {
+  if (value == null || value.isEmpty) {
     return 'Enter Password';
   }else  if (value.length < 6) {
     return 'Password needs to have character, an uppercase, lowercase, 1 number';
   }else {
-    return null;
+    return '';
   }
 }
 //PASSWORD VALIDATION
-String confirmPwdValidator(String value) {
-  if (value.isEmpty) {
+String confirmPwdValidator(String? value) {
+  if (value == null || value.isEmpty) {
     return 'Retype your password';
   }/*else if (value!=model.txtPassword.text) {
       return 'Both password should be match';
     }*/ else {
-    return null;
+    return '';
   }
 }
 //PASSWORD VALIDATION
-String pwdMatchValidator(String value) {
-  if (value.isEmpty) {
+String pwdMatchValidator(String? value) {
+  if (value == null || value.isEmpty) {
     return 'Both password should be match';
   } else {
-    return null;
+    return '';
   }
 }
 
 //Name VALIDATION
-String nameValidator(String value) {
-  if (value.isEmpty) {
+String nameValidator(String? value) {
+  if (value == null || value.isEmpty) {
     return 'Enter name';
   } else {
-    return null;
+    return '';
   }
 }

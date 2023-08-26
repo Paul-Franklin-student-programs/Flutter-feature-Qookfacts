@@ -25,13 +25,13 @@ class RecipeList {
   /// The constructor is named after the source class, in this case, User.
   factory RecipeList.fromJson(Map<String, dynamic> json) {
     print('generating list');
-    try {
+    // try {
       print('internal: ' + _$RecipeListFromJson(json).toJson().toString());
       return _$RecipeListFromJson(json);
-    } catch(e){
+    /*} catch(e){
       print(e.toString());
       return null;
-    }
+    }*/
   }
 
   /// `toJson` is the convention for a class to declare support for serialization
@@ -39,6 +39,17 @@ class RecipeList {
   /// helper method `_$UserToJson`.
   Map<String, dynamic> toJson() => _$RecipeListToJson(this);
 
-  RecipeList();
+
+  RecipeList(
+      {
+      required this.firstPageToken,
+      required this.itemCount,
+      required this.recipes,
+      required this.lastPageToken,
+      required this.nextPageToken,
+      required this.prevPageToken,
+      required this.totalItemCount,
+      required this.totalPageCount
+      });
 }
 

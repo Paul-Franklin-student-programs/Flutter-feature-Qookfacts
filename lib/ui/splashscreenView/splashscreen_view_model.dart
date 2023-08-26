@@ -1,4 +1,7 @@
 
+import 'package:auto_route/annotations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:qookit/app/app_router.gr.dart';
 import 'package:qookit/services/getIt.dart';
 import 'package:qookit/services/services.dart';
@@ -22,18 +25,18 @@ class SplashScreenViewModel extends BaseViewModel {
         UserService.finishedOnboarding,
         defaultValue: false,
       )) {
-        await ExtendedNavigator.named('topNav').pushAndRemoveUntil(
-          Routes.navigationView,
-          (route) => false,
-        );
+        // await ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(
+        //   Routes.navigationView,
+        //   (route) => false,
+        // );
       }
 
       /// User still needs to finish onboarding
       else {
-        await ExtendedNavigator.named('topNav').pushAndRemoveUntil(
-          Routes.recommendationPreferences,
-          (route) => false,
-        );
+        // await ExtendedNavigator.named('topNav')?.pushAndRemoveUntil(
+        //   Routes.recommendationPreferences,
+        //   (route) => false,
+        // );
       }
 
       setBusy(false);
@@ -51,4 +54,23 @@ class SplashScreenViewModel extends BaseViewModel {
     titlePositon = newPos;
     notifyListeners();
   }
+
+  void navigateToLogInScreen({
+    required BuildContext context,
+
+  }) {
+    Navigator.pushNamed(
+        context,
+        '/login',
+    );
+  }
+
+  void navigateToRegisterScreen(BuildContext context) {
+    Navigator.pushNamed(context, '/register');
+  }
+
+  void navigateToHomeScreenScreen(BuildContext context) {
+    Navigator.pushNamed(context, '/homeScreen');
+  }
+
 }

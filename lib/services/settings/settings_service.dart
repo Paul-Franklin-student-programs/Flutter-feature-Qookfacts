@@ -8,7 +8,7 @@ class SettingsService {
   static const String unitSystem = 'unitSystem';
   static const String profileVisibility = 'profileVisibility';
 
-  Box settingsBox;
+  late Box settingsBox;
 
   Future<void> initializeSettings() async {
     settingsBox = await Hive.openBox('settings');

@@ -10,12 +10,12 @@ String unmatchUserReportRequestModelToJson(UnmatchUserReportRequestModel data) =
 ///Create user model class
 class UnmatchUserReportRequestModel {
   UnmatchUserReportRequestModel({
-    this.userName,
-    this.photoUrl,
-    this.backgroundUrl,
-    this.displayName,
-    this.personal,
-    this.preferences,
+    required this.userName,
+    required this.photoUrl,
+    required this.backgroundUrl,
+    required this.displayName,
+    required this.personal,
+    required this.preferences,
   });
 
   String userName;
@@ -46,13 +46,13 @@ class UnmatchUserReportRequestModel {
 
 class Personal {
   Personal({
-    this.firstName,
-    this.lastName,
-    this.fullName,
-    this.email,
-    this.aboutMe,
-    this.homeUrl,
-    this.location,
+    required this.firstName,
+    required this.lastName,
+    required this.fullName,
+    required this.email,
+    required this.aboutMe,
+    required this.homeUrl,
+    required this.location,
   });
 
   String firstName;
@@ -86,12 +86,12 @@ class Personal {
 
 class Location {
   Location({
-    this.city,
-    this.state,
-    this.country,
-    this.zip,
-    this.gps,
-    this.ipAddr,
+    required this.city,
+    required this.state,
+    required this.country,
+    required this.zip,
+    required this.gps,
+    required this.ipAddr,
   });
 
   String city;
@@ -122,9 +122,9 @@ class Location {
 
 class Preferences {
   Preferences({
-    this.units,
-    this.recipe,
-    this.diet,
+   required this.units,
+   required this.recipe,
+   required this.diet,
   });
 
   String units;

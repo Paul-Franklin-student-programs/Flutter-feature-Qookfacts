@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:qookit/app/theme/colors.dart';
@@ -5,7 +7,10 @@ import 'package:qookit/elements/block_button_widget.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_components.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view_model.dart';
 import 'package:stacked/stacked.dart';
+import 'package:auto_route/annotations.dart';
 
+
+@RoutePage()
 class LoginView extends StatelessWidget {
   static final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
 
@@ -205,7 +210,7 @@ class LoginView extends StatelessWidget {
                                       text: 'LOG IN',
                                       color: colorTheme,
                                       onPressed: () {
-                                        if (_loginFormKey.currentState
+                                        if (_loginFormKey.currentState != null && _loginFormKey.currentState!
                                             .validate()) {
                                           model.loginWithEmail(context);
                                         }
@@ -232,23 +237,24 @@ class LoginView extends StatelessWidget {
   //TOGGLE(SHOW/HIDE) PASSWORD FUNCTION
 
   //EMAIL VALIDATION
-  String emailValidator(String value) {
-    Pattern pattern =
+  String emailValidator(String? value) {
+    String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = RegExp(pattern);
-    if (!regex.hasMatch(value)) {
+    if (!regex.hasMatch(value ?? '')) {
       return 'Email format is invalid';
     } else {
-      return null;
+      return '';
     }
   }
 
   //PASSWORD VALIDATION
-  String pwdValidator(String value) {
-    if (value.isEmpty) {
+  String pwdValidator(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Enter Password';
     } else {
-      return null;
+      return '';
     }
   }
+
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:qookit/ui/navigationView/recipesView/recipeDetails/recipe_details_view_model.dart';
 import 'package:stacked/stacked.dart';
 

@@ -13,9 +13,9 @@ class Instruction {
   String imageUrl;
   String text;
 
-  Instruction();
-
   factory Instruction.fromJson(Map<String, dynamic> json) => _$InstructionFromJson(json);
 
   Map<String, dynamic> toJson() => _$InstructionToJson(this);
+
+  Instruction(this.imageUrl, this.text);
 }
