@@ -124,16 +124,7 @@ class LoginViewModel extends BaseViewModel {
 
   ///login with Facebook and stored credential in firebase
   Future<void> loginWithFacebook(BuildContext context) async {
-    /*String message = await authService.initiateFacebookLogin();
-
-    if(message == 'Success'){
-      await UserBloc().getUserData();
-      await loginNavigation(message, context);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message, textAlign: TextAlign.center),
-      ));
-    }*/
+    // TODO
   }
 
   ///Register user with email-password and stored in firebase
@@ -151,32 +142,12 @@ class LoginViewModel extends BaseViewModel {
 
   ///Registration and Sign in with amazon
   Future<void> loginWithAmazon(BuildContext context) async {
-    // String message = await authService.signInWithAmazon(context);
-    /*await UserBloc().getUserData();
-    await loginNavigation(message, context);*/
-    // if(message == 'Success'){
-    //   await UserBloc().getUserData();
-    //   await loginNavigation(message, context);
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text(message, textAlign: TextAlign.center),
-    //   ));
-    // }
+    // TODO
   }
 
 
   Future<void> loginWithApple(BuildContext context) async {
-    // String message = await authService.signInWithApple(context);
-    /*await UserBloc().getUserData();
-    await loginNavigation(message, context);*/
-    // if(message == 'Success'){
-    //   await UserBloc().getUserData();
-    //   await loginNavigation(message, context);
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    //     content: Text(message, textAlign: TextAlign.center),
-    //   ));
-    // }
+    // TODO
   }
 
   Future<void> loginNavigation(String message, BuildContext context) async {
