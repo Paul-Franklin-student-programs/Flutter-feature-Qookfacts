@@ -20,6 +20,7 @@ import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.d
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
 import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
+import 'package:qookit/ui/testView/testView.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
@@ -86,7 +87,8 @@ class App extends StatelessWidget {
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/':
-                  return MaterialPageRoute(builder: (_) => SplashScreenView());
+                  return MaterialPageRoute(builder: (_) => TestView());
+              // return MaterialPageRoute(builder: (_) => SplashScreenView());
                 case '/login':
                   return MaterialPageRoute(builder: (_) => LoginView());
                 case '/forgot-password-view':
