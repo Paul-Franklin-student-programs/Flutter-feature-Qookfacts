@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +16,7 @@ import 'package:qookit/services/ml/ml_service.dart';
 import 'package:qookit/services/navigation/navigation_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/tflite_test/ui/camera_view.dart';
 import 'package:qookit/tflite_test/ui/home_view.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
