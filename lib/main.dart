@@ -216,13 +216,13 @@ class _TestCameraViewState extends State<TestCameraView> {
 
   void ocrPhoto(BuildContext context) async {
     if (photoFile != null) {
-      // Read the photoFile and convert it to bytes
-      List<int> imageBytes = await photoFile!.readAsBytes();
+      // // Read the photoFile and convert it to bytes
+      // List<int> imageBytes = await photoFile!.readAsBytes();
+      // // Encode the bytes to base64
+      // String base64Image = base64Encode(imageBytes);
+      // print(base64Image);
 
-      // Encode the bytes to base64
-      String base64Image = base64Encode(imageBytes);
-      print(base64Image);
-      String ocrResponse = await sendOCRRequest(base64Image);
+      String ocrResponse = await sendOCRRequest(await photoFile!.path);
       print(ocrResponse);
 
       // Navigate to the new screen and pass the base64Image
@@ -236,7 +236,7 @@ class _TestCameraViewState extends State<TestCameraView> {
     }
   }
 
-  Future<String> sendOCRRequest(String base64Image) async {
+  Future<String> sendOCRRequest(String filePath) async {
     List<String> parsedTextList = [];
 
     var url = Uri.parse('https://api.ocr.space/parse/image');
@@ -246,13 +246,20 @@ class _TestCameraViewState extends State<TestCameraView> {
     var request = http.MultipartRequest('POST', url);
 
     request.headers.addAll(headers);
-    request.fields['base64Image'] = 'data:image/jpeg;base64,$base64Image';
     request.fields['language'] = 'eng';
-    request.fields['isOverlayRequired'] = 'false';
+    request.fields['isOverlayRequired'] = 'true';
     request.fields['isCreateSearchablePdf'] = 'false';
     request.fields['isSearchablePdfHideTextLayer'] = 'false';
     request.fields['scale'] = 'true';
     request.fields['isTable'] = 'true';
+
+    // Add the file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'file',
+        filePath,
+      ),
+    );
 
     var response = await request.send();
     var responseString = await response.stream.bytesToString();
