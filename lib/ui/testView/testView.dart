@@ -23,7 +23,8 @@ class _TestViewState extends State<TestView> {
               onPressed: () async {
                 // Add your button's onPressed logic here
                 print('Button Pressed');
-                List<String> newData = await pruneIngredientList();
+                List<String> parsedText = await sendOCRRequest(getBase64EncodedImage());
+                List<String> newData = await pruneIngredientList(parsedText);
                 print(newData);
                 resultList=newData;
                 setState(() {
@@ -46,9 +47,8 @@ class _TestViewState extends State<TestView> {
     );
   }
 
-  Future<List<String>> pruneIngredientList() async {
+  Future<List<String>> pruneIngredientList(List<String> parsedText) async {
     List<String> filteredList = [];
-    List<String> parsedText = await sendOCRRequest();
 
     // Regular expression to match strings with alphabets only
     final ingredientRegex = RegExp(r'^[a-zA-Z\s]+$');
@@ -71,12 +71,11 @@ class _TestViewState extends State<TestView> {
     return filteredList;
   }
 
-  Future<List<String>> sendOCRRequest() async {
+  Future<List<String>> sendOCRRequest(String base64Image) async {
     List<String> parsedTextList = [];
 
     var url = Uri.parse('https://api.ocr.space/parse/image');
     var apiKey = 'K89478254888957';
-    var base64Image = getBase64EncodedImage();
     var language = 'eng';
     var isOverlayRequired = 'false';
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
@@ -22,6 +23,7 @@ import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.d
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
 import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
+import 'package:qookit/ui/testView/OCResultView.dart';
 import 'package:qookit/ui/testView/testView.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
@@ -32,7 +34,16 @@ import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dar
 import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
 
+import 'dart:io';
+
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 bool preview = false;
+
+late List<CameraDescription> _cameras;
+
 
 Future<void> main() async {
   // NavigationService().setupLocator();
@@ -64,8 +75,11 @@ Future<void> main() async {
     SystemUiOverlay.top,
   ]);
 
+  _cameras = await availableCameras();
+
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
 
   runApp(
     App(),
@@ -89,7 +103,7 @@ class App extends StatelessWidget {
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/':
-                  return MaterialPageRoute(builder: (_) => TestView());
+                  return MaterialPageRoute(builder: (_) => TestCameraView());
               // return MaterialPageRoute(builder: (_) => SplashScreenView());
                 case '/login':
                   return MaterialPageRoute(builder: (_) => LoginView());
@@ -130,3 +144,164 @@ class App extends StatelessWidget {
         });
   }
 }
+
+
+
+
+
+
+////////////////////////
+//QOOKIT new app
+/////////////////////
+
+
+/// CameraApp is the Main Application.
+class TestCameraView extends StatefulWidget {
+  /// Default Constructor
+  const TestCameraView({Key? key}) : super(key: key);
+
+  @override
+  State<TestCameraView> createState() => _TestCameraViewState();
+}
+
+class _TestCameraViewState extends State<TestCameraView> {
+  late CameraController controller;
+  File? photoFile;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CameraController(_cameras[0], ResolutionPreset.medium);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+          // Handle access errors here.
+            break;
+          default:
+          // Handle other errors here.
+            break;
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void takePhoto() async {
+    try {
+      XFile photo = await controller.takePicture();
+      setState(() {
+        photoFile = File(photo.path);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void deletePhoto() {
+    setState(() {
+      photoFile = null;
+    });
+  }
+
+  void ocrPhoto(BuildContext context) async {
+    if (photoFile != null) {
+      // Read the photoFile and convert it to bytes
+      List<int> imageBytes = await photoFile!.readAsBytes();
+
+      // Encode the bytes to base64
+      String base64Image = base64Encode(imageBytes);
+      print(base64Image);
+      String ocrResponse = await sendOCRRequest(base64Image);
+      print(ocrResponse);
+
+      // Navigate to the new screen and pass the base64Image
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return OCRResultView(ocrResponse);
+          },
+        ),
+      );
+    }
+  }
+
+  Future<String> sendOCRRequest(String base64Image) async {
+    List<String> parsedTextList = [];
+
+    var url = Uri.parse('https://api.ocr.space/parse/image');
+    var apiKey = 'K89478254888957';
+
+    var headers = {'apikey': apiKey};
+    var request = http.MultipartRequest('POST', url);
+
+    request.headers.addAll(headers);
+    request.fields['base64Image'] = 'data:image/jpeg;base64,$base64Image';
+    request.fields['language'] = 'eng';
+    request.fields['isOverlayRequired'] = 'false';
+    request.fields['isCreateSearchablePdf'] = 'false';
+    request.fields['isSearchablePdfHideTextLayer'] = 'false';
+    request.fields['scale'] = 'true';
+    request.fields['isTable'] = 'true';
+
+    var response = await request.send();
+    var responseString = await response.stream.bytesToString();
+
+    return responseString;
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    if (!controller.value.isInitialized) {
+      return Container();
+    }
+    return MaterialApp(
+        home: Scaffold(
+          body: photoFile == null
+              ? CameraPreview(controller)
+              : Image.file(photoFile!),
+          floatingActionButton: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: photoFile == null
+                ? <Widget>[
+              FloatingActionButton(
+                onPressed: takePhoto,
+                child: const Icon(Icons.camera),
+              ),
+            ]
+                : <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FloatingActionButton(
+                    onPressed: deletePhoto,
+                    child: const Icon(Icons.delete),
+                  ),
+                  const SizedBox(width: 16),
+                  FloatingActionButton(
+                    onPressed: () {
+                      ocrPhoto(context); // Call your function here
+                    },
+                    child: const Icon(Icons.adb_rounded),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ));
+  }
+}
+
+
+
