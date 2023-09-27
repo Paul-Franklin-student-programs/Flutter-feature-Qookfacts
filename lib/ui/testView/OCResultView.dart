@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OCRResultView extends StatefulWidget {
-  final String base64Image;
+  final String ocrResults;
 
-  OCRResultView(this.base64Image);
+  OCRResultView(this.ocrResults);
 
   @override
   State<OCRResultView> createState() => _OCRResultViewState();
@@ -20,7 +20,7 @@ class _OCRResultViewState extends State<OCRResultView> {
       body: SingleChildScrollView(
         child: Center(
           child: Text(
-            'Base64 Encoded Image:\n\n${widget.base64Image}',
+            'OCR Results:\n\n${widget.ocrResults}',
             style: TextStyle(fontSize: 18),
           ),
         ),

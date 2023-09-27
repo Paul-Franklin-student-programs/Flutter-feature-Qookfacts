@@ -216,11 +216,6 @@ class _TestCameraViewState extends State<TestCameraView> {
 
   void ocrPhoto(BuildContext context) async {
     if (photoFile != null) {
-      // // Read the photoFile and convert it to bytes
-      // List<int> imageBytes = await photoFile!.readAsBytes();
-      // // Encode the bytes to base64
-      // String base64Image = base64Encode(imageBytes);
-      // print(base64Image);
 
       String ocrResponse = await sendOCRRequest(await photoFile!.path);
       print(ocrResponse);
@@ -239,19 +234,19 @@ class _TestCameraViewState extends State<TestCameraView> {
   Future<String> sendOCRRequest(String filePath) async {
     List<String> parsedTextList = [];
 
-    var url = Uri.parse('https://api.ocr.space/parse/image');
-    var apiKey = 'K89478254888957';
-
-    var headers = {'apikey': apiKey};
+    var url = Uri.parse('http://api.ocr.space/parse/Image');
     var request = http.MultipartRequest('POST', url);
 
-    request.headers.addAll(headers);
+    request.headers['apikey'] = 'K89478254888957';
     request.fields['language'] = 'eng';
+    request.fields['fileType'] = 'JPG';
+    request.fields['detectOrientation'] = 'true';
     request.fields['isOverlayRequired'] = 'true';
     request.fields['isCreateSearchablePdf'] = 'false';
     request.fields['isSearchablePdfHideTextLayer'] = 'false';
     request.fields['scale'] = 'true';
     request.fields['isTable'] = 'true';
+    request.fields['OCREngine'] = '1';
 
     // Add the file to the request
     request.files.add(
@@ -261,10 +256,35 @@ class _TestCameraViewState extends State<TestCameraView> {
       ),
     );
 
-    var response = await request.send();
-    var responseString = await response.stream.bytesToString();
 
-    return responseString;
+    try {
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseString);
+        // Check if the response contains the "ParsedResults" key
+        if (jsonResponse.containsKey('ParsedResults')) {
+          // Access the "ParsedResults" list
+          var parsedResults = jsonResponse['ParsedResults'];
+
+          // Iterate through each item in the "ParsedResults" list
+          for (var parsedResult in parsedResults) {
+            // Check if the parsedResult contains the "ParsedText" key
+            if (parsedResult.containsKey('ParsedText')) {
+              // Extract the "ParsedText" value and add it to the list
+              var parsedText = parsedResult['ParsedText'];
+              parsedTextList.add(parsedText);
+            }
+          }
+        }
+      } else {
+        parsedTextList.add('Request failed>>>:' + await response.stream.bytesToString());
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    return parsedTextList.join(',');
   }
 
 
