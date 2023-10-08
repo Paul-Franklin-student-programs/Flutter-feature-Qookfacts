@@ -39,6 +39,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'dart:developer' as developer;
+
 
 bool preview = false;
 
@@ -214,11 +216,11 @@ class _TestCameraViewState extends State<TestCameraView> {
     });
   }
 
-  void ocrPhoto(BuildContext context) async {
+  void processPhoto(BuildContext context) async {
     if (photoFile != null) {
 
       String ocrResponse = await sendOCRRequest(await photoFile!.path);
-      print(ocrResponse);
+      ocrResponse = await fetchRecipes(ocrResponse);
 
       // Navigate to the new screen and pass the base64Image
       await Navigator.of(context).push(
@@ -228,6 +230,44 @@ class _TestCameraViewState extends State<TestCameraView> {
           },
         ),
       );
+    }
+  }
+
+  Future<String> fetchRecipes(String ocrText) async {
+    final String apiKey = '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'; // Replace with your API key
+    final String apiUrl = 'https://api.openai.com/v1/completions';
+
+    final Map<String, dynamic> requestData = {
+      'model': 'text-davinci-003',
+      'prompt': 'identify ingredients in this text and give some recipes that you can make with those: $ocrText',
+      'max_tokens': 2000,
+      'temperature': 1.0,
+    };
+
+    print(requestData);
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey',
+    };
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(requestData),
+    );
+
+    // Check if the response status code is 200
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      final jsonResponse = jsonDecode(response.body);
+
+      // Extract the "text" data from the chosen choice
+      final textData = jsonResponse['choices'][0]['text'];
+
+      return textData;
+    } else {
+      return response.body;
     }
   }
 
@@ -318,7 +358,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                   const SizedBox(width: 16),
                   FloatingActionButton(
                     onPressed: () {
-                      ocrPhoto(context); // Call your function here
+                      processPhoto(context); // Call your function here
                     },
                     child: const Icon(Icons.adb_rounded),
                   ),
