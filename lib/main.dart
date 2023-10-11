@@ -336,37 +336,40 @@ class _TestCameraViewState extends State<TestCameraView> {
     }
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: photoFile == null
-              ? CameraPreview(controller)
-              : Image.file(photoFile!),
-          floatingActionButton: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: photoFile == null
-                ? <Widget>[
-              FloatingActionButton(
-                onPressed: takePhoto,
-                child: const Icon(Icons.camera),
-              ),
-            ]
-                : <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  FloatingActionButton(
-                    onPressed: deletePhoto,
-                    child: const Icon(Icons.delete),
-                  ),
-                  const SizedBox(width: 16),
-                  FloatingActionButton(
-                    onPressed: () {
-                      processPhoto(context); // Call your function here
-                    },
-                    child: const Icon(Icons.adb_rounded),
-                  ),
-                ],
-              )
-            ],
+        home: Theme(
+          data:qookitLight,
+          child: Scaffold(
+            body: photoFile == null
+                ? CameraPreview(controller)
+                : Image.file(photoFile!),
+            floatingActionButton: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: photoFile == null
+                  ? <Widget>[
+                FloatingActionButton(
+                  onPressed: takePhoto,
+                  child: const Icon(Icons.camera),
+                ),
+              ]
+                  : <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    FloatingActionButton(
+                      onPressed: deletePhoto,
+                      child: const Icon(Icons.delete),
+                    ),
+                    const SizedBox(width: 16),
+                    FloatingActionButton(
+                      onPressed: () {
+                        processPhoto(context); // Call your function here
+                      },
+                      child: const Icon(Icons.restaurant),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ));
   }
