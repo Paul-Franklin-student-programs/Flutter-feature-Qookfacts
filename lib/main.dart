@@ -235,13 +235,14 @@ class _TestCameraViewState extends State<TestCameraView> {
 
   Future<String> fetchRecipes(String ocrText) async {
     final String apiKey = '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'; // Replace with your API key
-    final String apiUrl = 'https://api.openai.com/v1/completions';
+    final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final Map<String, dynamic> requestData = {
-      'model': 'text-davinci-003',
-      'prompt': 'identify ingredients in this text and give some recipes that you can make with those: $ocrText',
-      'max_tokens': 2000,
-      'temperature': 1.0,
+      'model': 'gpt-3.5-turbo',
+      'messages': [
+        {"role": "user", "content": "identify ingredients in this text and give some recipes that you can make with these: $ocrText"}
+      ],
+      'temperature': 0.7,
     };
 
     print(requestData);
@@ -263,7 +264,7 @@ class _TestCameraViewState extends State<TestCameraView> {
       final jsonResponse = jsonDecode(response.body);
 
       // Extract the "text" data from the chosen choice
-      final textData = jsonResponse['choices'][0]['text'];
+      final textData = jsonResponse['choices'][0]['message']['content'];
 
       return textData;
     } else {
@@ -334,6 +335,7 @@ class _TestCameraViewState extends State<TestCameraView> {
       return Container();
     }
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: photoFile == null
               ? CameraPreview(controller)
