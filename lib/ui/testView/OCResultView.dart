@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:http/http.dart' as http;
 
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:qookit/services/theme/theme_service.dart';
 
 class OCRResultView extends StatefulWidget {
   final String ocrResults;
@@ -14,20 +19,15 @@ class OCRResultView extends StatefulWidget {
 }
 
 class _OCRResultViewState extends State<OCRResultView> {
-  // Initialize a list to hold the data.
   List<String> contentData = [];
-
-  // Initialize a flag to track if you're currently loading data.
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    // Add the initial content from widget.ocrResults to contentData.
     contentData.add(widget.ocrResults);
   }
 
-  // Method to make an API call and append new data.
   Future<void> loadMoreData() async {
     if (isLoading) {
       return;
@@ -37,21 +37,12 @@ class _OCRResultViewState extends State<OCRResultView> {
       isLoading = true;
     });
 
-    // Make your API call here, e.g., using http package.
-    final newData = await makeApiCall();
+    final newData = await fetchRecipes();
 
-    // Append the new data to the existing content.
     setState(() {
       contentData.addAll(newData.split('\n'));
-      isLoading = false; // Set isLoading to false when data is loaded.
+      isLoading = false;
     });
-  }
-
-  // Method to make an API call.
-  Future<String> makeApiCall() async {
-    // Replace this with your actual API call logic.
-    await Future.delayed(Duration(seconds: 2));
-    return 'New data from API'; // Replace with your API response.
   }
 
   @override
@@ -63,27 +54,91 @@ class _OCRResultViewState extends State<OCRResultView> {
         appBar: AppBar(
           title: Text('Qookit Insights',style: TextStyle(color: Colors.black)),
           centerTitle: true,
-          backgroundColor: qookitLight.primaryColor, // Set the app bar color to qookitLight's primary color
+          backgroundColor: qookitLight.primaryColor,
         ),
-        body: ListView.builder(
-          itemCount: contentData.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                contentData[index],
-                style: TextStyle(fontSize: 18),
+        body: Stack(
+          children: [
+            ListView.builder(
+              itemCount: contentData.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    contentData[index],
+                    style: TextStyle(fontSize: 18),
+                  ),
+                );
+              },
+            ),
+            if (isLoading)
+              Center(
+                child: Container(
+                  width: 100,  // Set the desired width
+                  height: 100, // Set the desired height
+                  child: CircularProgressIndicator(
+                    strokeWidth: 10.0,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                  ),
+                ),
               ),
-            );
-          },
+          ],
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // Call the method to load more data when the button is pressed.
-            loadMoreData();
-          },
-          child: Icon(Icons.add),
-        ),
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FloatingActionButton(
+                onPressed: loadMoreData,
+                child: Icon(Icons.add),
+              ),
+              Text(
+                'Load More (~10s)',
+                style: TextStyle(fontSize: 12, color: Colors.amber),
+              ),
+            ],
+          )
+
       ),
     );
   }
+
+
+// Method to make an API call.
+  Future<String> fetchRecipes() async {
+    final String apiKey = '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'; // Replace with your API key
+    final String apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+    final Map<String, dynamic> requestData = {
+      'model': 'gpt-3.5-turbo',
+      'messages': [
+        {"role": "user", "content": "more recipes based on those ingredients"}
+      ],
+      'temperature': 0.7,
+    };
+
+    print(requestData);
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $apiKey',
+    };
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(requestData),
+    );
+
+    // Check if the response status code is 200
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      final jsonResponse = jsonDecode(response.body);
+
+      // Extract the "text" data from the chosen choice
+      final textData = jsonResponse['choices'][0]['message']['content'];
+
+      return textData;
+    } else {
+      return response.body;
+    }
+  }
 }
+
