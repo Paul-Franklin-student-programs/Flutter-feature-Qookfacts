@@ -348,7 +348,7 @@ class _TestCameraViewState extends State<TestCameraView> {
               : Container(
             width: double.infinity,
             height: double.infinity,
-            child: Image.file(photoFile!, fit: BoxFit.cover),
+            child: Image.file(photoFile!, fit: BoxFit.fill),
           ),
           floatingActionButton: photoFile == null
               ? Column(
@@ -361,7 +361,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                     child: Icon(Icons.camera),
                   ),
                   Text(
-                    'Take Photo',
+                    'Capture Receipt',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.amber, // Set text color to amber
@@ -384,7 +384,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                         child: Icon(Icons.delete),
                       ),
                       Text(
-                        'Delete Photo',
+                        'Discard and Retry',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.amber, // Set text color to amber
@@ -401,7 +401,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                         child: Icon(Icons.restaurant),
                       ),
                       Text(
-                        'Process Photo',
+                        'Qookitize (~15s)',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.amber, // Set text color to amber
