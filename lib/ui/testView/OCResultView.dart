@@ -1,13 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qookit/services/theme/theme_service.dart';
 import 'package:http/http.dart' as http;
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:share/share.dart';
 
 class OCRResultView extends StatefulWidget {
   final String ocrResults;
@@ -45,16 +41,27 @@ class _OCRResultViewState extends State<OCRResultView> {
     });
   }
 
+  void shareContent() {
+    final textToShare = contentData.join('\n'); // Combine the content to share.
+    Share.share(textToShare);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: qookitLight,
+      theme: ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Qookit Insights',style: TextStyle(color: Colors.black)),
+          title: Text('Qookit Insights', style: TextStyle(color: Colors.black)),
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.share, color: Colors.black),
+              onPressed: shareContent,
+            ),
+          ],
         ),
         body: Stack(
           children: [
@@ -72,8 +79,8 @@ class _OCRResultViewState extends State<OCRResultView> {
             if (isLoading)
               Center(
                 child: Container(
-                  width: 100,  // Set the desired width
-                  height: 100, // Set the desired height
+                  width: 100,
+                  height: 100,
                   child: CircularProgressIndicator(
                     strokeWidth: 10.0,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
@@ -82,28 +89,26 @@ class _OCRResultViewState extends State<OCRResultView> {
               ),
           ],
         ),
-          floatingActionButton: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FloatingActionButton(
-                onPressed: loadMoreData,
-                child: Icon(Icons.add),
-              ),
-              Text(
-                'Load More (~10s)',
-                style: TextStyle(fontSize: 12, color: Colors.amber),
-              ),
-            ],
-          )
-
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              backgroundColor: Colors.amber,
+              onPressed: loadMoreData,
+              child: Icon(Icons.add),
+            ),
+            Text(
+              'Load More (~10s)',
+              style: TextStyle(fontSize: 12, color: Colors.amber),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-
-// Method to make an API call.
   Future<String> fetchRecipes() async {
-    final String apiKey = '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'; // Replace with your API key
+    final String apiKey = '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';
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final Map<String, dynamic> requestData = {
@@ -113,8 +118,6 @@ class _OCRResultViewState extends State<OCRResultView> {
       ],
       'temperature': 0.7,
     };
-
-    print(requestData);
 
     final headers = {
       'Content-Type': 'application/json',
@@ -127,18 +130,12 @@ class _OCRResultViewState extends State<OCRResultView> {
       body: jsonEncode(requestData),
     );
 
-    // Check if the response status code is 200
     if (response.statusCode == 200) {
-      // Parse the JSON response
       final jsonResponse = jsonDecode(response.body);
-
-      // Extract the "text" data from the chosen choice
       final textData = jsonResponse['choices'][0]['message']['content'];
-
       return textData;
     } else {
       return response.body;
     }
   }
 }
-

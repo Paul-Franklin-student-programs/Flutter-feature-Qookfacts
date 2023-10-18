@@ -1,43 +1,29 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:http/http.dart' as http;
 import 'package:qookit/models/expiry_group.dart';
 import 'package:qookit/models/pantry_item.dart';
 import 'package:qookit/services/getIt.dart';
 import 'package:qookit/services/ml/ml_service.dart';
-import 'package:qookit/services/navigation/navigation_service.dart';
-import 'package:qookit/services/services.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/tflite_test/ui/camera_view.dart';
 import 'package:qookit/tflite_test/ui/home_view.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
-import 'package:qookit/ui/splashscreenView/splashscreen_view.dart';
 import 'package:qookit/ui/testView/OCResultView.dart';
-import 'package:qookit/ui/testView/testView.dart';
-import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
-import 'app/app_router.dart';
 import 'models/itemlist.dart';
 import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
-
-import 'dart:io';
-
-import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:developer' as developer;
 
 bool preview = false;
 

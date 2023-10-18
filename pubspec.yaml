@@ -64,6 +64,7 @@ dependencies:
   #  rich_alert: ^0.1.32
   #  rich_alert: any
   #  shimmer: ^1.1.2
+  share: ^2.0.4
   shimmer: any
   stacked: ^3.4.1
   stacked_themes: ^0.3.11
