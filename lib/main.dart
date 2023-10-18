@@ -335,44 +335,57 @@ class _TestCameraViewState extends State<TestCameraView> {
       return Container();
     }
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Theme(
-          data:qookitLight,
-          child: Scaffold(
-            body: photoFile == null
-                ? CameraPreview(controller)
-                : Image.file(photoFile!),
-            floatingActionButton: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: photoFile == null
-                  ? <Widget>[
-                FloatingActionButton(
-                  onPressed: takePhoto,
-                  child: const Icon(Icons.camera),
-                ),
-              ]
-                  : <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    FloatingActionButton(
-                      onPressed: deletePhoto,
-                      child: const Icon(Icons.delete),
-                    ),
-                    const SizedBox(width: 16),
-                    FloatingActionButton(
-                      onPressed: () {
-                        processPhoto(context); // Call your function here
-                      },
-                      child: const Icon(Icons.restaurant),
-                    ),
-                  ],
-                )
-              ],
-            ),
+      debugShowCheckedModeBanner: false,
+      home: Theme(
+        data: qookitLight,
+        child: Scaffold(
+          body: photoFile == null
+              ? Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: CameraPreview(controller),
+          )
+              : Container(
+            width: double.infinity,
+            height: double.infinity,
+            child: Image.file(photoFile!, fit: BoxFit.cover),
           ),
-        ));
+          floatingActionButton: photoFile == null
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.end, // Place at the bottom
+            children: [
+              FloatingActionButton(
+                onPressed: takePhoto,
+                child: Icon(Icons.camera),
+              ),
+            ],
+          )
+              : Column(
+            mainAxisAlignment: MainAxisAlignment.end, // Place at the bottom
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  FloatingActionButton(
+                    onPressed: deletePhoto,
+                    child: Icon(Icons.delete),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      processPhoto(context);
+                    },
+                    child: Icon(Icons.restaurant),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
+
+
 }
 
 
