@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -41,25 +39,18 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as developer;
 
-
 bool preview = false;
 
 late List<CameraDescription> _cameras;
 
-
 Future<void> main() async {
-  // NavigationService().setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   configureDependencies();
-
-  // unawaited(mlService.setupModel());
-
   MlService.firebasemodeldownloder();
   MlService.downloadlabelfile();
 
-  /// Initialize hive stuff
   await Hive.initFlutter();
   Hive.registerAdapter(PantryItemAdapter());
   Hive.registerAdapter(ExpiryGroupAdapter());
@@ -68,98 +59,64 @@ Future<void> main() async {
   await Hive.openBox('master');
   await Hive.box('master').put('ready', false);
 
-  /// Initialize stacked themes
   await ThemeManager.initialise();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
     SystemUiOverlay.top,
   ]);
 
   _cameras = await availableCameras();
-
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-
-  runApp(
-    App(),
-  );
+      runApp(App());
 }
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeBuilder(
-        darkTheme: qookitDark,
-        lightTheme: qookitLight,
-        defaultThemeMode: ThemeMode.light,
-        builder: (context, regularTheme, darkTheme, themeMode) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: regularTheme,
-            darkTheme: darkTheme,
-            themeMode: themeMode,
-            color: (kIsWeb) ? Colors.green : Colors.red,
-            onGenerateRoute: (settings) {
-              switch (settings.name) {
-                case '/':
-                  return MaterialPageRoute(builder: (_) => TestCameraView());
-              // return MaterialPageRoute(builder: (_) => SplashScreenView());
-                case '/login':
-                  return MaterialPageRoute(builder: (_) => LoginView());
-                case '/forgot-password-view':
-                  return MaterialPageRoute(
-                      builder: (_) => ForgotPasswordView());
-                case '/diet-preferences-view':
-                  return MaterialPageRoute(
-                      builder: (_) => DietPreferencesView());
-                case '/recipe-preferences-view':
-                  return MaterialPageRoute(
-                      builder: (_) => RecipePreferencesView());
-                case '/recommendation-preferences-view':
-                  return MaterialPageRoute(
-                      builder: (_) => RecommendationPreferences());
-                case '/register':
-                  return MaterialPageRoute(builder: (_) => RegisterView());
-                case '/home-view':
-                  return MaterialPageRoute(builder: (_) => HomeView());
-                default:
-                  return null; // Handle other routes or show a default screen
-              }
-            },
-            showSemanticsDebugger: false,
-
-            /*builder: (context, nativeNavigator) {
-              return ExtendedNavigator.builder<AppRouter>(
-                  initialRoute: '/login-view',
-                  router: AppRouter(),
-                  name: 'topNav',
-                  builder: (context, child) {
-                    return child ?? Container();
-                  },
-              )
-                (context, nativeNavigator);
-            },*/
-          );
-        });
+      darkTheme: qookitDark,
+      lightTheme: qookitLight,
+      defaultThemeMode: ThemeMode.light,
+      builder: (context, regularTheme, darkTheme, themeMode) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: regularTheme,
+          darkTheme: darkTheme,
+          themeMode: themeMode,
+          color: (kIsWeb) ? Colors.green : Colors.red,
+          onGenerateRoute: (settings) {
+            switch (settings.name) {
+              case '/':
+                return MaterialPageRoute(builder: (_) => TestCameraView());
+              case '/login':
+                return MaterialPageRoute(builder: (_) => LoginView());
+              case '/forgot-password-view':
+                return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+              case '/diet-preferences-view':
+                return MaterialPageRoute(builder: (_) => DietPreferencesView());
+              case '/recipe-preferences-view':
+                return MaterialPageRoute(builder: (_) => RecipePreferencesView());
+              case '/recommendation-preferences-view':
+                return MaterialPageRoute(builder: (_) => RecommendationPreferences());
+              case '/register':
+                return MaterialPageRoute(builder: (_) => RegisterView());
+              case '/home-view':
+                return MaterialPageRoute(builder: (_) => HomeView());
+              default:
+                return null;
+            }
+          },
+          showSemanticsDebugger: false,
+        );
+      },
+    );
   }
 }
 
-
-
-
-
-
-////////////////////////
-//QOOKIT new app
-/////////////////////
-
-
-/// CameraApp is the Main Application.
 class TestCameraView extends StatefulWidget {
-  /// Default Constructor
   const TestCameraView({Key? key}) : super(key: key);
 
   @override
@@ -169,6 +126,7 @@ class TestCameraView extends StatefulWidget {
 class _TestCameraViewState extends State<TestCameraView> {
   late CameraController controller;
   File? photoFile;
+  bool processing = false;
 
   @override
   void initState() {
@@ -217,12 +175,18 @@ class _TestCameraViewState extends State<TestCameraView> {
   }
 
   void processPhoto(BuildContext context) async {
-    if (photoFile != null) {
+    setState(() {
+      processing = true;
+    });
 
+    if (photoFile != null) {
       String ocrResponse = await sendOCRRequest(await photoFile!.path);
       ocrResponse = await fetchRecipes(ocrResponse);
 
-      // Navigate to the new screen and pass the base64Image
+      setState(() {
+        processing = false;
+      });
+
       await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) {
@@ -328,31 +292,39 @@ class _TestCameraViewState extends State<TestCameraView> {
     return parsedTextList.join(',');
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (!controller.value.isInitialized) {
       return Container();
     }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Theme(
         data: qookitLight,
         child: Scaffold(
-          body: photoFile == null
-              ? Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: CameraPreview(controller),
-          )
-              : Container(
-            width: double.infinity,
-            height: double.infinity,
-            child: Image.file(photoFile!, fit: BoxFit.fill),
+          body: Stack(
+            children: <Widget>[
+              photoFile == null
+                  ? Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: CameraPreview(controller),
+              )
+                  : Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Image.file(photoFile!, fit: BoxFit.fill),
+              ),
+              if (processing)
+                Center(
+                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.amber))
+                ),
+            ],
           ),
           floatingActionButton: photoFile == null
               ? Column(
-            mainAxisAlignment: MainAxisAlignment.end, // Place at the bottom
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Column(
                 children: [
@@ -364,7 +336,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                     'Capture Receipt',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Colors.amber, // Set text color to amber
+                      color: Colors.amber,
                     ),
                   ),
                 ],
@@ -372,7 +344,7 @@ class _TestCameraViewState extends State<TestCameraView> {
             ],
           )
               : Column(
-            mainAxisAlignment: MainAxisAlignment.end, // Place at the bottom
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -387,7 +359,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                         'Discard and Retry',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.amber, // Set text color to amber
+                          color: Colors.amber,
                         ),
                       ),
                     ],
@@ -404,7 +376,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                         'Qookitize (~15s)',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.amber, // Set text color to amber
+                          color: Colors.amber,
                         ),
                       ),
                     ],
@@ -417,10 +389,4 @@ class _TestCameraViewState extends State<TestCameraView> {
       ),
     );
   }
-
-
-
 }
-
-
-
