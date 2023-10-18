@@ -354,9 +354,20 @@ class _TestCameraViewState extends State<TestCameraView> {
               ? Column(
             mainAxisAlignment: MainAxisAlignment.end, // Place at the bottom
             children: [
-              FloatingActionButton(
-                onPressed: takePhoto,
-                child: Icon(Icons.camera),
+              Column(
+                children: [
+                  FloatingActionButton(
+                    onPressed: takePhoto,
+                    child: Icon(Icons.camera),
+                  ),
+                  Text(
+                    'Take Photo',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.amber, // Set text color to amber
+                    ),
+                  ),
+                ],
               ),
             ],
           )
@@ -366,15 +377,37 @@ class _TestCameraViewState extends State<TestCameraView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  FloatingActionButton(
-                    onPressed: deletePhoto,
-                    child: Icon(Icons.delete),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: deletePhoto,
+                        child: Icon(Icons.delete),
+                      ),
+                      Text(
+                        'Delete Photo',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.amber, // Set text color to amber
+                        ),
+                      ),
+                    ],
                   ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      processPhoto(context);
-                    },
-                    child: Icon(Icons.restaurant),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {
+                          processPhoto(context);
+                        },
+                        child: Icon(Icons.restaurant),
+                      ),
+                      Text(
+                        'Process Photo',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.amber, // Set text color to amber
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -384,6 +417,7 @@ class _TestCameraViewState extends State<TestCameraView> {
       ),
     );
   }
+
 
 
 }
