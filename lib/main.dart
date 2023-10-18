@@ -70,7 +70,7 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-      runApp(App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -98,9 +98,11 @@ class App extends StatelessWidget {
               case '/diet-preferences-view':
                 return MaterialPageRoute(builder: (_) => DietPreferencesView());
               case '/recipe-preferences-view':
-                return MaterialPageRoute(builder: (_) => RecipePreferencesView());
+                return MaterialPageRoute(
+                    builder: (_) => RecipePreferencesView());
               case '/recommendation-preferences-view':
-                return MaterialPageRoute(builder: (_) => RecommendationPreferences());
+                return MaterialPageRoute(
+                    builder: (_) => RecommendationPreferences());
               case '/register':
                 return MaterialPageRoute(builder: (_) => RegisterView());
               case '/home-view':
@@ -141,10 +143,10 @@ class _TestCameraViewState extends State<TestCameraView> {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-          // Handle access errors here.
+            // Handle access errors here.
             break;
           default:
-          // Handle other errors here.
+            // Handle other errors here.
             break;
         }
       }
@@ -198,13 +200,18 @@ class _TestCameraViewState extends State<TestCameraView> {
   }
 
   Future<String> fetchRecipes(String ocrText) async {
-    final String apiKey = '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'; // Replace with your API key
+    final String apiKey =
+        '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'; // Replace with your API key
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',
       'messages': [
-        {"role": "user", "content": "identify ingredients in this text and give some recipes that you can make with these: $ocrText"}
+        {
+          "role": "user",
+          "content":
+              "identify ingredients in this text and give some recipes that you can make with these: $ocrText"
+        }
       ],
       'temperature': 0.7,
     };
@@ -261,7 +268,6 @@ class _TestCameraViewState extends State<TestCameraView> {
       ),
     );
 
-
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
@@ -283,7 +289,8 @@ class _TestCameraViewState extends State<TestCameraView> {
           }
         }
       } else {
-        parsedTextList.add('Request failed>>>:' + await response.stream.bytesToString());
+        parsedTextList
+            .add('Request failed>>>:' + await response.stream.bytesToString());
       }
     } catch (e) {
       print('Error: $e');
@@ -307,84 +314,91 @@ class _TestCameraViewState extends State<TestCameraView> {
             children: <Widget>[
               photoFile == null
                   ? Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: CameraPreview(controller),
-              )
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: CameraPreview(controller),
+                    )
                   : Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: Image.file(photoFile!, fit: BoxFit.fill),
-              ),
+                      width: double.infinity,
+                      height: double.infinity,
+                      child: Image.file(photoFile!, fit: BoxFit.fill),
+                    ),
               if (processing)
                 Center(
-                  child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.amber))
+                  child: Container(
+                    width: 100,  // Set the desired width
+                    height: 100, // Set the desired height
+                    child: CircularProgressIndicator(
+                      strokeWidth: 10.0,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                    ),
+                  ),
                 ),
             ],
           ),
           floatingActionButton: photoFile == null
               ? Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                children: [
-                  FloatingActionButton(
-                    onPressed: takePhoto,
-                    child: Icon(Icons.camera),
-                  ),
-                  Text(
-                    'Capture Receipt',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.amber,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        FloatingActionButton(
+                          onPressed: takePhoto,
+                          child: Icon(Icons.camera),
+                        ),
+                        Text(
+                          'Capture Receipt',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.amber,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          )
+                  ],
+                )
               : Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      FloatingActionButton(
-                        onPressed: deletePhoto,
-                        child: Icon(Icons.delete),
-                      ),
-                      Text(
-                        'Discard and Retry',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.amber,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            FloatingActionButton(
+                              onPressed: deletePhoto,
+                              child: Icon(Icons.delete),
+                            ),
+                            Text(
+                              'Discard and Retry',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      FloatingActionButton(
-                        onPressed: () {
-                          processPhoto(context);
-                        },
-                        child: Icon(Icons.restaurant),
-                      ),
-                      Text(
-                        'Qookitize (~15s)',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.amber,
+                        Column(
+                          children: [
+                            FloatingActionButton(
+                              onPressed: () {
+                                processPhoto(context);
+                              },
+                              child: Icon(Icons.restaurant),
+                            ),
+                            Text(
+                              'Qookitize (~15s)',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.amber,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+                      ],
+                    ),
+                  ],
+                ),
         ),
       ),
     );
