@@ -13,6 +13,7 @@ dependencies:
   auto_route: ^7.5.0
   cached_network_image: ^3.2.0
   camera: ^0.9.4+10
+  file_picker: ^4.1.6
   #  carousel_slider: ^2.3.1
   carousel_slider: any
   dotted_border: ^2.0.0+2
@@ -63,6 +64,7 @@ dependencies:
   #  rich_alert: ^0.1.32
   #  rich_alert: any
   #  shimmer: ^1.1.2
+  share: ^2.0.4
   shimmer: any
   stacked: ^3.4.1
   stacked_themes: ^0.3.11
