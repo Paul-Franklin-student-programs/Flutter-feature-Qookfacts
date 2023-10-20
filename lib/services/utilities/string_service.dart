@@ -5,12 +5,11 @@ PARAMETERS: input - string
  */
 
 
-String EmailFormValidator(String email){
-  if(email.isValidEmail()){
-    return '';
-  } else{
+String? EmailFormValidator(String email){
+  if(!email.isValidEmail()){
     return 'Please enter a valid email';
   }
+  return null;
 }
 
 extension EmailValidator on String {
@@ -40,51 +39,44 @@ extension PasswordValidator on String {
 }
 
 //EMAIL VALIDATION
-String emailValidator(String? value) {
+String? emailValidator(String? value) {
   String pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
   RegExp regex = RegExp(pattern);
   if (!regex.hasMatch(value ?? '')) {
     return 'Email format is invalid';
-  } else {
-    return '';
   }
+  return null;
 }
 
 //PASSWORD VALIDATION
-String pwdValidator(String? value) {
+String? pwdValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Enter Password';
   }else  if (value.length < 6) {
     return 'Password needs to have character, an uppercase, lowercase, 1 number';
-  }else {
-    return '';
   }
+  return null;
 }
 //PASSWORD VALIDATION
-String confirmPwdValidator(String? value) {
+String? confirmPwdValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Retype your password';
-  }/*else if (value!=model.txtPassword.text) {
-      return 'Both password should be match';
-    }*/ else {
-    return '';
   }
+  return null;
 }
 //PASSWORD VALIDATION
-String pwdMatchValidator(String? value) {
+String? pwdMatchValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Both password should be match';
-  } else {
-    return '';
   }
+  return null;
 }
 
 //Name VALIDATION
-String nameValidator(String? value) {
+String? nameValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'Enter name';
-  } else {
-    return '';
   }
+  return null;
 }
