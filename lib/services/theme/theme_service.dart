@@ -39,7 +39,7 @@ ThemeData qookitLight = ThemeData(
   indicatorColor: Colors.amber, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)).copyWith(background: Color(0xFFEAEAEA)).copyWith(error: Color(0xFFBE3944)),
 
   /// Text
-  /*textTheme: TextTheme(
+  textTheme: TextTheme(
     headline1: TextStyle(
       fontFamily: 'georgia_bold',
       fontSize: 32,
@@ -65,7 +65,7 @@ ThemeData qookitLight = ThemeData(
       fontFamily: 'opensans',
       fontSize: 16,
     ),
-  ),*/
+  ),
 );
 
 TextStyle headerStyle =

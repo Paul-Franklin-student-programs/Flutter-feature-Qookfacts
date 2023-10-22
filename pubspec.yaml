@@ -3,7 +3,7 @@ description: Meal planning in 60 seconds
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.2.0+11
+version: 1.0.0+01
 
 environment:
   sdk: ">=2.17.0 <=3.1.0"
@@ -30,6 +30,7 @@ dependencies:
   firebase_auth_web: ^5.5.3
   firebase_core: ^2.14.0
   firebase_dynamic_links: ^5.3.3
+  firebase_remote_config: ^4.3.1
   firebase_storage: ^11.2.3
   flutter:
     sdk: flutter

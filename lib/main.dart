@@ -12,6 +12,7 @@ import 'package:qookit/models/expiry_group.dart';
 import 'package:qookit/models/pantry_item.dart';
 import 'package:qookit/services/getIt.dart';
 import 'package:qookit/services/ml/ml_service.dart';
+import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/tflite_test/ui/home_view.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
@@ -24,27 +25,18 @@ import 'models/itemlist.dart';
 import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 bool preview = false;
 
 late List<CameraDescription> _cameras;
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  configureDependencies();
-  MlService.firebasemodeldownloder();
-  MlService.downloadlabelfile();
-
-  await Hive.initFlutter();
-  Hive.registerAdapter(PantryItemAdapter());
-  Hive.registerAdapter(ExpiryGroupAdapter());
-  Hive.registerAdapter(ItemListAdapter());
-
-  await Hive.openBox('master');
-  await Hive.box('master').put('ready', false);
-
+  await RemoteConfigService().initialize();
   await ThemeManager.initialise();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -76,7 +68,7 @@ class App extends StatelessWidget {
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case '/':
-                return MaterialPageRoute(builder: (_) => TestCameraView());
+                return MaterialPageRoute(builder: (_) => OCRCameraView());
               case '/login':
                 return MaterialPageRoute(builder: (_) => LoginView());
               case '/forgot-password-view':
@@ -104,21 +96,23 @@ class App extends StatelessWidget {
   }
 }
 
-class TestCameraView extends StatefulWidget {
-  const TestCameraView({Key? key}) : super(key: key);
+class OCRCameraView extends StatefulWidget {
+  const OCRCameraView({Key? key}) : super(key: key);
 
   @override
-  State<TestCameraView> createState() => _TestCameraViewState();
+  State<OCRCameraView> createState() => _OCRCameraViewState();
 }
 
-class _TestCameraViewState extends State<TestCameraView> {
+class _OCRCameraViewState extends State<OCRCameraView> {
   late CameraController controller;
   File? photoFile;
   bool processing = false;
+  String ocrKey = '';
 
   @override
   void initState() {
     super.initState();
+
     controller = CameraController(_cameras[0], ResolutionPreset.medium);
     controller.initialize().then((_) {
       if (!mounted) {
@@ -186,8 +180,7 @@ class _TestCameraViewState extends State<TestCameraView> {
   }
 
   Future<String> fetchRecipes(String ocrText) async {
-    final String apiKey =
-        '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'; // Replace with your API key
+    final String apiKey = RemoteConfigService().apiKey2OpenAI;
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final Map<String, dynamic> requestData = {
@@ -235,7 +228,7 @@ class _TestCameraViewState extends State<TestCameraView> {
     var url = Uri.parse('http://api.ocr.space/parse/Image');
     var request = http.MultipartRequest('POST', url);
 
-    request.headers['apikey'] = 'K89478254888957';
+    request.headers['apikey'] = RemoteConfigService().apiKeyOCR;
     request.fields['language'] = 'eng';
     request.fields['fileType'] = 'JPG';
     request.fields['detectOrientation'] = 'true';
@@ -373,7 +366,7 @@ class _TestCameraViewState extends State<TestCameraView> {
                               child: Icon(Icons.restaurant),
                             ),
                             Text(
-                              'Qookitize (~15s)',
+                              'Qookit (~15s)',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.amber,

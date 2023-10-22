@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:share/share.dart';
 
+import '../../services/system/remote_config_service.dart';
+
 class OCRResultView extends StatefulWidget {
   final String ocrResults;
 
@@ -17,11 +19,14 @@ class OCRResultView extends StatefulWidget {
 class _OCRResultViewState extends State<OCRResultView> {
   List<String> contentData = [];
   bool isLoading = false;
+  late String ocrResults;
 
   @override
   void initState() {
     super.initState();
+
     contentData.add(widget.ocrResults);
+    ocrResults=widget.ocrResults;
   }
 
   Future<void> loadMoreData() async {
@@ -53,7 +58,7 @@ class _OCRResultViewState extends State<OCRResultView> {
       theme: ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Qookit Insights', style: TextStyle(color: Colors.black)),
+          title: Text("Qookit's Culinary Delights", style: TextStyle(color: Colors.black)),
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
           actions: [
@@ -108,13 +113,13 @@ class _OCRResultViewState extends State<OCRResultView> {
   }
 
   Future<String> fetchRecipes() async {
-    final String apiKey = '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';
+    final String apiKey = RemoteConfigService().apiKey2OpenAI;
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     final Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',
       'messages': [
-        {"role": "user", "content": "more recipes based on those ingredients"}
+        {"role": "user", "content": "more recipes based only on ingredients provided in: $ocrResults"}
       ],
       'temperature': 0.7,
     };
