@@ -318,10 +318,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                         ),
                         Text(
                           'Capture Receipt',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.amber,
-                          ),
+                          style: qookitLight.tabBarTheme.labelStyle,
                         ),
                       ],
                     ),
@@ -341,10 +338,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                             ),
                             Text(
                               'Discard and Retry',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.amber,
-                              ),
+                               style: qookitLight.tabBarTheme.labelStyle,
                             ),
                           ],
                         ),
@@ -358,10 +352,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                             ),
                             Text(
                               'Qookit (~15s)',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.amber,
-                              ),
+                              style: qookitLight.tabBarTheme.labelStyle,
                             ),
                           ],
                         ),

@@ -65,6 +65,10 @@ ThemeData qookitLight = ThemeData(
       fontFamily: 'opensans',
       fontSize: 16,
     ),
+    bodyText1: TextStyle(
+      fontFamily: 'opensans',
+      fontSize: 15,
+    ),
   ),
 );
 

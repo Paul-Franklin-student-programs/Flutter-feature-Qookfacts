@@ -76,7 +76,7 @@ class _OCRResultViewState extends State<OCRResultView> {
                 return ListTile(
                   title: Text(
                     contentData[index],
-                    style: TextStyle(fontSize: 18),
+                    style: qookitLight.textTheme.bodyText1,
                   ),
                 );
               },
@@ -104,7 +104,7 @@ class _OCRResultViewState extends State<OCRResultView> {
             ),
             Text(
               'Load More (~10s)',
-              style: TextStyle(fontSize: 12, color: Colors.amber),
+              style: qookitLight.tabBarTheme.labelStyle,
             ),
           ],
         ),
