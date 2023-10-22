@@ -6,12 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:qookit/models/expiry_group.dart';
-import 'package:qookit/models/pantry_item.dart';
-import 'package:qookit/services/getIt.dart';
-import 'package:qookit/services/ml/ml_service.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/tflite_test/ui/home_view.dart';
@@ -21,17 +16,13 @@ import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
 import 'package:qookit/ui/testView/OCResultView.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
-import 'models/itemlist.dart';
 import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
 import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 bool preview = false;
 
 late List<CameraDescription> _cameras;
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -305,7 +296,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
               if (processing)
                 Center(
                   child: Container(
-                    width: 100,  // Set the desired width
+                    width: 100, // Set the desired width
                     height: 100, // Set the desired height
                     child: CircularProgressIndicator(
                       strokeWidth: 10.0,
