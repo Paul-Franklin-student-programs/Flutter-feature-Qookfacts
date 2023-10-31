@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/tflite_test/ui/home_view.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
-import 'package:qookit/ui/v2/ocr_camera_view.dart';
+import 'package:qookit/ui/v2/home_view.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
@@ -56,7 +55,7 @@ class App extends StatelessWidget {
             switch (settings.name) {
               case '/':
                 return MaterialPageRoute(
-                    builder: (_) => OCRCameraView(cameras: _cameras));
+                    builder: (_) => HomeView(cameras: _cameras));
               case '/login':
                 return MaterialPageRoute(builder: (_) => LoginView());
               case '/forgot-password-view':
@@ -72,7 +71,7 @@ class App extends StatelessWidget {
               case '/register':
                 return MaterialPageRoute(builder: (_) => RegisterView());
               case '/home-view':
-                return MaterialPageRoute(builder: (_) => HomeView());
+                return MaterialPageRoute(builder: (_) => RegisterView());
               default:
                 return null;
             }

@@ -12,13 +12,13 @@ import 'camera_view.dart';
 import 'package:auto_route/annotations.dart';
 
 @RoutePage()
-/// [HomeView] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
-class HomeView extends StatefulWidget {
+/// [OldHomeView] stacks [CameraView] and [BoxWidget]s with bottom sheet for stats
+class OldHomeView extends StatefulWidget {
   @override
-  _HomeViewState createState() => _HomeViewState();
+  _OldHomeViewState createState() => _OldHomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _OldHomeViewState extends State<OldHomeView> {
   /// Results to draw bounding boxes
   // List<dynamic> ditemlist = [];
   bool itemCheck = false;

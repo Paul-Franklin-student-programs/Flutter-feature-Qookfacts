@@ -58,7 +58,7 @@ class _OCRResultViewState extends State<OCRResultView> {
       theme: ThemeData.light(),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Qookit's Culinary Delights", style: TextStyle(color: Colors.black)),
+          title: Text("Qookit's Culinary Delights", style: qookitLight.textTheme.headline4),
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
           actions: [

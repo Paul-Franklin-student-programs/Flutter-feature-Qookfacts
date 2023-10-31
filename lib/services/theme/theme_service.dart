@@ -55,11 +55,14 @@ ThemeData qookitLight = ThemeData(
     headline4: TextStyle(
       fontFamily: 'opensans',
       fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: Colors.black
     ),
     headline5: TextStyle(
       fontFamily: 'opensans',
       fontSize: 15,
-        fontWeight: FontWeight.bold
+        fontWeight: FontWeight.bold,
+      color: Colors.black
     ),
     headline6: TextStyle(
       fontFamily: 'opensans',
@@ -77,6 +80,7 @@ TextStyle headerStyle =
 
 TextStyle subheaderStyle =
     TextStyle(fontFamily: 'opensans', fontSize: 14, color: Colors.black54);
+
 
 ThemeData qookitDark = ThemeData();
 

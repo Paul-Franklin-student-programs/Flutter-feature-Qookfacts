@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import '../tflite_test/ui/home_view.dart';
+import '../tflite_test/ui/old_home_view.dart';
 import '../ui/navigationView/navigation_view.dart';
 import '../ui/navigationView/pantryView/pantryCatalog/pantry_catalog_view.dart';
 import '../ui/navigationView/pantryView/pantry_view.dart';
