@@ -7,16 +7,16 @@ import 'package:share/share.dart';
 
 import '../../services/system/remote_config_service.dart';
 
-class OCRResultView extends StatefulWidget {
+class RecipesView extends StatefulWidget {
   final String ocrResults;
 
-  OCRResultView(this.ocrResults);
+  RecipesView(this.ocrResults);
 
   @override
-  State<OCRResultView> createState() => _OCRResultViewState();
+  State<RecipesView> createState() => _RecipesViewState();
 }
 
-class _OCRResultViewState extends State<OCRResultView> {
+class _RecipesViewState extends State<RecipesView> {
   List<String> contentData = [];
   bool isLoading = false;
   late String ocrResults;

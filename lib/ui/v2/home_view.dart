@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 
-class HomeView extends StatelessWidget {
-  final List<CameraDescription> cameras; // Add this line
 
-  HomeView({required this.cameras}); // Constructor to receive the cameras list
+class HomeView extends StatelessWidget {
+  final List<CameraDescription> cameras;
+  final bool isReceiptScanSelected; // Flag for Receipt Scanner
+  final bool isIngredientScanSelected; // Flag for Ingredient Scanner
+
+  HomeView({
+    required this.cameras,
+    this.isReceiptScanSelected = false,
+    this.isIngredientScanSelected = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +27,63 @@ class HomeView extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: ListView(
-              shrinkWrap: true, // This allows the ListView to wrap its content
+              shrinkWrap: true,
               children: <Widget>[
                 InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            OCRCameraView(cameras: cameras), // Pass cameras to OCRCameraView
+                        builder: (context) => OCRCameraView(
+                          cameras: cameras,
+                          isReceiptScanSelected: true,
+                            isIngredientScanSelected:false
+                        ),
                       ),
                     );
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.black, // Border color
-                        width: 1.0, // Border width
+                        color: Colors.amber,
+                        width: 1.0,
                       ),
-                      borderRadius: BorderRadius.circular(8.0), // Border radius
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
-                    padding: EdgeInsets.all(16.0), // Padding for content
+                    padding: EdgeInsets.all(16.0),
                     child: ListTile(
                       title: Text(
-                        "Receipt Scanner",
+                        "Scan a receipt",
+                        style: qookitLight.textTheme.headline5,
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OCRCameraView(
+                          cameras: cameras,
+                          isReceiptScanSelected: false,
+                          isIngredientScanSelected: true
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.amber,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: EdgeInsets.all(16.0),
+                    child: ListTile(
+                      title: Text(
+                        "Scan a nutrition label",
                         style: qookitLight.textTheme.headline5,
                       ),
                     ),

@@ -55,23 +55,23 @@ class App extends StatelessWidget {
             switch (settings.name) {
               case '/':
                 return MaterialPageRoute(
-                    builder: (_) => HomeView(cameras: _cameras));
-              case '/login':
-                return MaterialPageRoute(builder: (_) => LoginView());
-              case '/forgot-password-view':
-                return MaterialPageRoute(builder: (_) => ForgotPasswordView());
-              case '/diet-preferences-view':
-                return MaterialPageRoute(builder: (_) => DietPreferencesView());
-              case '/recipe-preferences-view':
-                return MaterialPageRoute(
-                    builder: (_) => RecipePreferencesView());
-              case '/recommendation-preferences-view':
-                return MaterialPageRoute(
-                    builder: (_) => RecommendationPreferences());
-              case '/register':
-                return MaterialPageRoute(builder: (_) => RegisterView());
-              case '/home-view':
-                return MaterialPageRoute(builder: (_) => RegisterView());
+                     builder: (_) => HomeView(cameras: _cameras));
+              // case '/login':
+              //   return MaterialPageRoute(builder: (_) => LoginView());
+              // case '/forgot-password-view':
+              //   return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+              // case '/diet-preferences-view':
+              //   return MaterialPageRoute(builder: (_) => DietPreferencesView());
+              // case '/recipe-preferences-view':
+              //   return MaterialPageRoute(
+              //       builder: (_) => RecipePreferencesView());
+              // case '/recommendation-preferences-view':
+              //   return MaterialPageRoute(
+              //       builder: (_) => RecommendationPreferences());
+              // case '/register':
+              //   return MaterialPageRoute(builder: (_) => RegisterView());
+              // case '/home-view':
+              //   return MaterialPageRoute(builder: (_) => RegisterView());
               default:
                 return null;
             }

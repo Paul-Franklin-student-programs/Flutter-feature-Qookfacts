@@ -6,16 +6,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/ocr_result_view.dart';
+import 'package:qookit/ui/v2/nutrition_view.dart';
+import 'package:qookit/ui/v2/recipes_view.dart';
 
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
+  final bool isReceiptScanSelected; // Flag for Receipt Scanner
+  final bool isIngredientScanSelected; // Flag for Ingredient Scanner
 
-  const OCRCameraView({Key? key, required this.cameras}) : super(key: key);
+  const OCRCameraView({
+    Key? key,
+    required this.cameras,
+    required this.isReceiptScanSelected,
+    required this.isIngredientScanSelected,
+  }) : super(key: key);
 
   @override
   State<OCRCameraView> createState() => _OCRCameraViewState();
 }
+
 
 class _OCRCameraViewState extends State<OCRCameraView> {
   late CameraController controller;
@@ -83,27 +92,42 @@ class _OCRCameraViewState extends State<OCRCameraView> {
         processing = false;
       });
 
-      await Navigator.of(context).push(
+      Navigator.push(
+        context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return OCRResultView(ocrResponse);
+            if (widget.isReceiptScanSelected) {
+              return RecipesView(ocrResponse);
+            } else if (widget.isIngredientScanSelected) {
+              return NutritionView(ocrResponse);
+            }
+            // Return a default view if neither is selected
+            return Container();
           },
         ),
       );
     }
   }
 
+
   Future<String> fetchRecipes(String ocrText) async {
     final String apiKey = RemoteConfigService().apiKey2OpenAI;
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
+
+    String content = '';
+    if(widget.isReceiptScanSelected) {
+      content = "identify ingredients in this text and give some recipes that you can make with these: $ocrText";
+    } else if(widget.isIngredientScanSelected) {
+      content = "identify ingredients in this text. Highlight serving size and calories. Group ingredients under good and bad sections and describe why are they good or bad. Give an overall rating against 10: $ocrText";
+    }
+
 
     final Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',
       'messages': [
         {
           "role": "user",
-          "content":
-              "identify ingredients in this text and give some recipes that you can make with these: $ocrText"
+          "content": '$content'
         }
       ],
       'temperature': 0.7,
@@ -240,7 +264,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                           child: Icon(Icons.camera),
                         ),
                         Text(
-                          'Capture Receipt',
+                          widget.isReceiptScanSelected?'Capture Receipt':'Capture Nutrition Label',
                           style: qookitLight.tabBarTheme.labelStyle,
                         ),
                       ],
@@ -271,10 +295,10 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                               onPressed: () {
                                 processPhoto(context);
                               },
-                              child: Icon(Icons.restaurant),
+                              child: widget.isReceiptScanSelected? Icon(Icons.restaurant) : Icon(Icons.local_grocery_store),
                             ),
                             Text(
-                              'Qookit (~15s)',
+                              widget.isReceiptScanSelected?'Qookit (~15s)': 'Qookart (~15s)',
                               style: qookitLight.tabBarTheme.labelStyle,
                             ),
                           ],
