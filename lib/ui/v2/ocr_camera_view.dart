@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/testView/OCResultView.dart';
+import 'package:qookit/ui/v2/ocr_result_view.dart';
 
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;

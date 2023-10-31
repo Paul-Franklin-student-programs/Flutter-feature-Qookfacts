@@ -9,7 +9,7 @@ import 'package:qookit/tflite_test/ui/home_view.dart';
 import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
 import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
 import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
-import 'package:qookit/ui/testView/ocr_camera_view.dart';
+import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
