@@ -81,7 +81,6 @@ TextStyle headerStyle =
 TextStyle subheaderStyle =
     TextStyle(fontFamily: 'opensans', fontSize: 14, color: Colors.black54);
 
-
 ThemeData qookitDark = ThemeData();
 
 /*List<ThemeData> getThemes() {
