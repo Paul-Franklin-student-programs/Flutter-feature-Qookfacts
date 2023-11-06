@@ -4,7 +4,7 @@ import 'package:stacked/stacked.dart';
 
 class DietPreferencesViewModel extends BaseViewModel{
   String title = 'Choose your diet';
-  String background = 'assets/images/get_started22.png';
+  String background = 'assets/images/v2/app_logo.png';
   // String nextRoute = Routes.recipePreferencesView;
   String nextRoute = 'RecipePreferencesView.dart';
 

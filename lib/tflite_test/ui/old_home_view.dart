@@ -84,7 +84,7 @@ class _OldHomeViewState extends State<OldHomeView> {
       appBar: AppBar(
         centerTitle: true,
         title: SvgPicture.asset(
-          'assets/images/qookit_full.svg',
+          'assets/images/v2/app_logo.SVG',
           color: Colors.white,
         ),
         leading: IconButton(

@@ -69,13 +69,13 @@ dependencies:
   shimmer: any
   stacked: ^3.4.1
   stacked_themes: ^0.3.11
-  tflite_flutter: any
-  tflite_flutter_helper: #^0.3.1
-    git:
-      url: https://github.com/elephantum/tflite_flutter_helper.git
-      ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
-  google_ml_kit: ^0.14.0
-  firebase_ml_model_downloader: ^0.2.3+3
+#  tflite_flutter: any
+#  tflite_flutter_helper: #^0.3.1
+#    git:
+#      url: https://github.com/elephantum/tflite_flutter_helper.git
+#      ref: a7d7a59a33f7cffa0a2a12ab05625807622cc97a
+#  google_ml_kit: ^0.14.0
+#  firebase_ml_model_downloader: ^0.2.3+3
 #  url_launcher: ^6.0.18
 #  video_player: ^1.0.1
 
@@ -100,9 +100,9 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/app_logo.jpg"
+  image_path: "assets/images/v2/app_logo.jpg"
   adaptive_icon_background: "#ffd53f"
-  adaptive_icon_foreground: "assets/images/pan.png"
+  adaptive_icon_foreground: "assets/images/v2/pan.png"
 
 # The following section is specific to Flutter.
 flutter:
@@ -113,8 +113,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/cfg/
-    - assets/images/
-    - assets/kite.jpg
+    - assets/images/v2/
     - assets/groceries.txt
 
   fonts:

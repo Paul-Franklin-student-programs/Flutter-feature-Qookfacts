@@ -92,7 +92,7 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           InkWell(
                             child: SvgPicture.asset(
-                                'assets/images/settings_icon.svg',
+                                'assets/images/v2/app_logo.svg',
                                 color: Colors.black),
                             onTap: () {
                               Navigator.of(context, rootNavigator: true)

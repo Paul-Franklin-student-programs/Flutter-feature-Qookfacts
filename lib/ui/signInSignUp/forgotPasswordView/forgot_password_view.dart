@@ -22,7 +22,7 @@ class ForgotPasswordView extends StatelessWidget {
             height: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: ExactAssetImage('assets/images/forgotbg.png'),
+                image: ExactAssetImage('assets/images/v2/app_logo.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -58,7 +58,7 @@ class ForgotPasswordView extends StatelessWidget {
                                     width: 25, // width of the button
                                     child: Center(
                                       child: Image.asset(
-                                        'assets/images/back.png',
+                                        'assets/images/v2/app_logo.jpg',
                                         width: 25,
                                         height: 25,
                                         fit: BoxFit.contain,

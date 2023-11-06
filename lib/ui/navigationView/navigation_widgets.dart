@@ -35,27 +35,27 @@ OverlayEntry showFabActions(BuildContext context, NavigationViewModel model) {
             top: offset.dy - step / 2,
             child: fabOption(
 
-                size, 'pantry', 'assets/images/pantry_icon.svg', model,
+                size, 'pantry', 'assets/images/v2/app_logo.svg', model,
                 startDemo: 0),
           ),
           Positioned(
             left: offset.dx - step / 2 + size.width / 4,
             top: offset.dy - step,
             child: fabOption(
-                size, 'recipe', 'assets/images/utensils_icon.svg', model,
+                size, 'recipe', 'assets/images/v2/app_logo.svg', model,
                 startDemo: 2),
           ),
           Positioned(
             left: offset.dx + step / 2 - size.width / 4,
             top: offset.dy - step,
-            child: fabOption(size, 'dish', 'assets/images/dish_icon.svg', model,
+            child: fabOption(size, 'dish', 'assets/images/v2/app_logo.svg', model,
                 startDemo: 1),
           ),
           Positioned(
             left: offset.dx + step,
             top: offset.dy - step / 2,
             child: fabOption(
-                size, 'receipt', 'assets/images/receipt_icon.svg', model,
+                size, 'receipt', 'assets/images/v2/app_logo.svg', model,
                 startDemo: 3),
           ),
         ],

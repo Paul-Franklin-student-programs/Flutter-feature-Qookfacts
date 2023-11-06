@@ -47,13 +47,13 @@ class NavigationView extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
-                                'assets/images/crop_icon.svg',
+                                'assets/images/v2/app_logo.svg',
                                 color: Colors.black),
                           ),
                           Align(
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
-                                'assets/images/add_icon.svg',
+                                'assets/images/v2/app_logo.svg',
                                 color: Colors.black),
                           ),
                         ],

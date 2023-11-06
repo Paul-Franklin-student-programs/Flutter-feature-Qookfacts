@@ -14,7 +14,7 @@ class ShoppingTitle extends StatelessWidget {
             'Shopping List',
             style: headerStyle,
           ),
-          SvgPicture.asset('assets/images/cart_icon.svg')
+          SvgPicture.asset('assets/images/v2/app_logo.svg')
         ],
       ),
     );

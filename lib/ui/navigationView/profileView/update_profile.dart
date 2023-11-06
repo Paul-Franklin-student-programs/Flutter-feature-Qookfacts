@@ -48,7 +48,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               height: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: ExactAssetImage('assets/images/signupbg.png'),
+                  image: ExactAssetImage('assets/images/v2/app_logo.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -79,7 +79,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     width: 25, // width of the button
                                     child: Center(
                                       child: Image.asset(
-                                          'assets/images/back.png',
+                                          'assets/images/v2/app_logo.png',
                                           width: 25,
                                           height: 25,
                                           fit: BoxFit.contain),

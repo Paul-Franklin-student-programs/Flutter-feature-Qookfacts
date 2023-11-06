@@ -97,7 +97,7 @@ class NoAccountRow extends ViewModelWidget<LoginViewModel> {
 
 class ThirdPartyIcons extends ViewModelWidget<LoginViewModel> {
   ThirdParty google =
-      ThirdParty(image: 'assets/images/google_icon.png', label: 'Google');
+      ThirdParty(image: 'assets/images/v2/app_logo.png', label: 'Google');
 
   @override
   Widget build(BuildContext context, model) {
