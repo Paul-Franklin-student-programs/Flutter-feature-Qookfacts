@@ -101,6 +101,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            shrinkResources true
+            minifyEnabled true  // Enable code shrinking (Proguard)
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 

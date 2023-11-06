@@ -5,15 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/signInSignUp/forgotPasswordView/forgot_password_view.dart';
-import 'package:qookit/ui/signInSignUp/loginView/login_view.dart';
-import 'package:qookit/ui/signInSignUp/registerView/register_view.dart';
 import 'package:qookit/ui/v2/home_view.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-
-import 'ui/signInSignUp/onboardingView/dietPreferences/diet_preferences_view.dart';
-import 'ui/signInSignUp/onboardingView/recipePreferences/recipe_preferences_view.dart';
-import 'ui/signInSignUp/onboardingView/recommendationPreferences/recommendation_preferences_view.dart';
 
 bool preview = false;
 
@@ -56,22 +49,6 @@ class App extends StatelessWidget {
               case '/':
                 return MaterialPageRoute(
                      builder: (_) => HomeView(cameras: _cameras));
-              // case '/login':
-              //   return MaterialPageRoute(builder: (_) => LoginView());
-              // case '/forgot-password-view':
-              //   return MaterialPageRoute(builder: (_) => ForgotPasswordView());
-              // case '/diet-preferences-view':
-              //   return MaterialPageRoute(builder: (_) => DietPreferencesView());
-              // case '/recipe-preferences-view':
-              //   return MaterialPageRoute(
-              //       builder: (_) => RecipePreferencesView());
-              // case '/recommendation-preferences-view':
-              //   return MaterialPageRoute(
-              //       builder: (_) => RecommendationPreferences());
-              // case '/register':
-              //   return MaterialPageRoute(builder: (_) => RegisterView());
-              // case '/home-view':
-              //   return MaterialPageRoute(builder: (_) => RegisterView());
               default:
                 return null;
             }
