@@ -33,8 +33,8 @@ class AuthService extends ChangeNotifier {
   // Firebase auth automatically keeps token updated
   // https://stackoverflow.com/questions/49656489/is-the-firebase-access-token-refreshed-automatically?rq=1#:~:text=Firebase%20automatically%20refreshes%20if%20it,cause%20that%20listener%20to%20trigger.
   Future<String> get token async {
-    String value = await  auth.currentUser!.getIdToken();
-    print('Token ' +value);
+    String? value = await auth.currentUser!.getIdToken();
+    print('Token ' +value!);
     return value;
   }
 

@@ -53,3 +53,8 @@ doc/api/
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+
+# Flutter related
+.flutter-plugins
+.flutter-plugins-dependencies

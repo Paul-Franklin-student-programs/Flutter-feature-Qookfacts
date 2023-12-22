@@ -21,9 +21,9 @@ class SplashScreenView extends StatelessWidget {
   // Function goToTab;
 
   final List<String> imgList = [
-    'assets/images/splash1.png',
-    'assets/images/splash2.png',
-    'assets/images/splash3.png',
+    'assets/images/v2/app_logo.png',
+    'assets/images/v2/app_logo.png',
+    'assets/images/v2/app_logo.png',
   ];
 
   final List<String> txtList = [

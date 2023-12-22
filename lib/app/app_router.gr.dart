@@ -11,7 +11,7 @@
 import 'package:auto_route/auto_route.dart' as _i17;
 import 'package:flutter/material.dart' as _i18;
 import 'package:qookit/models/recipe.dart' as _i19;
-import 'package:qookit/tflite_test/ui/home_view.dart' as _i16;
+import 'package:qookit/tflite_test/ui/old_home_view.dart' as _i16;
 import 'package:qookit/ui/navigationView/navigation_view.dart' as _i8;
 import 'package:qookit/ui/navigationView/pantryView/pantry_view.dart' as _i6;
 import 'package:qookit/ui/navigationView/pantryView/pantryCatalog/pantry_catalog_view.dart'
@@ -145,7 +145,7 @@ abstract class $AppRouter extends _i17.RootStackRouter {
     HomeView.name: (routeData) {
       return _i17.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i16.HomeView(),
+        child: _i16.OldHomeView(),
       );
     },
   };
@@ -425,7 +425,7 @@ class SplashRouteView extends _i17.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i16.HomeView]
+/// [_i16.OldHomeView]
 class HomeView extends _i17.PageRouteInfo<void> {
   const HomeView({List<_i17.PageRouteInfo>? children})
       : super(

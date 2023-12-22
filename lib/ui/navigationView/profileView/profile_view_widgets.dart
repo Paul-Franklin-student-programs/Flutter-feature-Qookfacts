@@ -63,7 +63,7 @@ class _SettingsIconState extends State<SettingsIcon> {
   Widget build(BuildContext context) {
     return InkWell(
       child: SvgPicture.asset(
-        'assets/images/settings_icon.svg',
+        'assets/images/v2/app_logo.svg',
         color: Colors.black,
       ),
       onTap: () {

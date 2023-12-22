@@ -81,7 +81,7 @@ class ShoppingItemView extends StatelessWidget {
                                                                   right: 8.0),
                                                           child:
                                                               SvgPicture.asset(
-                                                            'assets/images/barcode_icon.svg',
+                                                            'assets/images/v2/app_logo.svg',
                                                             color: Colors.black,
                                                           )),
                                                       suffixIconConstraints:

@@ -3,10 +3,10 @@ import 'package:stacked/stacked.dart';
 class PantryCatalogViewModel extends BaseViewModel{
 
   List<PantryCategory> categories = [
-    PantryCategory('MEATS', 'assets/images/meat_image.png'),
-    PantryCategory('PRODUCE', 'assets/images/produce_image.png'),
-    PantryCategory('DRY PASTA', 'assets/images/dry_pasta_image.png'),
-    PantryCategory('DAIRY', 'assets/images/dairy_image.png'),
+    PantryCategory('MEATS', 'assets/images/v2/app_logo.png'),
+    PantryCategory('PRODUCE', 'assets/images/v2/app_logo.png'),
+    PantryCategory('DRY PASTA', 'assets/images/v2/app_logo.png'),
+    PantryCategory('DAIRY', 'assets/images/v2/app_logo.png'),
   ];
 }
 

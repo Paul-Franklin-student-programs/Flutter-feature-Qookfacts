@@ -108,7 +108,7 @@ class PantryHeader extends ViewModelWidget<PantryViewModel> {
                             suffixIcon: Container(
                               margin: const EdgeInsets.only(right: 8.0),
                               child: SvgPicture.asset(
-                                'assets/images/barcode_icon.svg',
+                                'assets/images/v2/app_logo.svg',
                                 color: Colors.black,
                               ),
                             ),

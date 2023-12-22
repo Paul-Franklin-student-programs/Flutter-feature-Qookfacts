@@ -73,9 +73,9 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
                 },
                 icon: !model.added.contains(ing.text)
                     ? SvgPicture.asset(
-                        'assets/images/circle_checkbox_empty.svg')
+                        'assets/images/v2/app_logo.svg')
                     : SvgPicture.asset(
-                        'assets/images/circle_checkbox_checked.svg'),
+                        'assets/images/v2/app_logo.svg'),
               ),
             ),
           ListTile(
@@ -146,9 +146,9 @@ class InfoColumn extends ViewModelWidget<RecipeDetailsViewModel> {
                 },
                 icon: !model.added.contains(ing.text)
                     ? SvgPicture.asset(
-                        'assets/images/circle_checkbox_empty.svg')
+                        'assets/images/v2/app_logo.svg')
                     : SvgPicture.asset(
-                        'assets/images/circle_checkbox_checked.svg'),
+                        'assets/images/v2/app_logo.svg'),
               ),
             ),
         ],

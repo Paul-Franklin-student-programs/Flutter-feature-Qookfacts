@@ -7,7 +7,7 @@ class RecommendationPreferencesViewModel extends BaseViewModel{
   String subtitle = "Let's focus our recommendations on the things that matter most to you. You can always change this in your profile.";
   // String nextRoute = Routes.dietPreferencesView;
   String nextRoute = '';
-  String background = 'assets/images/get_started11.png';
+  String background = 'assets/images/v2/app_logo.png';
 
   List<String> recs = [
     'Healthier Lifestyle',

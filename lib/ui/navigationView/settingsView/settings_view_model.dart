@@ -4,18 +4,18 @@ class SettingsViewModel extends BaseViewModel {
   List<String> subsections = ['ACCOUNT', 'SYSTEM', 'ABOUT US'];
 
   List<SettingsTile> accountTiles = [
-    SettingsTile('MY STORES', 'assets/images/cart_icon.svg'),
-    SettingsTile('PAYMENT', 'assets/images/money_icon.svg'),
+    SettingsTile('MY STORES', 'assets/images/v2/app_logo.svg'),
+    SettingsTile('PAYMENT', 'assets/images/v2/app_logo.svg'),
   ];
 
   List<SettingsTile> systemTiles = [
-    SettingsTile('MEASUREMENT SYSTEM', 'assets/images/stats_icon.svg'),
-    SettingsTile('NOTIFICATIONS', 'assets/images/notifications_icon.svg'),
+    SettingsTile('MEASUREMENT SYSTEM', 'assets/images/v2/app_logo.svg'),
+    SettingsTile('NOTIFICATIONS', 'assets/images/v2/app_logo.svg'),
   ];
 
   List<SettingsTile> aboutUsTiles = [
-    SettingsTile('FEEDBACK', 'assets/images/chat_icon.svg'),
-    SettingsTile('RATE US', 'assets/images/star_icon.svg'),
+    SettingsTile('FEEDBACK', 'assets/images/v2/app_logo.svg'),
+    SettingsTile('RATE US', 'assets/images/v2/app_logo.svg'),
   ];
 }
 

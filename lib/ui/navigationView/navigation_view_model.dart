@@ -52,10 +52,10 @@ class NavigationViewModel extends BaseViewModel {
   ];
 
   List<BottomItem> navItems = [
-    BottomItem('pantry', FontAwesomeIcons.breadSlice, 'assets/images/pantry_icon.svg'),
-    BottomItem('recipes', FontAwesomeIcons.utensils, 'assets/images/utensils_icon.svg'),
-    BottomItem('shopping', FontAwesomeIcons.shoppingCart, 'assets/images/cart_icon.svg'),
-    BottomItem('profile', FontAwesomeIcons.userAlt, 'assets/images/profile_icon.svg'),
+    BottomItem('pantry', FontAwesomeIcons.breadSlice, 'assets/images/v2/app_logo.svg'),
+    BottomItem('recipes', FontAwesomeIcons.utensils, 'assets/images/v2/app_logo.svg'),
+    BottomItem('shopping', FontAwesomeIcons.shoppingCart, 'assets/images/v2/app_logo.svg'),
+    BottomItem('profile', FontAwesomeIcons.userAlt, 'assets/images/v2/app_logo.svg'),
   ];
 
   void onItemTapped(int index) {

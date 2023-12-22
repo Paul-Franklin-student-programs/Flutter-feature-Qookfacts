@@ -23,7 +23,7 @@ class RegisterView extends StatelessWidget {
               height: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: ExactAssetImage('assets/images/signupbg.png'),
+                  image: ExactAssetImage('assets/images/v2/app_logo.png'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -54,7 +54,7 @@ class RegisterView extends StatelessWidget {
                                     width: 25, // width of the button
                                     child: Center(
                                       child: Image.asset(
-                                          'assets/images/back.png',
+                                          'assets/images/v2/app_logo.png',
                                           width: 25,
                                           height: 25,
                                           fit: BoxFit.contain),
@@ -376,7 +376,7 @@ class RegisterView extends StatelessWidget {
                                 height: 15,
                                 width: 15,
                                 child: Image.asset(
-                                  'assets/images/close.png',
+                                  'assets/images/v2/app_logo.png',
                                   height: 17,
                                   width: 17,
                                   fit: BoxFit.contain,
@@ -388,7 +388,7 @@ class RegisterView extends StatelessWidget {
                         Column(
                           children: <Widget>[
                             Image.asset(
-                              'assets/images/forgot_password.png',
+                              'assets/images/v2/app_logo.png',
                               height: 80,
                               width: MediaQuery.of(context).size.width * 0.7,
                             ),
@@ -576,7 +576,7 @@ class RegisterView extends StatelessWidget {
                       },
                       child: Container(
                         child: Image.asset(
-                          'assets/images/close.png',
+                          'assets/images/v2/app_logo.png',
                           width: 35,
                           height: 35,
                           fit: BoxFit.contain,
