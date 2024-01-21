@@ -1,18 +1,21 @@
 import 'package:camera/camera.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/home_view.dart';
+import 'package:qookit/ui/v2/auth_view.dart';
+import 'package:qookit/ui/v2/auth_service.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
-bool preview = false;
 
 late List<CameraDescription> _cameras;
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await RemoteConfigService().initialize();
@@ -27,7 +30,20 @@ Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent));
 
-  runApp(App());
+  runApp(
+    MultiProvider(
+      providers: [
+        StreamProvider<User?>.value(
+          value: AuthService().authStateChanges,
+          initialData: null,
+        ),
+        Provider<AuthService>(
+          create: (_) => AuthService(),
+        ),
+      ],
+      child: App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -47,8 +63,7 @@ class App extends StatelessWidget {
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case '/':
-                return MaterialPageRoute(
-                     builder: (_) => HomeView(cameras: _cameras));
+                return MaterialPageRoute(builder: (_) => AuthWrapper(cameras: _cameras));
               default:
                 return null;
             }
@@ -59,3 +74,21 @@ class App extends StatelessWidget {
     );
   }
 }
+
+class AuthWrapper extends StatelessWidget {
+  final List<CameraDescription> cameras;
+
+  const AuthWrapper({Key? key, required this.cameras}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
+    if (user == null) {
+      return AuthView();
+    } else {
+      return HomeView(cameras: cameras);
+    }
+  }
+}
+
