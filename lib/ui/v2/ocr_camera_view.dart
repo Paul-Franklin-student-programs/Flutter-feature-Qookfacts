@@ -257,15 +257,38 @@ class _OCRCameraViewState extends State<OCRCameraView> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        FloatingActionButton(
-                          onPressed: takePhoto,
-                          child: Icon(Icons.camera),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              FloatingActionButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(Icons.arrow_back),
+                              ),
+                              Text(
+                                'Go Back',
+                                style: qookitLight.tabBarTheme.labelStyle,
+                              ),
+                            ],
+                          ),
                         ),
-                        Text(
-                          widget.isReceiptScanSelected?'Capture Receipt':'Capture Nutrition Label',
-                          style: qookitLight.tabBarTheme.labelStyle,
+                        Expanded(
+                          child: Column(
+                            children: [
+                              FloatingActionButton(
+                                onPressed: takePhoto,
+                                child: Icon(Icons.camera),
+                              ),
+                              Text(
+                                widget.isReceiptScanSelected?'Capture Receipt':'Capture Nutrition Label',
+                                style: qookitLight.tabBarTheme.labelStyle,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

@@ -41,6 +41,12 @@ class _NutritionViewState extends State<NutritionView> {
           ),
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.share, color: Colors.black),

@@ -61,6 +61,12 @@ class _RecipesViewState extends State<RecipesView> {
           title: Text("Qookit's Culinary Delights", style: qookitLight.textTheme.headline4),
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.share, color: Colors.black),

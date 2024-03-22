@@ -23,6 +23,14 @@ class HomeView extends StatelessWidget {
         title: Text("Let's Qookit", style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await AuthService().signOut();
+            },
+            icon: Icon(Icons.logout, color: Colors.black),
+          ),
+        ],
       ),
       body: StreamBuilder<User?>(
         stream: AuthService().authStateChanges,
@@ -31,100 +39,82 @@ class HomeView extends StatelessWidget {
             User? user = snapshot.data;
             String userEmail = user?.email ?? "Unknown User";
 
-            return Stack(
+            return Column(
               children: [
-                Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OCRCameraView(
-                                    cameras: cameras,
-                                    isReceiptScanSelected: true,
-                                    isIngredientScanSelected: false,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.all(16.0),
-                              child: ListTile(
-                                title: Text(
-                                  "Scan a receipt",
-                                  style: qookitLight.textTheme.headline5,
-                                ),
+                Expanded(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OCRCameraView(
+                                cameras: cameras,
+                                isReceiptScanSelected: true,
+                                isIngredientScanSelected: false,
                               ),
                             ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OCRCameraView(
-                                    cameras: cameras,
-                                    isReceiptScanSelected: false,
-                                    isIngredientScanSelected: true,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.all(16.0),
-                              child: ListTile(
-                                title: Text(
-                                  "Scan a nutrition label",
-                                  style: qookitLight.textTheme.headline5,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  bottom: 16.0,
-                  left: 0,
-                  right: 0,
-                  child: Column(
-                    children: [
-                      Text(
-                        "Hello, $userEmail",
-                        style: qookitLight.textTheme.headline6,
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await AuthService().signOut();
+                          );
                         },
-                        style: ElevatedButton.styleFrom(primary: Colors.amber),
-                        child: Text("Sign Out", style: qookitLight.textTheme.headline6),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.amber,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.all(16.0),
+                          child: ListTile(
+                            title: Text(
+                              "Scan a receipt",
+                              style: qookitLight.textTheme.headline5,
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OCRCameraView(
+                                cameras: cameras,
+                                isReceiptScanSelected: false,
+                                isIngredientScanSelected: true,
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.amber,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.all(16.0),
+                          child: ListTile(
+                            title: Text(
+                              "Scan a nutrition label",
+                              style: qookitLight.textTheme.headline5,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "Hello, $userEmail",
+                    style: qookitLight.textTheme.headline6,
+                  ),
+                ),
               ],
             );
           } else {
