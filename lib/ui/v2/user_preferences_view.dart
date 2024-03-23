@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/virtual_pantry_view.dart';
 import 'dietary_restrictions.dart';
 
 class UserPreferencesView extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +45,36 @@ class UserPreferencesView extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VirtualPantryView(), // Navigate to VirtualPantryView
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.amber,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    padding: EdgeInsets.all(16.0),
+                    child: ListTile(
+                      title: Text(
+                        "Virtual Pantry",
+                        style: qookitLight.textTheme.headline5,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
