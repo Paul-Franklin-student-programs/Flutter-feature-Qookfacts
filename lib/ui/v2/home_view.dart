@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:hive/hive.dart'; // Import Hive
 import 'package:qookit/ui/v2/manual_entry_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/auth_service.dart';
@@ -21,29 +20,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _openHiveBox(), // Open Hive box asynchronously
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final Box<String> dietaryRestrictionsBox = snapshot.data as Box<String>; // Get the dietary restrictions box
-          return _buildHomeView(context, dietaryRestrictionsBox);
-        } else {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  Future<Box<String>> _openHiveBox() async {
-    await Hive.openBox<String>('dietary_restrictions'); // Open the 'dietary_restrictions' box
-    return Hive.box<String>('dietary_restrictions'); // Return the opened box
-  }
-
-  Widget _buildHomeView(BuildContext context, Box<String> dietaryRestrictionsBox) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Let's Qookit", style: qookitLight.textTheme.headline4),
@@ -90,7 +66,7 @@ class HomeView extends StatelessWidget {
                               builder: (context) => OCRCameraView(
                                 cameras: cameras,
                                 isReceiptScanSelected: true,
-                                isIngredientScanSelected: false
+                                isIngredientScanSelected: false,
                               ),
                             ),
                           );
@@ -120,7 +96,7 @@ class HomeView extends StatelessWidget {
                               builder: (context) => OCRCameraView(
                                 cameras: cameras,
                                 isReceiptScanSelected: false,
-                                isIngredientScanSelected: true
+                                isIngredientScanSelected: true,
                               ),
                             ),
                           );
@@ -147,8 +123,7 @@ class HomeView extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ManualEntryView(// Pass the dietary restrictions box
-                              ),
+                              builder: (context) => ManualEntryView(),
                             ),
                           );
                         },

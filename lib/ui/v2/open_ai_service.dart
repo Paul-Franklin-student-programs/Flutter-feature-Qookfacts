@@ -49,4 +49,60 @@ class OpenAiService {
       return response.body;
     }
   }
+
+  static Future<String> sendOCRRequest(String filePath) async {
+    List<String> parsedTextList = [];
+
+    var url = Uri.parse('http://api.ocr.space/parse/Image');
+    var request = http.MultipartRequest('POST', url);
+
+    request.headers['apikey'] = RemoteConfigService().apiKeyOCR;
+    request.fields['language'] = 'eng';
+    request.fields['fileType'] = 'JPG';
+    request.fields['detectOrientation'] = 'true';
+    request.fields['isOverlayRequired'] = 'true';
+    request.fields['isCreateSearchablePdf'] = 'false';
+    request.fields['isSearchablePdfHideTextLayer'] = 'false';
+    request.fields['scale'] = 'true';
+    request.fields['isTable'] = 'true';
+    request.fields['OCREngine'] = '1';
+
+    // Add the file to the request
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'file',
+        filePath,
+      ),
+    );
+
+    try {
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseString);
+        // Check if the response contains the "ParsedResults" key
+        if (jsonResponse.containsKey('ParsedResults')) {
+          // Access the "ParsedResults" list
+          var parsedResults = jsonResponse['ParsedResults'];
+
+          // Iterate through each item in the "ParsedResults" list
+          for (var parsedResult in parsedResults) {
+            // Check if the parsedResult contains the "ParsedText" key
+            if (parsedResult.containsKey('ParsedText')) {
+              // Extract the "ParsedText" value and add it to the list
+              var parsedText = parsedResult['ParsedText'];
+              parsedTextList.add(parsedText);
+            }
+          }
+        }
+      } else {
+        parsedTextList
+            .add('Request failed>>>:' + await response.stream.bytesToString());
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+
+    return parsedTextList.join(',');
+  }
 }
