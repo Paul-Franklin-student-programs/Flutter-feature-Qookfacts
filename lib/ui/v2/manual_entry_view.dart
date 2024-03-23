@@ -13,7 +13,7 @@ class _ManualEntryViewState extends State<ManualEntryView> {
   String userId = FirebaseAuth.instance.currentUser?.uid ?? 'xyz';
 
   final TextEditingController _controller = TextEditingController();
-  List<String> ingredientsList = []; // List to store dietary restrictions
+  List<String> ingredientsList = []; // List to store ingredients
   bool isLoading = false; // Variable to control the visibility of CircularProgressIndicator
 
   @override
@@ -48,7 +48,7 @@ class _ManualEntryViewState extends State<ManualEntryView> {
                 final String ingredient = _controller.text.trim();
                 if (ingredient.isNotEmpty) {
                   setState(() {
-                    ingredientsList.add(ingredient); // Add restriction to the list
+                    ingredientsList.add(ingredient); // Add ingredient to the list
                   });
                   _controller.clear();
                 }
@@ -142,9 +142,23 @@ class _ManualEntryViewState extends State<ManualEntryView> {
       itemCount: ingredientsList.length,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(
-            ingredientsList[index],
-            style: qookitLight.textTheme.bodyText1, // Apply qookit theme to the list item text
+          title: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  ingredientsList[index],
+                  style: qookitLight.textTheme.bodyText1, // Apply qookit theme to the list item text
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.remove_circle),
+                onPressed: () {
+                  setState(() {
+                    ingredientsList.removeAt(index); // Remove the item from the list
+                  });
+                },
+              ),
+            ],
           ),
         );
       },
