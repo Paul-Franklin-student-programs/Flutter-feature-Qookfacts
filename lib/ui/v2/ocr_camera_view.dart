@@ -9,6 +9,7 @@ import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/nutrition_view.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
+import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
 
 import 'services/open_ai_service.dart';
 
@@ -21,13 +22,12 @@ class OCRCameraView extends StatefulWidget {
     Key? key,
     required this.cameras,
     required this.isReceiptScanSelected,
-    required this.isIngredientScanSelected
+    required this.isIngredientScanSelected,
   }) : super(key: key);
 
   @override
   State<OCRCameraView> createState() => _OCRCameraViewState();
 }
-
 
 class _OCRCameraViewState extends State<OCRCameraView> {
   late CameraController controller;
@@ -49,10 +49,10 @@ class _OCRCameraViewState extends State<OCRCameraView> {
       if (e is CameraException) {
         switch (e.code) {
           case 'CameraAccessDenied':
-            // Handle access errors here.
+          // Handle access errors here.
             break;
           default:
-            // Handle other errors here.
+          // Handle other errors here.
             break;
         }
       }
@@ -81,6 +81,34 @@ class _OCRCameraViewState extends State<OCRCameraView> {
       photoFile = null;
     });
   }
+
+  void saveToVirtualPantry(BuildContext context) async {
+    setState(() {
+      processing = true;
+    });
+
+    if (photoFile != null) {
+      String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
+      ocrResponse = await OpenAiService.fetchIngredients(ocrResponse);
+      List<String> ingredientsList = ocrResponse.split(',');
+
+      print(ocrResponse);
+
+      setState(() {
+        processing = false;
+      });
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return ScannedIngredientsView(ingredients: ingredientsList);
+          },
+        ),
+      );
+    }
+  }
+
 
   void processPhoto(BuildContext context) async {
     setState(() {
@@ -127,15 +155,15 @@ class _OCRCameraViewState extends State<OCRCameraView> {
             children: <Widget>[
               photoFile == null
                   ? Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: CameraPreview(controller),
-                    )
+                width: double.infinity,
+                height: double.infinity,
+                child: CameraPreview(controller),
+              )
                   : Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: Image.file(photoFile!, fit: BoxFit.fill),
-                    ),
+                width: double.infinity,
+                height: double.infinity,
+                child: Image.file(photoFile!, fit: BoxFit.fill),
+              ),
               if (processing)
                 Center(
                   child: Container(
@@ -151,81 +179,96 @@ class _OCRCameraViewState extends State<OCRCameraView> {
           ),
           floatingActionButton: photoFile == null
               ? Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: Column(
-                            children: [
-                              FloatingActionButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.arrow_back),
-                              ),
-                              Text(
-                                'Go Back',
-                                style: qookitLight.tabBarTheme.labelStyle,
-                              ),
-                            ],
-                          ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(Icons.arrow_back),
                         ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              FloatingActionButton(
-                                onPressed: takePhoto,
-                                child: Icon(Icons.camera),
-                              ),
-                              Text(
-                                widget.isReceiptScanSelected?'Capture Receipt':'Capture Nutrition Label',
-                                style: qookitLight.tabBarTheme.labelStyle,
-                              ),
-                            ],
-                          ),
+                        Text(
+                          'Go Back',
+                          style: qookitLight.tabBarTheme.labelStyle,
                         ),
                       ],
                     ),
-                  ],
-                )
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        FloatingActionButton(
+                          onPressed: takePhoto,
+                          child: Icon(Icons.camera),
+                        ),
+                        Text(
+                          widget.isReceiptScanSelected ? 'Capture Receipt' : 'Capture Nutrition Label',
+                          style: qookitLight.tabBarTheme.labelStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )
               : Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: deletePhoto,
+                        child: Icon(Icons.delete),
+                      ),
+                      Text(
+                        'Discard and Retry',
+                        style: qookitLight.tabBarTheme.labelStyle,
+                      ),
+                    ],
+                  ),
+                  if (widget.isReceiptScanSelected) // Show the button only if isReceiptScanSelected is true
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            FloatingActionButton(
-                              onPressed: deletePhoto,
-                              child: Icon(Icons.delete),
-                            ),
-                            Text(
-                              'Discard and Retry',
-                              style: qookitLight.tabBarTheme.labelStyle,
-                            ),
-                          ],
+                        FloatingActionButton(
+                          onPressed: () {
+                            saveToVirtualPantry(context);
+                          },
+                          child: Icon(Icons.add_shopping_cart), // Replace with your icon
                         ),
-                        Column(
-                          children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                processPhoto(context);
-                              },
-                              child: widget.isReceiptScanSelected? Icon(Icons.restaurant) : Icon(Icons.local_grocery_store),
-                            ),
-                            Text(
-                              widget.isReceiptScanSelected?'Qookit (~15s)': 'Qookart (~15s)',
-                              style: qookitLight.tabBarTheme.labelStyle,
-                            ),
-                          ],
+                        Text(
+                          'Add to Pantry', // Replace with your button text
+                          style: qookitLight.tabBarTheme.labelStyle,
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {
+                          processPhoto(context);
+                        },
+                        child: widget.isReceiptScanSelected ? Icon(Icons.restaurant) : Icon(Icons.local_grocery_store),
+                      ),
+                      Text(
+                        widget.isReceiptScanSelected ? 'Qookit (~15s)' : 'Qookart (~15s)',
+                        style: qookitLight.tabBarTheme.labelStyle,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

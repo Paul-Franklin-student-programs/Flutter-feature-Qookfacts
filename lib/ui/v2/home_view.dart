@@ -5,7 +5,8 @@ import 'package:qookit/ui/v2/manual_entry_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/user_preferences_view.dart'; // Import the UserPreferencesView
+import 'package:qookit/ui/v2/user_preferences_view.dart';
+import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 
 class HomeView extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -113,6 +114,32 @@ class HomeView extends StatelessWidget {
                           child: ListTile(
                             title: Text(
                               "Scan a nutrition label",
+                              style: qookitLight.textTheme.headline5,
+                            ),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VirtualPantryScan(), // Navigate to VirtualPantryScan
+                            ),
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.amber,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          padding: EdgeInsets.all(16.0),
+                          child: ListTile(
+                            title: Text(
+                              "Virtual Pantry Based Recipes",
                               style: qookitLight.textTheme.headline5,
                             ),
                           ),
