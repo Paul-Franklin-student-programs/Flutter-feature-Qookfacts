@@ -13,15 +13,13 @@ import 'package:qookit/ui/v2/recipes_view.dart';
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
   final bool isReceiptScanSelected; // Flag for Receipt Scanner
-  final bool isIngredientScanSelected; // Flag for Ingredient Scanner
-  final Box<String> dietaryRestrictionsBox;
+  final bool isIngredientScanSelected;
 
   const OCRCameraView({
     Key? key,
     required this.cameras,
     required this.isReceiptScanSelected,
-    required this.isIngredientScanSelected,
-    required this.dietaryRestrictionsBox,
+    required this.isIngredientScanSelected
   }) : super(key: key);
 
   @override

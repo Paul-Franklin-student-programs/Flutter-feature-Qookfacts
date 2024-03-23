@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 
@@ -8,10 +9,36 @@ class DietaryRestrictionsView extends StatefulWidget {
 }
 
 class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
-  String userId = FirebaseAuth.instance.currentUser?.uid ?? 'xyz';
+  String userId = FirebaseAuth.instance.currentUser!.uid!;
 
   final TextEditingController _controller = TextEditingController();
   List<String> dietaryRestrictions = []; // List to store dietary restrictions
+
+  // Define a reference to the Hive box
+  late Box<List<String>> _dietaryRestrictionsBox;
+
+  @override
+  void initState() {
+    super.initState();
+    // Open the Hive box for dietary restrictions
+    _openDietaryRestrictionsBox();
+  }
+
+  // Open the Hive box for dietary restrictions
+  // Open the Hive box for dietary restrictions
+  Future<void> _openDietaryRestrictionsBox() async {
+    try {
+      _dietaryRestrictionsBox = await Hive.openBox<List<String>>('dietary_restrictions');
+      // Retrieve dietary restrictions from the box when the view is initialized
+      setState(() {
+        dietaryRestrictions = _dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+      });
+      print('Dietary restrictions loaded: $dietaryRestrictions');
+    } catch (error) {
+      print('Error opening Hive box: $error');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +74,8 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
                   dietaryRestrictions.add(restriction); // Add restriction to the list
                 });
                 _controller.clear();
+                // Save the updated dietary restrictions list to the Hive box
+                _updateDietaryRestrictions();
               }
             },
             style: ElevatedButton.styleFrom(primary: Colors.amber), // Apply amber color to the button
@@ -72,8 +101,26 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             dietaryRestrictions[index],
             style: qookitLight.textTheme.bodyText1, // Apply qookit theme to the list item text
           ),
+          trailing: IconButton(
+            icon: Icon(Icons.remove_circle),
+            onPressed: () {
+              _removeDietaryRestriction(index);
+            },
+          ),
         );
       },
     );
+  }
+
+  void _updateDietaryRestrictions() {
+    _dietaryRestrictionsBox.put(userId, dietaryRestrictions); // Update data in Hive box
+  }
+
+  void _removeDietaryRestriction(int index) {
+    setState(() {
+      dietaryRestrictions.removeAt(index); // Remove item from the list
+    });
+    // Update the Hive box to reflect the changes
+    _updateDietaryRestrictions();
   }
 }

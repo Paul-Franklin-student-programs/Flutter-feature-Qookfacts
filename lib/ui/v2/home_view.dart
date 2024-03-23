@@ -90,8 +90,7 @@ class HomeView extends StatelessWidget {
                               builder: (context) => OCRCameraView(
                                 cameras: cameras,
                                 isReceiptScanSelected: true,
-                                isIngredientScanSelected: false,
-                                dietaryRestrictionsBox: dietaryRestrictionsBox, // Pass the dietary restrictions box
+                                isIngredientScanSelected: false
                               ),
                             ),
                           );
@@ -121,8 +120,7 @@ class HomeView extends StatelessWidget {
                               builder: (context) => OCRCameraView(
                                 cameras: cameras,
                                 isReceiptScanSelected: false,
-                                isIngredientScanSelected: true,
-                                dietaryRestrictionsBox: dietaryRestrictionsBox, // Pass the dietary restrictions box
+                                isIngredientScanSelected: true
                               ),
                             ),
                           );
