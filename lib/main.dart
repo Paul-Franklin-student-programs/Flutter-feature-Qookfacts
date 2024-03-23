@@ -4,9 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/hive_service.dart';
 import 'package:qookit/ui/v2/home_view.dart';
 import 'package:qookit/ui/v2/auth_view.dart';
 import 'package:qookit/ui/v2/auth_service.dart';
@@ -19,6 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await RemoteConfigService().initialize();
+  await Hive.initFlutter();
   await ThemeManager.initialise();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -39,6 +43,9 @@ void main() async {
         ),
         Provider<AuthService>(
           create: (_) => AuthService(),
+        ),
+        Provider<HiveService>(
+          create: (_) => HiveService(),
         ),
       ],
       child: App(),

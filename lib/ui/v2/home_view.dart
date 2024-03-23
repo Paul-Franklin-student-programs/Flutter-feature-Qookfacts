@@ -1,9 +1,11 @@
 import 'package:camera/camera.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive/hive.dart'; // Import Hive
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/user_preferences_view.dart'; // Import the UserPreferencesView
 
 class HomeView extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -18,12 +20,46 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _openHiveBox(), // Open Hive box asynchronously
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final Box<String> dietaryRestrictionsBox = snapshot.data as Box<String>; // Get the dietary restrictions box
+          return _buildHomeView(context, dietaryRestrictionsBox);
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future<Box<String>> _openHiveBox() async {
+    await Hive.openBox<String>('dietary_restrictions'); // Open the 'dietary_restrictions' box
+    return Hive.box<String>('dietary_restrictions'); // Return the opened box
+  }
+
+  Widget _buildHomeView(BuildContext context, Box<String> dietaryRestrictionsBox) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Let's Qookit", style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserPreferencesView(),
+                ),
+              );
+            },
+            icon: Icon(Icons.settings, color: Colors.black), // Add icon for User Preferences
+          ),
           IconButton(
             onPressed: () async {
               await AuthService().signOut();
@@ -54,6 +90,7 @@ class HomeView extends StatelessWidget {
                                 cameras: cameras,
                                 isReceiptScanSelected: true,
                                 isIngredientScanSelected: false,
+                                dietaryRestrictionsBox: dietaryRestrictionsBox, // Pass the dietary restrictions box
                               ),
                             ),
                           );
@@ -84,6 +121,7 @@ class HomeView extends StatelessWidget {
                                 cameras: cameras,
                                 isReceiptScanSelected: false,
                                 isIngredientScanSelected: true,
+                                dietaryRestrictionsBox: dietaryRestrictionsBox, // Pass the dietary restrictions box
                               ),
                             ),
                           );

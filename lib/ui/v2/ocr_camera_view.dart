@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
@@ -13,12 +14,14 @@ class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
   final bool isReceiptScanSelected; // Flag for Receipt Scanner
   final bool isIngredientScanSelected; // Flag for Ingredient Scanner
+  final Box<String> dietaryRestrictionsBox;
 
   const OCRCameraView({
     Key? key,
     required this.cameras,
     required this.isReceiptScanSelected,
     required this.isIngredientScanSelected,
+    required this.dietaryRestrictionsBox,
   }) : super(key: key);
 
   @override
