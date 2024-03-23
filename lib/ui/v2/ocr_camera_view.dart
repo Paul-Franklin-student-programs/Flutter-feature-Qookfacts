@@ -136,7 +136,6 @@ class _OCRCameraViewState extends State<OCRCameraView> {
       'temperature': 0.7,
     };
 
-    print(requestData);
 
     final headers = {
       'Content-Type': 'application/json',

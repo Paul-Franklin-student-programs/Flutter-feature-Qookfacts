@@ -9,6 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/dietary_restrictions_data.dart';
 import 'package:qookit/ui/v2/hive_service.dart';
 import 'package:qookit/ui/v2/home_view.dart';
 import 'package:qookit/ui/v2/auth_view.dart';
@@ -47,9 +48,13 @@ void main() async {
         Provider<HiveService>(
           create: (_) => HiveService(),
         ),
+        ChangeNotifierProvider<DietaryRestrictionsProvider>( // Add the provider for dietary restrictions
+          create: (_) => DietaryRestrictionsProvider(),
+        ),
       ],
       child: App(),
     ),
+
   );
 }
 
