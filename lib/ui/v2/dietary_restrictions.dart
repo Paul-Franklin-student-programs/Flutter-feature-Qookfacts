@@ -25,10 +25,9 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
   }
 
   // Open the Hive box for dietary restrictions
-  // Open the Hive box for dietary restrictions
   Future<void> _openDietaryRestrictionsBox() async {
     try {
-      _dietaryRestrictionsBox = await Hive.openBox<List<String>>('dietary_restrictions');
+      _dietaryRestrictionsBox = await Hive.box<List<String>>('dietary_restrictions');
       // Retrieve dietary restrictions from the box when the view is initialized
       setState(() {
         dietaryRestrictions = _dietaryRestrictionsBox.get(userId, defaultValue: [])!;

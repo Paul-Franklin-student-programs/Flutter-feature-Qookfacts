@@ -33,11 +33,21 @@ class _AuthViewState extends State<AuthView> {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(
+                labelText: 'Email',
+                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+              ),
+              style: TextStyle(color: Colors.black), // Set input text color to black
             ),
             TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+              ),
+              style: TextStyle(color: Colors.black), // Set input text color to black
               obscureText: true,
             ),
             SizedBox(height: 16),

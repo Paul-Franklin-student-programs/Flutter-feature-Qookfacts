@@ -3,16 +3,18 @@ import 'package:http/http.dart' as http;
 import 'package:qookit/services/system/remote_config_service.dart';
 
 class OpenAiService {
-  static Future<String> fetchRecipes(String ocrText, bool isReceiptScanSelected, bool isIngredientScanSelected) async {
+  static Future<String> fetchRecipes(String ocrText, String dietaryRestrictions, bool isReceiptScanSelected, bool isIngredientScanSelected) async {
     final String apiKey = RemoteConfigService().apiKey2OpenAI;
     final String apiUrl = 'https://api.openai.com/v1/chat/completions';
 
     String content = '';
     if (isReceiptScanSelected) {
-      content = "identify ingredients in this text and give some recipes that you can make with these: $ocrText";
+      content = "Identify ingredients in this text [$ocrText] and give some recipes that you can make with them after eliminating these list of ingredients [$dietaryRestrictions]";
     } else if (isIngredientScanSelected) {
-      content = "identify ingredients in this text. Highlight serving size and calories. Group ingredients under good and bad sections and describe why are they good or bad. Give an overall rating against 10: $ocrText";
+      content = "identify ingredients in $ocrText text. Highlight if any ingredients in $dietaryRestrictions are found under dietary restrictions. For others ighlight serving size and calories. Group ingredients under good and not so good sections and describe why so. Give an overall rating against 10";
     }
+
+    print(">>>$content");
 
     final Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',

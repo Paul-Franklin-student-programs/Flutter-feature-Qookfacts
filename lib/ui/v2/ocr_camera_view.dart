@@ -89,7 +89,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
 
     if (photoFile != null) {
       String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await OpenAiService.fetchRecipes(ocrResponse, widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+      ocrResponse = await OpenAiService.fetchRecipes(ocrResponse, '', widget.isReceiptScanSelected, widget.isIngredientScanSelected);
 
       setState(() {
         processing = false;

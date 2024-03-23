@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/open_ai_service.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
+import 'package:hive/hive.dart';
 
 class ManualEntryView extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class ManualEntryView extends StatefulWidget {
 }
 
 class _ManualEntryViewState extends State<ManualEntryView> {
-  String userId = FirebaseAuth.instance.currentUser?.uid ?? 'xyz';
+  String userId = FirebaseAuth.instance.currentUser!.uid!;
 
   final TextEditingController _controller = TextEditingController();
   List<String> ingredientsList = []; // List to store ingredients
@@ -78,11 +79,14 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         mainAxisSize: MainAxisSize.min,
         children: [
           FloatingActionButton(
-            onPressed: () {
+            onPressed: () async {
               setState(() {
                 isLoading = true; // Set isLoading to true when FloatingActionButton is pressed
               });
-              processData(context);
+              await processData(context);
+              setState(() {
+                isLoading = false; // Set isLoading to false when data processing is complete
+              });
             },
             child: Icon(Icons.restaurant),
           ),
@@ -95,12 +99,21 @@ class _ManualEntryViewState extends State<ManualEntryView> {
     );
   }
 
-  void processData(BuildContext context) async {
+  Future<void> processData(BuildContext context) async {
     try {
-      String response = await OpenAiService.fetchRecipes(ingredientsList.toString(), true, false);
-      setState(() {
-        isLoading = false; // Set isLoading to false when data processing is complete
-      });
+      print('before box');
+      final dietaryRestrictionsBox = await Hive.box<List<String>>('dietary_restrictions');
+      List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+      print('after box');
+
+
+      String response = await OpenAiService.fetchRecipes(
+        ingredientsList.join(','),
+        dietaryRestrictions.join(','),
+        true,
+        false,
+      );
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -110,9 +123,6 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         ),
       );
     } catch (e) {
-      setState(() {
-        isLoading = false; // Set isLoading to false if an error occurs
-      });
       // Handle error
       print('Error processing data: $e');
       // Show error message to the user
@@ -121,7 +131,7 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('Failed to process data. Please try again later.'),
+            content: Text('Failed to process data. Please try again later. $e'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

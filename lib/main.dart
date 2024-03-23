@@ -22,6 +22,7 @@ void main() async {
   await Firebase.initializeApp();
   await RemoteConfigService().initialize();
   await Hive.initFlutter();
+  await Hive.openBox<List<String>>('dietary_restrictions');
   await ThemeManager.initialise();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
