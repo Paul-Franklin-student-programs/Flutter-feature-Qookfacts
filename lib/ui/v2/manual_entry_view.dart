@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/open_ai_service.dart';
+import 'package:qookit/ui/v2/services/open_ai_service.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:hive/hive.dart';
+
+import 'services/hive_service.dart';
 
 class ManualEntryView extends StatefulWidget {
   @override
@@ -101,10 +103,8 @@ class _ManualEntryViewState extends State<ManualEntryView> {
 
   Future<void> processData(BuildContext context) async {
     try {
-      print('before box');
-      final dietaryRestrictionsBox = await Hive.box<List<String>>('dietary_restrictions');
+      final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
-      print('after box');
 
 
       String response = await OpenAiService.fetchRecipes(
@@ -167,7 +167,9 @@ class _ManualEntryViewState extends State<ManualEntryView> {
                     ingredientsList.removeAt(index); // Remove the item from the list
                   });
                 },
+                color: Colors.amber, // Set the color of the icon
               ),
+
             ],
           ),
         );

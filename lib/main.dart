@@ -9,9 +9,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/services/hive_service.dart';
 import 'package:qookit/ui/v2/home_view.dart';
 import 'package:qookit/ui/v2/auth_view.dart';
-import 'package:qookit/ui/v2/auth_service.dart';
+import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 
@@ -21,8 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await RemoteConfigService().initialize();
-  await Hive.initFlutter();
-  await Hive.openBox<List<String>>('dietary_restrictions');
+  await HiveBoxes().initialize();
   await ThemeManager.initialise();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

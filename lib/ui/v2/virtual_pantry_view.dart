@@ -4,47 +4,46 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/services/hive_service.dart';
 
-class DietaryRestrictionsView extends StatefulWidget {
+class VirtualPantryView extends StatefulWidget {
   @override
-  _DietaryRestrictionsViewState createState() => _DietaryRestrictionsViewState();
+  _VirtualPantryViewState createState() => _VirtualPantryViewState();
 }
 
-class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
+class _VirtualPantryViewState extends State<VirtualPantryView> {
   String userId = FirebaseAuth.instance.currentUser!.uid!;
 
   final TextEditingController _controller = TextEditingController();
-  List<String> dietaryRestrictions = []; // List to store dietary restrictions
+  List<String> pantryItems = []; // List to store pantry items
 
   // Define a reference to the Hive box
-  late Box<List<String>> _dietaryRestrictionsBox;
+  late Box<List<String>> _pantryBox;
 
   @override
   void initState() {
     super.initState();
-    // Open the Hive box for dietary restrictions
-    _openDietaryRestrictionsBox();
+    // Open the Hive box for the virtual pantry
+    _openPantryBox();
   }
 
-  // Open the Hive box for dietary restrictions
-  Future<void> _openDietaryRestrictionsBox() async {
+  // Open the Hive box for the virtual pantry
+  Future<void> _openPantryBox() async {
     try {
-      _dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
-      // Retrieve dietary restrictions from the box when the view is initialized
+      _pantryBox = await Hive.openBox<List<String>>(HiveBoxes.virtualPantry);
+      // Retrieve pantry items from the box when the view is initialized
       setState(() {
-        dietaryRestrictions = _dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+        pantryItems = _pantryBox.get(userId, defaultValue: [])!;
       });
-      // print('Dietary restrictions loaded: $dietaryRestrictions');
+      // print('Pantry items loaded: $pantryItems');
     } catch (error) {
       print('Error opening Hive box: $error');
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dietary Restrictions', style: qookitLight.textTheme.headline4),
+        title: Text('Virtual Pantry', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
         iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
@@ -57,7 +56,7 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(
-                labelText: 'Enter a dietary restriction',
+                labelText: 'Add an item',
                 labelStyle: TextStyle(color: Colors.black), // Set label text color to black
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set border color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
@@ -68,14 +67,14 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
           ),
           ElevatedButton(
             onPressed: () {
-              final String restriction = _controller.text.trim();
-              if (restriction.isNotEmpty) {
+              final String item = _controller.text.trim();
+              if (item.isNotEmpty) {
                 setState(() {
-                  dietaryRestrictions.add(restriction); // Add restriction to the list
+                  pantryItems.add(item); // Add item to the pantry list
                 });
                 _controller.clear();
-                // Save the updated dietary restrictions list to the Hive box
-                _updateDietaryRestrictions();
+                // Save the updated pantry list to the Hive box
+                _updatePantry();
               }
             },
             style: ElevatedButton.styleFrom(primary: Colors.amber), // Apply amber color to the button
@@ -85,20 +84,20 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             ),
           ),
           Expanded(
-            child: _buildDietaryRestrictionsList(), // Pass the list directly
+            child: _buildPantryItemList(), // Pass the list directly
           ),
         ],
       ),
     );
   }
 
-  Widget _buildDietaryRestrictionsList() {
+  Widget _buildPantryItemList() {
     return ListView.builder(
-      itemCount: dietaryRestrictions.length,
+      itemCount: pantryItems.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            dietaryRestrictions[index],
+            pantryItems[index],
             style: qookitLight.textTheme.bodyText1, // Apply qookit theme to the list item text
           ),
           trailing: IconTheme(
@@ -106,7 +105,7 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             child: IconButton(
               icon: Icon(Icons.remove_circle),
               onPressed: () {
-                _removeDietaryRestriction(index);
+                _removeItem(index);
               },
             ),
           ),
@@ -115,15 +114,15 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
     );
   }
 
-  void _updateDietaryRestrictions() {
-    _dietaryRestrictionsBox.put(userId, dietaryRestrictions); // Update data in Hive box
+  void _updatePantry() {
+    _pantryBox.put(userId, pantryItems); // Update data in Hive box
   }
 
-  void _removeDietaryRestriction(int index) {
+  void _removeItem(int index) {
     setState(() {
-      dietaryRestrictions.removeAt(index); // Remove item from the list
+      pantryItems.removeAt(index); // Remove item from the list
     });
     // Update the Hive box to reflect the changes
-    _updateDietaryRestrictions();
+    _updatePantry();
   }
 }

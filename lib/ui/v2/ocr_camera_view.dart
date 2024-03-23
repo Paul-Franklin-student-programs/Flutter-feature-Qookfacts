@@ -10,7 +10,7 @@ import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/nutrition_view.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 
-import 'open_ai_service.dart';
+import 'services/open_ai_service.dart';
 
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;

@@ -14,7 +14,7 @@ class OpenAiService {
       content = "identify ingredients in $ocrText text. Highlight if any ingredients in $dietaryRestrictions are found under dietary restrictions. For others ighlight serving size and calories. Group ingredients under good and not so good sections and describe why so. Give an overall rating against 10";
     }
 
-    print(">>>$content");
+    // print(">>>$content");
 
     final Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',

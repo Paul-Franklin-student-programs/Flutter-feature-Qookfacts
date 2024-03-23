@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth_service.dart'; // Ensure this import points to your AuthService location
+import 'services/auth_service.dart'; // Ensure this import points to your AuthService location
 import 'package:qookit/services/theme/theme_service.dart'; // Adjust this import based on your project structure
 
 class SignUpView extends StatefulWidget {

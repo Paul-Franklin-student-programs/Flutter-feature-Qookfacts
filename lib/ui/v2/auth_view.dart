@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'auth_service.dart';
+import 'services/auth_service.dart';
 import 'sign_up_view.dart'; // Make sure to import your SignUpView here
 import 'forgot_password_view.dart'; // Import the ForgotPasswordView
 import 'package:qookit/services/theme/theme_service.dart';

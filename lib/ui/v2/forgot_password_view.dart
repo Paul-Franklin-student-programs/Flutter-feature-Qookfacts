@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 
-import 'auth_service.dart';
+import 'services/auth_service.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/ui/v2/manual_entry_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
-import 'package:qookit/ui/v2/auth_service.dart';
+import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/user_preferences_view.dart'; // Import the UserPreferencesView
 
