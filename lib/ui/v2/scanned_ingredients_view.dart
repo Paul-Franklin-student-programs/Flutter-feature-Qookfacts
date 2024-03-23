@@ -72,13 +72,16 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
                     _ingredients[index],
                     style: qookitLight.textTheme.bodyText1,
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.remove_circle_outline, color: Colors.black),
-                    onPressed: () {
-                      setState(() {
-                        _ingredients.removeAt(index);
-                      });
-                    },
+                  trailing: IconTheme(
+                    data: IconThemeData(color: Colors.amber), // Set the color of the icon
+                    child: IconButton(
+                      icon: Icon(Icons.remove_circle),
+                      onPressed: () {
+                        setState(() {
+                          _ingredients.removeAt(index);
+                        });
+                      },
+                    ),
                   ),
                 );
               },
