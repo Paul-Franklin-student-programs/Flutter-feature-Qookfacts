@@ -53,6 +53,13 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
       body: Column(
         children: [
           Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Any ingredients added below will automatically be eliminated from recipe suggestions",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.all(16.0),
             child: TextField(
               controller: _controller,
