@@ -11,7 +11,7 @@ import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/services/hive_service.dart';
 import 'package:qookit/ui/v2/home_view.dart';
-import 'package:qookit/ui/v2/auth_view.dart';
+import 'package:qookit/ui/v2/sign_in_view.dart';
 import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
@@ -90,7 +90,7 @@ class AuthWrapper extends StatelessWidget {
     final user = Provider.of<User?>(context);
 
     if (user == null) {
-      return AuthView();
+      return SignInView();
     } else {
       return HomeView(cameras: cameras);
     }

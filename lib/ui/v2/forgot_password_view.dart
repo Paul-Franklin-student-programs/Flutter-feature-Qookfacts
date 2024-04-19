@@ -29,6 +29,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           children: [
             TextField(
               controller: emailController,
+              style: qookitLight.textTheme.headline6,
               decoration: InputDecoration(labelText: 'Email'),
             ),
             SizedBox(height: 16),

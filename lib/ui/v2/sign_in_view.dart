@@ -6,12 +6,12 @@ import 'sign_up_view.dart'; // Make sure to import your SignUpView here
 import 'forgot_password_view.dart'; // Import the ForgotPasswordView
 import 'package:qookit/services/theme/theme_service.dart';
 
-class AuthView extends StatefulWidget {
+class SignInView extends StatefulWidget {
   @override
-  _AuthViewState createState() => _AuthViewState();
+  _SignInViewState createState() => _SignInViewState();
 }
 
-class _AuthViewState extends State<AuthView> {
+class _SignInViewState extends State<SignInView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String? errorMessage; // Variable to store error message
@@ -38,7 +38,7 @@ class _AuthViewState extends State<AuthView> {
                 labelStyle: TextStyle(color: Colors.black), // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
-              style: TextStyle(color: Colors.black), // Set input text color to black
+              style: qookitLight.textTheme.headline6
             ),
             TextField(
               controller: passwordController,
@@ -47,7 +47,7 @@ class _AuthViewState extends State<AuthView> {
                 labelStyle: TextStyle(color: Colors.black), // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
-              style: TextStyle(color: Colors.black), // Set input text color to black
+              style: qookitLight.textTheme.headline6, // Set input text color to black
               obscureText: true,
             ),
             SizedBox(height: 16),

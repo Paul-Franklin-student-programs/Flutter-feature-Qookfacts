@@ -34,10 +34,12 @@ class _SignUpViewState extends State<SignUpView> {
               decoration: InputDecoration(
                 labelText: "Email",
               ),
+              style: qookitLight.textTheme.headline6
             ),
             TextField(
               controller: passwordController,
               obscureText: true,
+              style: qookitLight.textTheme.headline6,
               decoration: InputDecoration(
                 labelText: "Password",
               ),

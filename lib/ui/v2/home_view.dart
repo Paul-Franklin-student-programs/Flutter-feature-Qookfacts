@@ -171,13 +171,13 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        "Hello, $userEmail",
-                        style: qookitLight.textTheme.headline6,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(16.0),
+                    //   child: Text(
+                    //     "Hello, $userEmail",
+                    //     style: qookitLight.textTheme.headline6,
+                    //   ),
+                    // ),
                   ],
                 ),
                 Positioned(
