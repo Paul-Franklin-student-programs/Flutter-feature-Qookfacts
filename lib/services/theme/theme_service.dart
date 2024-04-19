@@ -38,6 +38,16 @@ ThemeData qookitLight = ThemeData(
 
   indicatorColor: Colors.amber, colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color(0xFFFFBE30)).copyWith(background: Color(0xFFEAEAEA)).copyWith(error: Color(0xFFBE3944)),
 
+  buttonTheme: ButtonThemeData(
+    // Define the default button theme
+    buttonColor: Colors.amber,
+    textTheme: ButtonTextTheme.primary,
+    padding: EdgeInsets.all(16.0),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  ),
+
   /// Text
   textTheme: TextTheme(
     headline1: TextStyle(
@@ -80,6 +90,17 @@ TextStyle headerStyle =
 
 TextStyle subheaderStyle =
     TextStyle(fontFamily: 'opensans', fontSize: 14, color: Colors.black54);
+
+
+ButtonStyle getButtonStyle() {
+  return ElevatedButton.styleFrom(
+    backgroundColor: Colors.amber,
+      textStyle: TextStyle(
+          fontSize: 15,
+          fontFamily: 'opensans',
+          fontWeight: FontWeight.bold)
+  );
+}
 
 ThemeData qookitDark = ThemeData();
 

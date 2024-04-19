@@ -69,6 +69,7 @@ dependencies:
   shimmer: any
   stacked: ^3.4.1
   stacked_themes: ^0.3.11
+  provider: ^6.1.1
 #  tflite_flutter: any
 #  tflite_flutter_helper: #^0.3.1
 #    git:
