@@ -66,7 +66,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Can I use the camera please?</string>
+	<string>This app needs access to camera in order to take a photo of receipts/ingredients/nutrition labels and create your virtual pantry</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Can I use the mic please?</string>
 	<key>NSPhotoLibraryUsageDescription</key>
