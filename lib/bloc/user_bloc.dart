@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:qookit/bloc/response.dart';
 import 'package:qookit/models/userdata.dart';
 import 'package:qookit/services/elastic/elastic_service.dart';
+import 'package:qookit/services/elastic/endpoints/recipes_service.dart';
 import 'package:qookit/services/elastic/endpoints/users_service.dart';
 import 'package:qookit/services/services.dart';
 import 'package:qookit/services/user/user_service.dart';

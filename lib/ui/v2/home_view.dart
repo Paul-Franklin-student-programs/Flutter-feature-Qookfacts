@@ -9,6 +9,7 @@ import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_view.dart';
 
 import 'dietary_restrictions_view.dart';
+import 'test_page.dart'; // Import the new TestPage
 
 class HomeView extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -25,7 +26,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     // Ensuring that we consider the safe area for devices with a notch or home indicator
     var paddingBottom = MediaQuery.of(context).padding.bottom;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +46,7 @@ class HomeView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             User? user = snapshot.data;
-            String userEmail = user?.email ?? "Unknown User";
+            String userId = user?.uid ?? "Unknown User";
 
             return Stack(
               children: [
@@ -168,16 +168,36 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                           ),
+                          // Add the new button for Test Feature
+                          InkWell(
+                            onTap: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TestPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Test Feature",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   child: Text(
-                    //     "Hello, $userEmail",
-                    //     style: qookitLight.textTheme.headline6,
-                    //   ),
-                    // ),
                   ],
                 ),
                 Positioned(
