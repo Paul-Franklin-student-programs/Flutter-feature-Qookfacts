@@ -19,8 +19,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         title: Text("Forgot Password", style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black54),
+        actionsIconTheme: IconThemeData(color: Colors.black54),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -51,7 +51,7 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
           style: qookitLight.textTheme.headline4,
         ),
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black54),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

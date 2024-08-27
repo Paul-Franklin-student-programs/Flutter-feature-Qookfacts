@@ -62,14 +62,14 @@ class _RecipesViewState extends State<RecipesView> {
           centerTitle: true,
           backgroundColor: qookitLight.primaryColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: Icon(Icons.arrow_back, color: Colors.black54),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.share, color: Colors.black),
+              icon: Icon(Icons.share, color: Colors.black54),
               onPressed: shareContent,
             ),
           ],

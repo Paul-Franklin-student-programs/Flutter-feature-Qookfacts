@@ -257,10 +257,10 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                         onPressed: () {
                           processPhoto(context);
                         },
-                        child: widget.isReceiptScanSelected ? Icon(Icons.restaurant) : Icon(Icons.local_grocery_store),
+                        child: widget.isReceiptScanSelected ? Icon(Icons.restaurant) : Icon(Icons.restaurant_menu),
                       ),
                       Text(
-                        widget.isReceiptScanSelected ? 'Qookit (~15s)' : 'Qookart (~15s)',
+                        widget.isReceiptScanSelected ? 'Qookit (~15s)' : 'Qookit (~15s)',
                         style: qookitLight.tabBarTheme.labelStyle,
                       ),
                     ],

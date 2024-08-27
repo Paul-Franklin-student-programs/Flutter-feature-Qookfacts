@@ -12,9 +12,10 @@ class QookitService {
   static const String users_endpoint = '/v1/user';
   static const String recipes_endpoint = '/v1/recipes';
   static const String ingredients_endpoint = '/v1/ingredients';
+  static const String completions_endpoint = '/v1/chat/completions';
 
   Future<String> testRequest() {
-    return getList(ingredients_endpoint);
+    return getList(users_endpoint);
   }
 
   // GET ALL ITEMS
@@ -79,5 +80,67 @@ class QookitService {
         throw Exception(
             'Error occurred while Communication with Server with StatusCode : ${response.statusCode}');
     }
+  }
+
+
+  Future<String> sendCompletionsRequest(String content) async {
+    var uri = Uri.https(domain, completions_endpoint);
+    var token = await AuthService().getToken();
+
+    final Map<String, dynamic> details = {
+      'model': 'string',
+      'temperature': 0,
+      'maxTokens': 0,
+      'stream': true,
+      'messages': [
+        {
+          "role": "user",
+          "content": content,
+          "toolCallId": "1"
+        }
+      ]
+    };
+
+    var response = await http.post(
+      uri,
+      headers: token != null
+          ? {
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+        HttpHeaders.contentTypeHeader: 'application/json',
+      }
+          : {
+        HttpHeaders.contentTypeHeader: 'application/json',
+      },
+      body: jsonEncode(details),
+    );
+
+    if (response.statusCode == 200) {
+      // Process streaming response if needed
+      var streamedContent = _processStreamedResponse(response);
+      return streamedContent;
+    } else {
+      return 'Request failed with status: ${response.statusCode}';
+    }
+  }
+
+  String _processStreamedResponse(http.Response response) {
+    // Parse and process each data chunk received in the response
+    List<String> chunks = response.body.split('data:');
+    String aggregatedContent = '';
+
+    for (var chunk in chunks) {
+      if (chunk.trim().isNotEmpty) {
+        try {
+          var decodedChunk = json.decode(chunk);
+          var content = decodedChunk['choices'][0]['delta']['content'] ?? ''; // Provide default value if null
+          aggregatedContent += content;
+        } catch (e) {
+          // Handle JSON decode or other exceptions
+          print('Error processing chunk: $e');
+        }
+      }
+    }
+
+    return aggregatedContent;
   }
 }

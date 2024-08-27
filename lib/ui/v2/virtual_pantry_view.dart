@@ -46,8 +46,8 @@ class _VirtualPantryViewState extends State<VirtualPantryView> {
         title: Text('Virtual Pantry', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar icons
+        actionsIconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar action icons
       ),
       body: Column(
         children: [
@@ -57,12 +57,12 @@ class _VirtualPantryViewState extends State<VirtualPantryView> {
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Add an item',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
-                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set border color to black
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+                labelStyle: TextStyle(color: Colors.black54), // Set label text color to black
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
               ),
-              style: TextStyle(color: Colors.black), // Set input text color to black
-              cursorColor: Colors.black, // Set cursor color to black
+              style: TextStyle(color: Colors.black54), // Set input text color to black
+              cursorColor: Colors.black54, // Set cursor color to black
             ),
           ),
           ElevatedButton(

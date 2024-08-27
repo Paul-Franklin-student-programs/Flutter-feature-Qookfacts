@@ -26,8 +26,8 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         title: Text('Enter Ingredients Manually', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar icons
+        actionsIconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar action icons
       ),
       body: SingleChildScrollView( // Wrap the body in a SingleChildScrollView
         child: Column(
@@ -38,12 +38,12 @@ class _ManualEntryViewState extends State<ManualEntryView> {
                 controller: _controller,
                 decoration: InputDecoration(
                   labelText: 'Enter an ingredient',
-                  labelStyle: TextStyle(color: Colors.black), // Set label text color to black
-                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set border color to black
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+                  labelStyle: TextStyle(color: Colors.black54), // Set label text color to black
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
                 ),
-                style: TextStyle(color: Colors.black), // Set input text color to black
-                cursorColor: Colors.black, // Set cursor color to black
+                style: TextStyle(color: Colors.black54), // Set input text color to black
+                cursorColor: Colors.black54, // Set cursor color to black
               ),
             ),
             ElevatedButton(

@@ -23,8 +23,8 @@ class _SignInViewState extends State<SignInView> {
         title: Text("Welcome to Qookit", style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black54),
+        actionsIconTheme: IconThemeData(color: Colors.black54),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

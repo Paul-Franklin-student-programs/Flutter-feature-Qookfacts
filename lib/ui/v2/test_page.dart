@@ -23,7 +23,7 @@ class _TestViewState extends State<TestView> {
 
   void _fetchData() async {
     try {
-      String result = await QookitService().testRequest();
+      String result = "null";
       setState(() {
         _result = result;
       });

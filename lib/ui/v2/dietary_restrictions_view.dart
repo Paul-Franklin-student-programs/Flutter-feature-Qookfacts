@@ -47,8 +47,8 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
         title: Text('Dietary Restrictions', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar icons
+        actionsIconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar action icons
       ),
       body: Column(
         children: [
@@ -56,7 +56,7 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               "Any ingredients added below will automatically be eliminated from recipe suggestions",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black54),
             ),
           ),
           Padding(
@@ -65,12 +65,12 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Enter a dietary restriction',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
-                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set border color to black
-                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+                labelStyle: TextStyle(color: Colors.black54), // Set label text color to black
+                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
+                focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
               ),
-              style: TextStyle(color: Colors.black), // Set input text color to black
-              cursorColor: Colors.black, // Set cursor color to black
+              style: TextStyle(color: Colors.black54), // Set input text color to black
+              cursorColor: Colors.black54, // Set cursor color to black
             ),
           ),
           ElevatedButton(

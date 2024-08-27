@@ -23,8 +23,8 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
         title: Text('Virtual Pantry Scan', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar icons
+        actionsIconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar action icons
       ),
       body: Center(
         child: Padding(
@@ -35,7 +35,7 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
               Text(
                 'This will suggest recipes based on your virtual pantry and dietary restrictions',
                 style: TextStyle(
-                  color: Colors.black, // Set text color to black
+                  color: Colors.black54, // Set text color to black
                   fontSize: 18.0, // Set font size
                 ),
                 textAlign: TextAlign.center, // Center-align the text

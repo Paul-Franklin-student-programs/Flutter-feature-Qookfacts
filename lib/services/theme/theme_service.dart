@@ -65,14 +65,13 @@ ThemeData qookitLight = ThemeData(
     headline4: TextStyle(
       fontFamily: 'opensans',
       fontSize: 20,
-      fontWeight: FontWeight.bold,
-      color: Colors.black
+      fontWeight: FontWeight.bold
     ),
     headline5: TextStyle(
       fontFamily: 'opensans',
       fontSize: 15,
         fontWeight: FontWeight.bold,
-      color: Colors.black
+      color: Colors.black54
     ),
     headline6: TextStyle(
       fontFamily: 'opensans',

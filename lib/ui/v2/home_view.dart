@@ -9,7 +9,6 @@ import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_view.dart';
 
 import 'dietary_restrictions_view.dart';
-import 'test_page.dart'; // Import the new TestPage
 
 class HomeView extends StatelessWidget {
   final List<CameraDescription> cameras;
@@ -37,7 +36,7 @@ class HomeView extends StatelessWidget {
             onPressed: () async {
               await AuthService().signOut();
             },
-            icon: Icon(Icons.logout, color: Colors.black),
+            icon: Icon(Icons.logout, color: Colors.black54),
           ),
         ],
       ),
@@ -163,33 +162,6 @@ class HomeView extends StatelessWidget {
                               child: ListTile(
                                 title: Text(
                                   "Enter ingredients manually",
-                                  style: qookitLight.textTheme.headline5,
-                                ),
-                              ),
-                            ),
-                          ),
-                          // Add the new button for Test Feature
-                          InkWell(
-                            onTap: () async {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TestPage(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.all(16.0),
-                              child: ListTile(
-                                title: Text(
-                                  "Test Feature",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
