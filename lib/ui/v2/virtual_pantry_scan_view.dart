@@ -34,10 +34,7 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
             children: [
               Text(
                 'This will suggest recipes based on your virtual pantry and dietary restrictions',
-                style: TextStyle(
-                  color: Colors.black54, // Set text color to black
-                  fontSize: 18.0, // Set font size
-                ),
+                style: qookitLight.textTheme.headline4,
                 textAlign: TextAlign.center, // Center-align the text
               ),
               SizedBox(height: 20),

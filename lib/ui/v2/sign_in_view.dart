@@ -35,7 +35,7 @@ class _SignInViewState extends State<SignInView> {
               controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
               style: qookitLight.textTheme.headline6
@@ -44,7 +44,7 @@ class _SignInViewState extends State<SignInView> {
               controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
               style: qookitLight.textTheme.headline6, // Set input text color to black

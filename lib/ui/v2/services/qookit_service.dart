@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 
+import '../../../models/user.dart';
 import 'auth_service.dart';
 
 @injectable
@@ -142,5 +143,37 @@ class QookitService {
     }
 
     return aggregatedContent;
+  }
+
+
+  Future<UserRoot> addUserToBackend({required UserRoot addUser}) async {
+    String added = jsonEncode(addUser.toJson());
+
+    print(added);
+
+    var uri = Uri.https(
+      domain,
+      users_endpoint,
+    );
+    var token = await AuthService().getToken();
+
+    var userResponse = await http.post(
+      uri,
+      body: jsonEncode(addUser.toJson()),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer $token',
+        HttpHeaders.contentTypeHeader: 'application/json-patch+json',
+      },
+    );
+
+    print('Reason Phrase: ' + userResponse.reasonPhrase.toString());
+    print('Body: ' + userResponse.body);
+    print('URI : ' + uri.toString());
+
+    if (userResponse.statusCode != 200 && userResponse.statusCode != 201) {
+      throw Exception('Failed to add user: ${userResponse.reasonPhrase}');
+    }
+
+    return UserRoot.empty();
   }
 }

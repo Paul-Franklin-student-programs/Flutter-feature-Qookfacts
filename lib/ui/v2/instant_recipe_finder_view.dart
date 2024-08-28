@@ -7,12 +7,12 @@ import 'package:hive/hive.dart';
 
 import 'services/hive_service.dart';
 
-class ManualEntryView extends StatefulWidget {
+class InstantRecipeFinderView extends StatefulWidget {
   @override
-  _ManualEntryViewState createState() => _ManualEntryViewState();
+  _InstantRecipeFinderViewState createState() => _InstantRecipeFinderViewState();
 }
 
-class _ManualEntryViewState extends State<ManualEntryView> {
+class _InstantRecipeFinderViewState extends State<InstantRecipeFinderView> {
   String userId = FirebaseAuth.instance.currentUser!.uid!;
 
   final TextEditingController _controller = TextEditingController();
@@ -38,11 +38,11 @@ class _ManualEntryViewState extends State<ManualEntryView> {
                 controller: _controller,
                 decoration: InputDecoration(
                   labelText: 'Enter an ingredient',
-                  labelStyle: TextStyle(color: Colors.black54), // Set label text color to black
+                  labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                   enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
                   focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
                 ),
-                style: TextStyle(color: Colors.black54), // Set input text color to black
+                style: qookitLight.textTheme.bodyText1, // Set input text color to black
                 cursorColor: Colors.black54, // Set cursor color to black
               ),
             ),

@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qookit/ui/v2/manual_entry_view.dart';
+import 'package:qookit/ui/v2/instant_recipe_finder_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
@@ -146,7 +146,7 @@ class HomeView extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ManualEntryView(),
+                                  builder: (context) => InstantRecipeFinderView(),
                                 ),
                               );
                             },
@@ -161,7 +161,7 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Enter ingredients manually",
+                                  "Instant Recipe Finder",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),

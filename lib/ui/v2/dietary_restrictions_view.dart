@@ -56,7 +56,7 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               "Any ingredients added below will automatically be eliminated from recipe suggestions",
-              style: TextStyle(color: Colors.black54),
+              style: qookitLight.textTheme.bodyText1,
             ),
           ),
           Padding(
@@ -65,11 +65,11 @@ class _DietaryRestrictionsViewState extends State<DietaryRestrictionsView> {
               controller: _controller,
               decoration: InputDecoration(
                 labelText: 'Enter a dietary restriction',
-                labelStyle: TextStyle(color: Colors.black54), // Set label text color to black
+                labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
               ),
-              style: TextStyle(color: Colors.black54), // Set input text color to black
+              style: qookitLight.textTheme.bodyText1, // Set input text color to black
               cursorColor: Colors.black54, // Set cursor color to black
             ),
           ),

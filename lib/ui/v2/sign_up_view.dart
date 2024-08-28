@@ -1,8 +1,17 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'services/auth_service.dart'; // Ensure this import points to your AuthService location
-import 'package:qookit/services/theme/theme_service.dart'; // Adjust this import based on your project structure
-import 'sign_in_view.dart'; // Import your sign-in page
+import 'package:qookit/ui/v2/services/auth_service.dart';
+import 'package:qookit/ui/v2/services/qookit_service.dart';
+import 'package:qookit/services/theme/theme_service.dart';
+
+
+import 'package:qookit/models/location.dart';
+import 'package:qookit/models/personal.dart';
+import 'package:qookit/models/preference.dart';
+import 'package:qookit/models/user.dart';
+
 
 class SignUpView extends StatefulWidget {
   @override
@@ -72,18 +81,63 @@ class _SignUpViewState extends State<SignUpView> {
                   password,
                 );
 
-                setState(() {
-                  if (result != null && result.length == 28) { // Check if result is a user ID
-                    message = "Registration successful!"; // Update message
+                if (result != null && result.length == 28) { // Check if result is a user ID
+                  // Assuming `result` contains user ID
+                  final userId = result;
+                  final userName = generateRandomUsername();
+                  final displayName = userName;
+
+                  final userRoot = UserRoot(
+                    userName: userName,
+                    displayName: displayName,
+                    preferences: Preference(
+                      units: 'Imperial',
+                      diet: ['temp'],
+                      recipe: ['temp'],
+                    ),
+                    personal: Personal(
+                      firstName: 'qookittempfirstname',
+                      lastName: 'qookittemplastname',
+                      fullName: 'qookittempfullname',
+                      email: emailController.text.trim(),
+                      aboutMe: 'temp',
+                      homeUrl: 'temp',
+                      location: Location(
+                        city: 'San Diego',
+                        state: 'CA',
+                        country: 'USA',
+                        zip: '92126',
+                        gps: '37.4217197,-122.0841305',
+                        ipAddr: '192.168.1.1',
+                      ),
+                    ),
+                    backgroundUrl: 'temp',
+                    photoUrl: 'temp',
+                    id: userId,
+                    recipes: [],
+                    pantryItems: [],
+                  );
+
+                  try {
+                    await QookitService().addUserToBackend(addUser: userRoot);
+                    setState(() {
+                      message = "Registration successful!";
+                    });
 
                     // Navigate back after a short delay
                     Future.delayed(Duration(seconds: 1), () {
                       Navigator.pop(context); // Navigate back to previous screen
                     });
-                  } else {
-                    message = result; // Error message
+                  } catch (e) {
+                    setState(() {
+                      message = "Failed to create user profile: $e";
+                    });
                   }
-                });
+                } else {
+                  setState(() {
+                    message = result; // Error message
+                  });
+                }
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.amber,
@@ -93,11 +147,21 @@ class _SignUpViewState extends State<SignUpView> {
             if (message != null) // Show message if not null
               Text(
                 message!,
-                style: TextStyle(color: message == "Registration successful!" ? Colors.green : Colors.red), // Conditional color
+                style: TextStyle(
+                  color: message == "Registration successful!" ? Colors.green : Colors.red, // Conditional color
+                ),
               ),
           ],
         ),
       ),
     );
   }
+
+
+  String generateRandomUsername() {
+    final random = Random();
+    final randomNumber = random.nextInt(900) + 100; // Generates a random number between 100 and 999
+    return 'qookituser$randomNumber';
+  }
+
 }
