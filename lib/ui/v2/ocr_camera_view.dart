@@ -11,7 +11,7 @@ import 'package:qookit/ui/v2/nutrition_view.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
 
-import 'services/open_ai_service.dart';
+import 'services/facade_service.dart';
 
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -88,8 +88,8 @@ class _OCRCameraViewState extends State<OCRCameraView> {
     });
 
     if (photoFile != null) {
-      String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await OpenAiService.fetchIngredients(ocrResponse);
+      String ocrResponse = await FacadeService.sendOCRRequest(await photoFile!.path);
+      ocrResponse = await FacadeService.fetchIngredients(ocrResponse);
       List<String> ingredientsList = ocrResponse.split(',');
 
       print(ocrResponse);
@@ -116,8 +116,8 @@ class _OCRCameraViewState extends State<OCRCameraView> {
     });
 
     if (photoFile != null) {
-      String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await OpenAiService.fetchRecipes(ocrResponse, '', widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+      String ocrResponse = await FacadeService.sendOCRRequest(await photoFile!.path);
+      ocrResponse = await FacadeService.fetchRecipes(ocrResponse, '', widget.isReceiptScanSelected, widget.isIngredientScanSelected);
 
       setState(() {
         processing = false;

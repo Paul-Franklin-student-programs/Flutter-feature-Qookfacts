@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/services/open_ai_service.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:hive/hive.dart';
 
@@ -85,7 +85,7 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
       final virtualPantryBox = await Hive.box<List<String>>(HiveBoxes.virtualPantry);
       List<String> virtualPantryIngredients = virtualPantryBox.get(userId, defaultValue: [])!;
 
-      String response = await OpenAiService.fetchRecipes(
+      String response = await FacadeService.fetchRecipes(
         virtualPantryIngredients.join(','),
         dietaryRestrictions.join(','),
         true,

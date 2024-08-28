@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:share/share.dart';
 
 import '../../services/system/remote_config_service.dart';
@@ -38,7 +39,7 @@ class _RecipesViewState extends State<RecipesView> {
       isLoading = true;
     });
 
-    final newData = await fetchRecipes();
+    final newData = await FacadeService.loadMoreRecipes(ocrResults);
 
     setState(() {
       contentData.addAll(newData.split('\n'));
@@ -116,37 +117,5 @@ class _RecipesViewState extends State<RecipesView> {
         ),
       ),
     );
-  }
-
-  Future<String> fetchRecipes() async {
-    final String apiKey = RemoteConfigService().apiKey2OpenAI;
-    final String apiUrl = 'https://api.openai.com/v1/chat/completions';
-
-    final Map<String, dynamic> requestData = {
-      'model': 'gpt-3.5-turbo',
-      'messages': [
-        {"role": "user", "content": "more recipes based only on ingredients provided in: $ocrResults"}
-      ],
-      'temperature': 0.7,
-    };
-
-    final headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey',
-    };
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: headers,
-      body: jsonEncode(requestData),
-    );
-
-    if (response.statusCode == 200) {
-      final jsonResponse = jsonDecode(response.body);
-      final textData = jsonResponse['choices'][0]['message']['content'];
-      return textData;
-    } else {
-      return response.body;
-    }
   }
 }
