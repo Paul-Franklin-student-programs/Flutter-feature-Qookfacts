@@ -59,7 +59,7 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Ingredients identified from the scan',
+              'Ingredients identified',
               style: qookitLight.textTheme.headline6,
             ),
           ),

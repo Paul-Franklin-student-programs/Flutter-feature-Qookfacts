@@ -118,7 +118,7 @@ class _InstantRecipeFinderViewState extends State<InstantRecipeFinderView> {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return RecipesView(response);
+            return RecipesView(response, ingredientsList.join(','));
           },
         ),
       );

@@ -3,8 +3,6 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
 import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/nutrition_view.dart';
@@ -82,34 +80,6 @@ class _OCRCameraViewState extends State<OCRCameraView> {
     });
   }
 
-  void saveToVirtualPantry(BuildContext context) async {
-    setState(() {
-      processing = true;
-    });
-
-    if (photoFile != null) {
-      String ocrResponse = await FacadeService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await FacadeService.fetchIngredients(ocrResponse);
-      List<String> ingredientsList = ocrResponse.split(',');
-
-      print(ocrResponse);
-
-      setState(() {
-        processing = false;
-      });
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) {
-            return ScannedIngredientsView(ingredients: ingredientsList);
-          },
-        ),
-      );
-    }
-  }
-
-
   void processPhoto(BuildContext context) async {
     setState(() {
       processing = true;
@@ -128,7 +98,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             if (widget.isReceiptScanSelected) {
-              return RecipesView(ocrResponse);
+              return RecipesView(ocrResponse, "");
             } else if (widget.isIngredientScanSelected) {
               return NutritionView(ocrResponse);
             }
@@ -236,21 +206,6 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                       ),
                     ],
                   ),
-                  if (widget.isReceiptScanSelected) // Show the button only if isReceiptScanSelected is true
-                    Column(
-                      children: [
-                        FloatingActionButton(
-                          onPressed: () {
-                            saveToVirtualPantry(context);
-                          },
-                          child: Icon(Icons.add_shopping_cart), // Replace with your icon
-                        ),
-                        Text(
-                          'Add to Pantry', // Replace with your button text
-                          style: qookitLight.tabBarTheme.labelStyle,
-                        ),
-                      ],
-                    ),
                   Column(
                     children: [
                       FloatingActionButton(
