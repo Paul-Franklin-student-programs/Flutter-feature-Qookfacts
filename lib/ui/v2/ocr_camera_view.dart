@@ -7,7 +7,9 @@ import 'package:hive/hive.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/nutrition_view.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
+import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
 import 'package:qookit/ui/v2/services/facade_service.dart';
+import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 
 import 'services/hive_service.dart';
 
@@ -88,12 +90,17 @@ class _OCRCameraViewState extends State<OCRCameraView> {
 
     if (photoFile != null) {
       String ocrResponse = await FacadeService.sendOCRRequest(await photoFile!.path);
-
       final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
       final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
       List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
-      String recipes = await FacadeService.fetchRecipes(ocrResponse, dietaryRestrictions.join(','), culinaryPreferences.join(','), widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+
+      if (widget.isReceiptScanSelected) {
+        ocrResponse = await FacadeService.fetchIngredients(ocrResponse);
+      } else if (widget.isIngredientScanSelected) {
+        ocrResponse = await FacadeService.fetchRecipes(ocrResponse, dietaryRestrictions.join(','), culinaryPreferences.join(','), widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+
+      }
 
       setState(() {
         processing = false;
@@ -104,7 +111,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             if (widget.isReceiptScanSelected) {
-              return RecipesView(recipes, ocrResponse);
+              return ScannedIngredientsView(ingredients:ocrResponse.split(','));
             } else if (widget.isIngredientScanSelected) {
               return NutritionView(ocrResponse);
             }
@@ -218,10 +225,10 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                         onPressed: () {
                           processPhoto(context);
                         },
-                        child: widget.isReceiptScanSelected ? Icon(Icons.restaurant) : Icon(Icons.restaurant_menu),
+                        child: widget.isReceiptScanSelected ? Icon(Icons.add_shopping_cart) : Icon(Icons.restaurant_menu),
                       ),
                       Text(
-                        widget.isReceiptScanSelected ? 'Qookit (~15s)' : 'Qookit (~15s)',
+                        widget.isReceiptScanSelected ? 'Add to Pantry' : 'Qookit (~15s)',
                         style: qookitLight.tabBarTheme.labelStyle,
                       ),
                     ],

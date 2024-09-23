@@ -5,11 +5,7 @@ import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
 import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:share/share.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/services/facade_service.dart';
-import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:hive/hive.dart';
 
 import 'services/hive_service.dart';
@@ -17,8 +13,9 @@ import 'services/hive_service.dart';
 class RecipesView extends StatefulWidget {
   final String ocrResults;
   final String manualIngredientsList;
+  final bool showAddToPantryButton; // New parameter
 
-  RecipesView(this.ocrResults, this.manualIngredientsList);
+  RecipesView(this.ocrResults, this.manualIngredientsList, {this.showAddToPantryButton = false});
 
   @override
   State<RecipesView> createState() => _RecipesViewState();
@@ -33,7 +30,6 @@ class _RecipesViewState extends State<RecipesView> {
   @override
   void initState() {
     super.initState();
-
     contentData.add(widget.ocrResults);
     ocrResults = widget.ocrResults;
   }
@@ -52,7 +48,6 @@ class _RecipesViewState extends State<RecipesView> {
     final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
     List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
 
-
     final newData = await FacadeService.loadMoreRecipes(ocrResults, dietaryRestrictions.join(','), culinaryPreferences.join(','));
 
     setState(() {
@@ -70,10 +65,10 @@ class _RecipesViewState extends State<RecipesView> {
     List<String> ingredientsList;
 
     if (widget.manualIngredientsList.isNotEmpty) {
-      ingredientsList = widget.manualIngredientsList.split(',');
+      ingredientsList = widget.manualIngredientsList.toLowerCase().split(',').toSet().toList();
     } else {
       String ocrResponse = await FacadeService.fetchIngredients(content);
-      ingredientsList = ocrResponse.split(',');
+      ingredientsList = ocrResponse.toLowerCase().split(',').toSet().toList();
     }
 
     Navigator.push(
@@ -132,30 +127,32 @@ class _RecipesViewState extends State<RecipesView> {
                 ),
               ),
             ),
-          Positioned(
-            bottom: 10 + paddingBottom,
-            left: 0,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  FloatingActionButton(
-                    backgroundColor: Colors.amber,
-                    onPressed: () {
-                      saveToVirtualPantry(context, ocrResults);
-                    },
-                    child: Icon(Icons.add_shopping_cart),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Add to Pantry',
-                    style: qookitLight.tabBarTheme.labelStyle,
-                  ),
-                ],
+          // Conditionally show the "Add to Pantry" button
+          if (widget.showAddToPantryButton)
+            Positioned(
+              bottom: 10 + paddingBottom,
+              left: 0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FloatingActionButton(
+                      backgroundColor: Colors.amber,
+                      onPressed: () {
+                        saveToVirtualPantry(context, ocrResults);
+                      },
+                      child: Icon(Icons.add_shopping_cart),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Add to Pantry',
+                      style: qookitLight.tabBarTheme.labelStyle,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
           Positioned(
             bottom: 10 + paddingBottom,
             right: 0,

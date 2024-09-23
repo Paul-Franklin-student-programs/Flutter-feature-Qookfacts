@@ -184,7 +184,7 @@ class _VirtualPantryScanState extends State<VirtualPantryScanView> {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return RecipesView(response, pantryItems.join(','));
+            return RecipesView(response, pantryItems.join(','), showAddToPantryButton: false);
           },
         ),
       );

@@ -7,7 +7,7 @@ import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/user_preferences_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
-import 'package:qookit/ui/v2/virtual_pantry_view.dart';
+import 'package:qookit/ui/v2/qookit_tips_view.dart'; // Make sure to import the Qooking Tips view
 
 class HomeView extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -84,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Scan Receipt",
+                                  "Scan Receipt To Save Ingredients In Pantry",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
@@ -120,7 +120,6 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
-
                           // Pantry Based Recipes button
                           InkWell(
                             onTap: () {
@@ -174,49 +173,58 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
+                          // Qooking Tips button
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => QookitTipsView(), // Ensure this view is implemented
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Qooking Tips",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
                 Positioned(
-                  bottom: 10 + paddingBottom,
+                  bottom: 20 + paddingBottom,
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
-                          children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => VirtualPantryView(),
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.kitchen, color: Colors.white),
-                              backgroundColor: qookitLight.primaryColor,
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Virtual Pantry',
-                              style: qookitLight.tabBarTheme.labelStyle,
-                            ),
-                          ],
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Beta version: You may encounter occasional bugs or availability issues. Feedback? Email help@qookit.ai.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
               ],
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),
