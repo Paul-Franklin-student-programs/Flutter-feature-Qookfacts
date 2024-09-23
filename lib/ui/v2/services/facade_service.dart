@@ -9,7 +9,7 @@ class FacadeService {
 
     String content = '';
     if (isReceiptScanSelected) {
-      content = "Suggest recipes based on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
+      content = "Suggest recipes based only on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
     } else if (isIngredientScanSelected) {
       content = "Identify ingredients in $ocrText text. Highlight if any ingredients in $dietaryRestrictions are found under dietary restrictions. For others highlight serving size and calories. Group ingredients under good and not so good sections and describe why so. Give an overall rating against 10";
     }
@@ -23,7 +23,7 @@ class FacadeService {
   }
 
   static Future<String> loadMoreRecipes(String ocrText, String dietaryRestrictions, String culinaryPreferences) async {
-    String content = "Suggest more recipes based on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
+    String content = "Suggest more recipes based only on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
     return QookitService().sendCompletionsRequest(content);
   }
 

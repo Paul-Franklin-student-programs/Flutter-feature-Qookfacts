@@ -19,8 +19,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  bool showRecipeButtons = false;
-
   @override
   Widget build(BuildContext context) {
     var paddingBottom = MediaQuery.of(context).padding.bottom;
@@ -123,12 +121,15 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           ),
 
-                          // Find Recipes Button
+                          // Pantry Based Recipes button
                           InkWell(
                             onTap: () {
-                              setState(() {
-                                showRecipeButtons = !showRecipeButtons;
-                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VirtualPantryScanView(),
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -141,73 +142,38 @@ class _HomeViewState extends State<HomeView> {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Find Recipes",
+                                  "Pantry Based Recipes",
                                   style: qookitLight.textTheme.headline5,
-                                ),
-                                trailing: Icon(
-                                  showRecipeButtons
-                                      ? Icons.expand_less
-                                      : Icons.expand_more,
                                 ),
                               ),
                             ),
                           ),
-
-                          // Show the expanded buttons if Find Recipes is clicked
-                          if (showRecipeButtons) ...[
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => VirtualPantryView(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.amber,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => InstantRecipeFinderView(),
                                 ),
-                                padding: EdgeInsets.all(16.0),
-                                child: ListTile(
-                                  title: Text(
-                                    "Pantry Based Recipes",
-                                    style: qookitLight.textTheme.headline5,
-                                  ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Text Based Recipes",
+                                  style: qookitLight.textTheme.headline5,
                                 ),
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => InstantRecipeFinderView(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.amber,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                padding: EdgeInsets.all(16.0),
-                                child: ListTile(
-                                  title: Text(
-                                    "Text Based Recipes",
-                                    style: qookitLight.textTheme.headline5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ],
                       ),
                     ),

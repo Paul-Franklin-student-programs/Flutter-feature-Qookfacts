@@ -93,7 +93,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
       final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
       List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
-      ocrResponse = await FacadeService.fetchRecipes(ocrResponse, dietaryRestrictions.join(','), culinaryPreferences.join(','), widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+      String recipes = await FacadeService.fetchRecipes(ocrResponse, dietaryRestrictions.join(','), culinaryPreferences.join(','), widget.isReceiptScanSelected, widget.isIngredientScanSelected);
 
       setState(() {
         processing = false;
@@ -104,7 +104,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             if (widget.isReceiptScanSelected) {
-              return RecipesView(ocrResponse, "");
+              return RecipesView(recipes, ocrResponse);
             } else if (widget.isIngredientScanSelected) {
               return NutritionView(ocrResponse);
             }
