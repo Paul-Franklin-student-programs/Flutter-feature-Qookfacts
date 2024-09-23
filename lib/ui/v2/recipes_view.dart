@@ -5,6 +5,14 @@ import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
 import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:share/share.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
+import 'package:qookit/ui/v2/recipes_view.dart';
+import 'package:hive/hive.dart';
+
+import 'services/hive_service.dart';
 
 class RecipesView extends StatefulWidget {
   final String ocrResults;
@@ -17,6 +25,7 @@ class RecipesView extends StatefulWidget {
 }
 
 class _RecipesViewState extends State<RecipesView> {
+  String userId = FirebaseAuth.instance.currentUser!.uid!;
   List<String> contentData = [];
   bool isLoading = false;
   late String ocrResults;
@@ -38,7 +47,13 @@ class _RecipesViewState extends State<RecipesView> {
       isLoading = true;
     });
 
-    final newData = await FacadeService.loadMoreRecipes(ocrResults);
+    final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
+    List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+    final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+    List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
+
+
+    final newData = await FacadeService.loadMoreRecipes(ocrResults, dietaryRestrictions.join(','), culinaryPreferences.join(','));
 
     setState(() {
       contentData.addAll(newData.split('\n'));

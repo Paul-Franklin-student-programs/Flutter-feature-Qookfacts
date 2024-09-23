@@ -105,11 +105,13 @@ class _InstantRecipeFinderViewState extends State<InstantRecipeFinderView> {
     try {
       final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
-
+      final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+      List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
 
       String response = await FacadeService.fetchRecipes(
         ingredientsList.join(','),
         dietaryRestrictions.join(','),
+        culinaryPreferences.join(','),
         true,
         false,
       );

@@ -84,10 +84,13 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
       final virtualPantryBox = await Hive.box<List<String>>(HiveBoxes.virtualPantry);
       List<String> virtualPantryIngredients = virtualPantryBox.get(userId, defaultValue: [])!;
+      final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+      List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
 
       String response = await FacadeService.fetchRecipes(
         virtualPantryIngredients.join(','),
         dietaryRestrictions.join(','),
+        culinaryPreferences.join(','),
         true,
         false,
       );

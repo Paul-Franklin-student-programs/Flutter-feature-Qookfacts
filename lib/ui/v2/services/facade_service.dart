@@ -5,13 +5,13 @@ import 'package:qookit/ui/v2/services/qookit_service.dart';
 
 class FacadeService {
 
-  static Future<String> fetchRecipes(String ocrText, String dietaryRestrictions, bool isReceiptScanSelected, bool isIngredientScanSelected) async {
+  static Future<String> fetchRecipes(String ocrText, String dietaryRestrictions, String culinaryPreferences, bool isReceiptScanSelected, bool isIngredientScanSelected) async {
 
     String content = '';
     if (isReceiptScanSelected) {
-      content = "Identify ingredients in this text [$ocrText] and give some recipes that you can make with them after eliminating these list of ingredients [$dietaryRestrictions]. Give small para description for each recipe too.";
+      content = "Suggest recipes based on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
     } else if (isIngredientScanSelected) {
-      content = "identify ingredients in $ocrText text. Highlight if any ingredients in $dietaryRestrictions are found under dietary restrictions. For others highlight serving size and calories. Group ingredients under good and not so good sections and describe why so. Give an overall rating against 10";
+      content = "Identify ingredients in $ocrText text. Highlight if any ingredients in $dietaryRestrictions are found under dietary restrictions. For others highlight serving size and calories. Group ingredients under good and not so good sections and describe why so. Give an overall rating against 10";
     }
 
     return QookitService().sendCompletionsRequest(content);
@@ -22,8 +22,8 @@ class FacadeService {
     return QookitService().sendCompletionsRequest(content);
   }
 
-  static Future<String> loadMoreRecipes(String ocrText) async {
-    String content = 'more recipes based only on ingredients provided in: [$ocrText]';
+  static Future<String> loadMoreRecipes(String ocrText, String dietaryRestrictions, String culinaryPreferences) async {
+    String content = "Suggest more recipes based on ingredients in this text [$ocrText]. These are my culinary preferences [$culinaryPreferences]. These are my dietary restrictions [$dietaryRestrictions].";
     return QookitService().sendCompletionsRequest(content);
   }
 

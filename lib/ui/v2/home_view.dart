@@ -5,24 +5,24 @@ import 'package:qookit/ui/v2/instant_recipe_finder_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/user_preferences_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_view.dart';
-import 'dietary_restrictions_view.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   final List<CameraDescription> cameras;
-  final bool isReceiptScanSelected; // Flag for Receipt Scanner
-  final bool isIngredientScanSelected; // Flag for Ingredient Scanner
 
-  HomeView({
-    required this.cameras,
-    this.isReceiptScanSelected = false,
-    this.isIngredientScanSelected = false,
-  });
+  HomeView({required this.cameras});
+
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  bool showRecipeButtons = false;
 
   @override
   Widget build(BuildContext context) {
-    // Ensuring that we consider the safe area for devices with a notch or home indicator
     var paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
@@ -33,11 +33,10 @@ class HomeView extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // Navigate to the Profile page
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DietaryRestrictionsView(),
+                  builder: (context) => UserPreferencesView(),
                 ),
               );
             },
@@ -55,9 +54,6 @@ class HomeView extends StatelessWidget {
         stream: AuthService().authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            User? user = snapshot.data;
-            String userId = user?.uid ?? "Unknown User";
-
             return Stack(
               children: [
                 Column(
@@ -72,7 +68,7 @@ class HomeView extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OCRCameraView(
-                                    cameras: cameras,
+                                    cameras: widget.cameras,
                                     isReceiptScanSelected: true,
                                     isIngredientScanSelected: false,
                                   ),
@@ -102,7 +98,7 @@ class HomeView extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OCRCameraView(
-                                    cameras: cameras,
+                                    cameras: widget.cameras,
                                     isReceiptScanSelected: false,
                                     isIngredientScanSelected: true,
                                   ),
@@ -126,14 +122,13 @@ class HomeView extends StatelessWidget {
                               ),
                             ),
                           ),
+
+                          // Find Recipes Button
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VirtualPantryScan(),
-                                ),
-                              );
+                              setState(() {
+                                showRecipeButtons = !showRecipeButtons;
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -146,51 +141,86 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Virtual Pantry Based Recipes",
+                                  "Find Recipes",
                                   style: qookitLight.textTheme.headline5,
+                                ),
+                                trailing: Icon(
+                                  showRecipeButtons
+                                      ? Icons.expand_less
+                                      : Icons.expand_more,
                                 ),
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => InstantRecipeFinderView(),
+
+                          // Show the expanded buttons if Find Recipes is clicked
+                          if (showRecipeButtons) ...[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => VirtualPantryView(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.amber,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.all(16.0),
-                              child: ListTile(
-                                title: Text(
-                                  "Instant Recipe Finder",
-                                  style: qookitLight.textTheme.headline5,
+                                padding: EdgeInsets.all(16.0),
+                                child: ListTile(
+                                  title: Text(
+                                    "Pantry Based Recipes",
+                                    style: qookitLight.textTheme.headline5,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => InstantRecipeFinderView(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.amber,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                padding: EdgeInsets.all(16.0),
+                                child: ListTile(
+                                  title: Text(
+                                    "Text Based Recipes",
+                                    style: qookitLight.textTheme.headline5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
                   ],
                 ),
                 Positioned(
-                  bottom: 10 + paddingBottom, // Adjusted to include paddingBottom
+                  bottom: 10 + paddingBottom,
                   left: 0,
                   right: 0,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end, // Changed to align the button to the right
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Column(
                           children: [
