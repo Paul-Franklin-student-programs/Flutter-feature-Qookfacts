@@ -72,7 +72,7 @@ class _SignInViewState extends State<SignInView> {
             if (errorMessage != null) // Show error message if not null
               Text(
                 errorMessage!,
-                style: TextStyle(color: Colors.red), // Error message style
+                style: errorTextStyle, // Error message style
               ),
             SizedBox(height: 8),
             ElevatedButton(

@@ -90,6 +90,8 @@ TextStyle headerStyle =
 TextStyle subheaderStyle =
     TextStyle(fontFamily: 'opensans', fontSize: 14, color: Colors.black54);
 
+TextStyle errorTextStyle = TextStyle(fontFamily: 'opensans', color: Colors.red);
+
 
 ButtonStyle getButtonStyle() {
   return ElevatedButton.styleFrom(

@@ -84,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Scan Receipt To Save Ingredients In Pantry",
+                                  "Scan To Update Virtual Pantry",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
@@ -141,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Pantry Based Recipes",
+                                  "Virtual Pantry",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
@@ -167,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Text Based Recipes",
+                                  "Search Recipes By Ingredients",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
@@ -214,10 +214,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Text(
                       'Beta version: You may encounter occasional bugs or availability issues. Feedback? Email help@qookit.ai.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontFamily: 'opensans', fontSize: 10, color: Colors.black54),
                     ),
                   ),
                 ),
