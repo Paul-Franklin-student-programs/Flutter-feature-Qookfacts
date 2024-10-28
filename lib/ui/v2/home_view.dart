@@ -65,6 +65,32 @@ class _HomeViewState extends State<HomeView> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
+                                  builder: (context) => VirtualPantryScanView(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Virtual Pantry",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
                                   builder: (context) => OCRCameraView(
                                     cameras: widget.cameras,
                                     isReceiptScanSelected: true,
@@ -90,6 +116,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
+                          // Pantry Based Recipes button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -115,33 +142,6 @@ class _HomeViewState extends State<HomeView> {
                               child: ListTile(
                                 title: Text(
                                   "Scan Label Ingredients For Nutrition Info",
-                                  style: qookitLight.textTheme.headline5,
-                                ),
-                              ),
-                            ),
-                          ),
-                          // Pantry Based Recipes button
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VirtualPantryScanView(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              padding: EdgeInsets.all(16.0),
-                              child: ListTile(
-                                title: Text(
-                                  "Virtual Pantry",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),

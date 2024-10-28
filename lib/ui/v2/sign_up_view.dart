@@ -148,6 +148,7 @@ class _SignUpViewState extends State<SignUpView> {
               Text(
                 message!,
                 style: TextStyle(
+                  fontFamily: 'opensans',
                   color: message == "Registration successful!" ? Colors.green : Colors.red, // Conditional color
                 ),
               ),
