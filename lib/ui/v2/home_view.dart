@@ -7,7 +7,8 @@ import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/user_preferences_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
-import 'package:qookit/ui/v2/qookit_tips_view.dart'; // Make sure to import the Qooking Tips view
+import 'package:qookit/ui/v2/qookit_tips_view.dart';
+import 'package:qookit/ui/v2/deactivate_account_view.dart'; // Import the deactivation view
 
 class HomeView extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -60,6 +61,7 @@ class _HomeViewState extends State<HomeView> {
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
+                          // Virtual Pantry Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -86,6 +88,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
+                          // Scan To Update Virtual Pantry Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -116,7 +119,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
-                          // Pantry Based Recipes button
+                          // Scan Label Ingredients Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -147,6 +150,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
+                          // Search Recipes By Ingredients Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -173,13 +177,13 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
-                          // Qooking Tips button
+                          // Qooking Tips Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => QookitTipsView(), // Ensure this view is implemented
+                                  builder: (context) => QookitTipsView(),
                                 ),
                               );
                             },
@@ -195,6 +199,33 @@ class _HomeViewState extends State<HomeView> {
                               child: ListTile(
                                 title: Text(
                                   "Qooking Tips",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Deactivate Account Button
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DeactivateAccountView(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Delete Account",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
