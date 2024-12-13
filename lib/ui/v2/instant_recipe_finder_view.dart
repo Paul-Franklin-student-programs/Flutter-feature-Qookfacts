@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/services/open_ai_service.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:hive/hive.dart';
 
 import 'services/hive_service.dart';
 
-class ManualEntryView extends StatefulWidget {
+class InstantRecipeFinderView extends StatefulWidget {
   @override
-  _ManualEntryViewState createState() => _ManualEntryViewState();
+  _InstantRecipeFinderViewState createState() => _InstantRecipeFinderViewState();
 }
 
-class _ManualEntryViewState extends State<ManualEntryView> {
+class _InstantRecipeFinderViewState extends State<InstantRecipeFinderView> {
   String userId = FirebaseAuth.instance.currentUser!.uid!;
 
   final TextEditingController _controller = TextEditingController();
@@ -26,8 +26,8 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         title: Text('Enter Ingredients Manually', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar icons
+        actionsIconTheme: IconThemeData(color: Colors.black54), // Apply black color to the app bar action icons
       ),
       body: SingleChildScrollView( // Wrap the body in a SingleChildScrollView
         child: Column(
@@ -38,12 +38,12 @@ class _ManualEntryViewState extends State<ManualEntryView> {
                 controller: _controller,
                 decoration: InputDecoration(
                   labelText: 'Enter an ingredient',
-                  labelStyle: TextStyle(color: Colors.black), // Set label text color to black
-                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set border color to black
-                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
+                  labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set border color to black
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black54)), // Set focused border color to black
                 ),
-                style: TextStyle(color: Colors.black), // Set input text color to black
-                cursorColor: Colors.black, // Set cursor color to black
+                style: qookitLight.textTheme.bodyText1, // Set input text color to black
+                cursorColor: Colors.black54, // Set cursor color to black
               ),
             ),
             ElevatedButton(
@@ -105,11 +105,13 @@ class _ManualEntryViewState extends State<ManualEntryView> {
     try {
       final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+      final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+      List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
 
-
-      String response = await OpenAiService.fetchRecipes(
+      String response = await FacadeService.fetchRecipes(
         ingredientsList.join(','),
         dietaryRestrictions.join(','),
+        culinaryPreferences.join(','),
         true,
         false,
       );
@@ -118,7 +120,7 @@ class _ManualEntryViewState extends State<ManualEntryView> {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return RecipesView(response);
+            return RecipesView(response, ingredientsList.join(','), showAddToPantryButton: true);
           },
         ),
       );

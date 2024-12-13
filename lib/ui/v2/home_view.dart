@@ -1,31 +1,28 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:qookit/ui/v2/manual_entry_view.dart';
+import 'package:qookit/ui/v2/instant_recipe_finder_view.dart';
 import 'package:qookit/ui/v2/ocr_camera_view.dart';
 import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
+import 'package:qookit/ui/v2/user_preferences_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
-import 'package:qookit/ui/v2/virtual_pantry_view.dart';
+import 'package:qookit/ui/v2/qookit_tips_view.dart';
+import 'package:qookit/ui/v2/deactivate_account_view.dart'; // Import the deactivation view
 
-import 'dietary_restrictions_view.dart';
-
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   final List<CameraDescription> cameras;
-  final bool isReceiptScanSelected; // Flag for Receipt Scanner
-  final bool isIngredientScanSelected; // Flag for Ingredient Scanner
 
-  HomeView({
-    required this.cameras,
-    this.isReceiptScanSelected = false,
-    this.isIngredientScanSelected = false,
-  });
+  HomeView({required this.cameras});
 
   @override
-  Widget build(BuildContext context) {
-    // Ensuring that we consider the safe area for devices with a notch or home indicator
-    var paddingBottom = MediaQuery.of(context).padding.bottom;
+  _HomeViewState createState() => _HomeViewState();
+}
 
+class _HomeViewState extends State<HomeView> {
+  @override
+  Widget build(BuildContext context) {
+    var paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return Scaffold(
       appBar: AppBar(
@@ -34,10 +31,21 @@ class HomeView extends StatelessWidget {
         backgroundColor: qookitLight.primaryColor,
         actions: [
           IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserPreferencesView(),
+                ),
+              );
+            },
+            icon: Icon(Icons.person, color: Colors.black54),
+          ),
+          IconButton(
             onPressed: () async {
               await AuthService().signOut();
             },
-            icon: Icon(Icons.logout, color: Colors.black),
+            icon: Icon(Icons.logout, color: Colors.black54),
           ),
         ],
       ),
@@ -45,9 +53,6 @@ class HomeView extends StatelessWidget {
         stream: AuthService().authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            User? user = snapshot.data;
-            String userEmail = user?.email ?? "Unknown User";
-
             return Stack(
               children: [
                 Column(
@@ -56,13 +61,41 @@ class HomeView extends StatelessWidget {
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
+                          // Virtual Pantry Button
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VirtualPantryScanView(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Virtual Pantry",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Scan To Update Virtual Pantry Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OCRCameraView(
-                                    cameras: cameras,
+                                    cameras: widget.cameras,
                                     isReceiptScanSelected: true,
                                     isIngredientScanSelected: false,
                                   ),
@@ -80,19 +113,20 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Scan a receipt",
+                                  "Scan To Update Virtual Pantry",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
                             ),
                           ),
+                          // Scan Label Ingredients Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => OCRCameraView(
-                                    cameras: cameras,
+                                    cameras: widget.cameras,
                                     isReceiptScanSelected: false,
                                     isIngredientScanSelected: true,
                                   ),
@@ -110,18 +144,19 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Scan a nutrition label",
+                                  "Scan Label Ingredients For Nutrition Info",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
                             ),
                           ),
+                          // Search Recipes By Ingredients Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => VirtualPantryScan(),
+                                  builder: (context) => InstantRecipeFinderView(),
                                 ),
                               );
                             },
@@ -136,18 +171,19 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Virtual Pantry Based Recipes",
+                                  "Search Recipes By Ingredients",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
                             ),
                           ),
+                          // Qooking Tips Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ManualEntryView(),
+                                  builder: (context) => QookitTipsView(),
                                 ),
                               );
                             },
@@ -162,7 +198,34 @@ class HomeView extends StatelessWidget {
                               padding: EdgeInsets.all(16.0),
                               child: ListTile(
                                 title: Text(
-                                  "Enter ingredients manually",
+                                  "Qooking Tips",
+                                  style: qookitLight.textTheme.headline5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Deactivate Account Button
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DeactivateAccountView(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.amber,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              padding: EdgeInsets.all(16.0),
+                              child: ListTile(
+                                title: Text(
+                                  "Delete Account",
                                   style: qookitLight.textTheme.headline5,
                                 ),
                               ),
@@ -171,74 +234,25 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(16.0),
-                    //   child: Text(
-                    //     "Hello, $userEmail",
-                    //     style: qookitLight.textTheme.headline6,
-                    //   ),
-                    // ),
                   ],
                 ),
                 Positioned(
-                  bottom: 10 + paddingBottom, // Adjusted to include paddingBottom
+                  bottom: 20 + paddingBottom,
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DietaryRestrictionsView(),
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.list, color: Colors.white),
-                              backgroundColor: qookitLight.primaryColor,
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Diet Restrictions',
-                              style: qookitLight.tabBarTheme.labelStyle,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            FloatingActionButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => VirtualPantryView(),
-                                  ),
-                                );
-                              },
-                              child: Icon(Icons.kitchen, color: Colors.white),
-                              backgroundColor: qookitLight.primaryColor,
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Virtual Pantry',
-                              style: qookitLight.tabBarTheme.labelStyle,
-                            ),
-                          ],
-                        ),
-                      ],
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Beta version: You may encounter occasional bugs or availability issues. Feedback? Email help@qookit.ai.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: 'opensans', fontSize: 10, color: Colors.black54),
                     ),
                   ),
                 ),
               ],
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),

@@ -1,17 +1,17 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
-import 'package:qookit/services/system/remote_config_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/nutrition_view.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:qookit/ui/v2/scanned_ingredients_view.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
+import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
 
-import 'services/open_ai_service.dart';
+import 'services/hive_service.dart';
 
 class OCRCameraView extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -30,6 +30,7 @@ class OCRCameraView extends StatefulWidget {
 }
 
 class _OCRCameraViewState extends State<OCRCameraView> {
+  String userId = FirebaseAuth.instance.currentUser!.uid!;
   late CameraController controller;
   File? photoFile;
   bool processing = false;
@@ -82,42 +83,24 @@ class _OCRCameraViewState extends State<OCRCameraView> {
     });
   }
 
-  void saveToVirtualPantry(BuildContext context) async {
-    setState(() {
-      processing = true;
-    });
-
-    if (photoFile != null) {
-      String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await OpenAiService.fetchIngredients(ocrResponse);
-      List<String> ingredientsList = ocrResponse.split(',');
-
-      print(ocrResponse);
-
-      setState(() {
-        processing = false;
-      });
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) {
-            return ScannedIngredientsView(ingredients: ingredientsList);
-          },
-        ),
-      );
-    }
-  }
-
-
   void processPhoto(BuildContext context) async {
     setState(() {
       processing = true;
     });
 
     if (photoFile != null) {
-      String ocrResponse = await OpenAiService.sendOCRRequest(await photoFile!.path);
-      ocrResponse = await OpenAiService.fetchRecipes(ocrResponse, '', widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+      String ocrResponse = await FacadeService.sendOCRRequest(await photoFile!.path);
+      final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
+      List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
+      final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+      List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
+
+      if (widget.isReceiptScanSelected) {
+        ocrResponse = await FacadeService.fetchIngredients(ocrResponse);
+      } else if (widget.isIngredientScanSelected) {
+        ocrResponse = await FacadeService.fetchRecipes(ocrResponse, dietaryRestrictions.join(','), culinaryPreferences.join(','), widget.isReceiptScanSelected, widget.isIngredientScanSelected);
+
+      }
 
       setState(() {
         processing = false;
@@ -128,7 +111,7 @@ class _OCRCameraViewState extends State<OCRCameraView> {
         MaterialPageRoute(
           builder: (BuildContext context) {
             if (widget.isReceiptScanSelected) {
-              return RecipesView(ocrResponse);
+              return ScannedIngredientsView(ingredients:ocrResponse.split(','));
             } else if (widget.isIngredientScanSelected) {
               return NutritionView(ocrResponse);
             }
@@ -236,31 +219,16 @@ class _OCRCameraViewState extends State<OCRCameraView> {
                       ),
                     ],
                   ),
-                  if (widget.isReceiptScanSelected) // Show the button only if isReceiptScanSelected is true
-                    Column(
-                      children: [
-                        FloatingActionButton(
-                          onPressed: () {
-                            saveToVirtualPantry(context);
-                          },
-                          child: Icon(Icons.add_shopping_cart), // Replace with your icon
-                        ),
-                        Text(
-                          'Add to Pantry', // Replace with your button text
-                          style: qookitLight.tabBarTheme.labelStyle,
-                        ),
-                      ],
-                    ),
                   Column(
                     children: [
                       FloatingActionButton(
                         onPressed: () {
                           processPhoto(context);
                         },
-                        child: widget.isReceiptScanSelected ? Icon(Icons.restaurant) : Icon(Icons.local_grocery_store),
+                        child: widget.isReceiptScanSelected ? Icon(Icons.add_shopping_cart) : Icon(Icons.restaurant_menu),
                       ),
                       Text(
-                        widget.isReceiptScanSelected ? 'Qookit (~15s)' : 'Qookart (~15s)',
+                        widget.isReceiptScanSelected ? 'Add to Pantry' : 'Qookit (~15s)',
                         style: qookitLight.tabBarTheme.labelStyle,
                       ),
                     ],

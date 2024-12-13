@@ -1,53 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/services/open_ai_service.dart';
+import 'package:qookit/ui/v2/services/facade_service.dart';
 import 'package:qookit/ui/v2/recipes_view.dart';
 import 'package:hive/hive.dart';
-
 import 'services/hive_service.dart';
 
-class VirtualPantryScan extends StatefulWidget {
+class VirtualPantryScanView extends StatefulWidget {
   @override
   _VirtualPantryScanState createState() => _VirtualPantryScanState();
 }
 
-class _VirtualPantryScanState extends State<VirtualPantryScan> {
+class _VirtualPantryScanState extends State<VirtualPantryScanView> {
   String userId = FirebaseAuth.instance.currentUser!.uid!;
   bool isLoading = false;
+  final TextEditingController _controller = TextEditingController();
+  List<String> pantryItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadPantryItems();
+  }
+
+  Future<void> _loadPantryItems() async {
+    final pantryBox = await Hive.openBox<List<String>>(HiveBoxes.virtualPantry);
+    setState(() {
+      pantryItems = pantryBox.get(userId, defaultValue: [])!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Virtual Pantry Scan', style: qookitLight.textTheme.headline4),
+        title: Text('Virtual Pantry Based Recipes', style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar icons
-        actionsIconTheme: IconThemeData(color: Colors.black), // Apply black color to the app bar action icons
+        iconTheme: IconThemeData(color: Colors.black54),
+        actionsIconTheme: IconThemeData(color: Colors.black54),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'This will suggest recipes based on your virtual pantry and dietary restrictions',
-                style: TextStyle(
-                  color: Colors.black, // Set text color to black
-                  fontSize: 18.0, // Set font size
-                ),
-                textAlign: TextAlign.center, // Center-align the text
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'This will suggest recipes based on your user preferences and virtual pantry ingredients below',
+              style: qookitLight.textTheme.bodyText1,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            if (isLoading)
+              CircularProgressIndicator(
+                strokeWidth: 4.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
               ),
-              SizedBox(height: 20),
-              if (isLoading) // Show CircularProgressIndicator if isLoading is true
-                CircularProgressIndicator(
-                  strokeWidth: 4.0,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
-                ),
-            ],
-          ),
+            SizedBox(height: 20),
+            _buildAddIngredientField(),
+            SizedBox(height: 20),
+            Expanded(child: _buildPantryItemList()),
+          ],
         ),
       ),
       floatingActionButton: Stack(
@@ -58,18 +71,18 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
             child: FloatingActionButton(
               onPressed: () async {
                 setState(() {
-                  isLoading = true; // Set isLoading to true when button is pressed
+                  isLoading = true;
                 });
                 await processData(context);
                 setState(() {
-                  isLoading = false; // Set isLoading to false when data processing is complete
+                  isLoading = false;
                 });
               },
               child: Icon(Icons.restaurant),
             ),
           ),
           Positioned(
-            bottom: 90.0, // Adjust the position as needed
+            bottom: 90.0,
             right: 16.0,
             child: Text(
               'Qookit (~15s)',
@@ -81,16 +94,88 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
     );
   }
 
+  Widget _buildAddIngredientField() {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            decoration: InputDecoration(
+              labelText: 'Add an item',
+              labelStyle: qookitLight.textTheme.bodyText1,
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.amber)),
+              enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black54)),
+              contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 10),
+            ),
+            style: qookitLight.textTheme.bodyText1,
+            cursorColor: Colors.black54,
+          ),
+        ),
+        SizedBox(width: 10), // Add some space between the text field and button
+        IconButton(
+          icon: Icon(Icons.add, color: Colors.amber),
+          onPressed: () {
+            final String item = _controller.text.trim();
+            if (item.isNotEmpty) {
+              setState(() {
+                pantryItems.add(item);
+                _controller.clear();
+              });
+              _updatePantry();
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPantryItemList() {
+    return ListView.builder(
+      itemCount: pantryItems.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(
+            pantryItems[index],
+            style: qookitLight.textTheme.bodyText1,
+          ),
+          trailing: IconTheme(
+            data: IconThemeData(color: Colors.amber),
+            child: IconButton(
+              icon: Icon(Icons.remove_circle),
+              onPressed: () {
+                _removeItem(index);
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _updatePantry() async {
+    final pantryBox = await Hive.openBox<List<String>>(HiveBoxes.virtualPantry);
+    pantryBox.put(userId, pantryItems);
+  }
+
+  void _removeItem(int index) {
+    setState(() {
+      pantryItems.removeAt(index);
+    });
+    _updatePantry();
+  }
+
   Future<void> processData(BuildContext context) async {
     try {
       final dietaryRestrictionsBox = await Hive.box<List<String>>(HiveBoxes.dietaryRestrictions);
       List<String> dietaryRestrictions = dietaryRestrictionsBox.get(userId, defaultValue: [])!;
-      final virtualPantryBox = await Hive.box<List<String>>(HiveBoxes.virtualPantry);
-      List<String> virtualPantryIngredients = virtualPantryBox.get(userId, defaultValue: [])!;
+      final culinaryPreferencesBox = await Hive.box<List<String>>(HiveBoxes.culinaryPreferences);
+      List<String> culinaryPreferences = culinaryPreferencesBox.get(userId, defaultValue: [])!;
 
-      String response = await OpenAiService.fetchRecipes(
-        virtualPantryIngredients.join(','),
+      String response = await FacadeService.fetchRecipes(
+        pantryItems.join(','),
         dietaryRestrictions.join(','),
+        culinaryPreferences.join(','),
         true,
         false,
       );
@@ -99,14 +184,12 @@ class _VirtualPantryScanState extends State<VirtualPantryScan> {
         context,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return RecipesView(response);
+            return RecipesView(response, pantryItems.join(','), showAddToPantryButton: false);
           },
         ),
       );
     } catch (e) {
-      // Handle error
       print('Error processing data: $e');
-      // Show error message to the user
       showDialog(
         context: context,
         builder: (BuildContext context) {

@@ -42,4 +42,22 @@ class AuthService {
   Future<void> sendPasswordResetEmail(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
+
+  Future<String?> getToken() async {
+    return await _auth.currentUser?.getIdToken();
+  }
+
+  Future<String?> deactivateAccount() async {
+    try {
+      await _auth.currentUser?.delete();
+      return null; // Return null if deletion is successful
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        return 'Please re-authenticate to deactivate your account.';
+      }
+      return e.message; // Return specific Firebase error message
+    } catch (e) {
+      return 'An unexpected error occurred'; // Return generic error message
+    }
+  }
 }

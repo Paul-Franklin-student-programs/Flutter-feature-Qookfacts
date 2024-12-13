@@ -23,8 +23,8 @@ class _SignInViewState extends State<SignInView> {
         title: Text("Welcome to Qookit", style: qookitLight.textTheme.headline4),
         centerTitle: true,
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black),
-        actionsIconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black54),
+        actionsIconTheme: IconThemeData(color: Colors.black54),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,7 +35,7 @@ class _SignInViewState extends State<SignInView> {
               controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
               style: qookitLight.textTheme.headline6
@@ -44,7 +44,7 @@ class _SignInViewState extends State<SignInView> {
               controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.black), // Set label text color to black
+                labelStyle: qookitLight.textTheme.bodyText1, // Set label text color to black
                 focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.black)), // Set focused border color to black
               ),
               style: qookitLight.textTheme.headline6, // Set input text color to black
@@ -72,7 +72,7 @@ class _SignInViewState extends State<SignInView> {
             if (errorMessage != null) // Show error message if not null
               Text(
                 errorMessage!,
-                style: TextStyle(color: Colors.red), // Error message style
+                style: errorTextStyle, // Error message style
               ),
             SizedBox(height: 8),
             ElevatedButton(

@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:qookit/services/theme/theme_service.dart';
-import 'package:qookit/ui/v2/services/hive_service.dart'; // Ensure you have the correct path for your theme
+import 'package:qookit/ui/v2/services/hive_service.dart';
+import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart'; // Ensure you have the correct path for your theme
 
 class ScannedIngredientsView extends StatefulWidget {
   final List<String> ingredients;
@@ -40,6 +41,12 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Ingredients saved to virtual pantry"),
     ));
+
+    // Navigate to VirtualPantryScanView
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => VirtualPantryScanView()),
+    );
   }
 
   @override
@@ -51,7 +58,7 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
           style: qookitLight.textTheme.headline4,
         ),
         backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black54),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +66,7 @@ class _ScannedIngredientsViewState extends State<ScannedIngredientsView> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Ingredients identified from the scan',
+              'Ingredients identified',
               style: qookitLight.textTheme.headline6,
             ),
           ),
