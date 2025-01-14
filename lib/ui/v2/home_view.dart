@@ -7,7 +7,7 @@ import 'package:qookit/ui/v2/services/auth_service.dart';
 import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/user_preferences_view.dart';
 import 'package:qookit/ui/v2/virtual_pantry_scan_view.dart';
-import 'package:qookit/ui/v2/qookit_tips_view.dart';
+import 'package:qookit/ui/v2/qookit_tips_utility.dart';
 import 'package:qookit/ui/v2/deactivate_account_view.dart'; // Import the deactivation view
 
 class HomeView extends StatefulWidget {
