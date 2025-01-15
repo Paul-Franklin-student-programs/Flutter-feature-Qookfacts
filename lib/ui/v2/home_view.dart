@@ -85,7 +85,9 @@ class _HomeViewState extends State<HomeView> {
                                 MaterialPageRoute(
                                   builder: (context) => VirtualPantryScanView(),
                                 ),
-                              );
+                              ).then((_) {
+                                refreshQookitTip();
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -116,7 +118,9 @@ class _HomeViewState extends State<HomeView> {
                                     isIngredientScanSelected: false,
                                   ),
                                 ),
-                              );
+                              ).then((_) {
+                                refreshQookitTip();
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -147,7 +151,9 @@ class _HomeViewState extends State<HomeView> {
                                     isIngredientScanSelected: true,
                                   ),
                                 ),
-                              );
+                              ).then((_) {
+                                refreshQookitTip();
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -174,7 +180,9 @@ class _HomeViewState extends State<HomeView> {
                                 MaterialPageRoute(
                                   builder: (context) => InstantRecipeFinderView(),
                                 ),
-                              );
+                              ).then((_) {
+                                refreshQookitTip();
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -228,7 +236,9 @@ class _HomeViewState extends State<HomeView> {
                                 MaterialPageRoute(
                                   builder: (context) => DeactivateAccountView(),
                                 ),
-                              );
+                              ).then((_) {
+                                refreshQookitTip();
+                              });
                             },
                             child: Container(
                               decoration: BoxDecoration(
