@@ -28,7 +28,7 @@ class _HomeViewState extends State<HomeView> {
     qookitTip = QookitTips().loadNewTip();
   }
 
-  // Function to refresh qookitTip
+  // Function to refresh Qookit Tip
   void refreshQookitTip() {
     setState(() {
       qookitTip = QookitTips().loadNewTip();
