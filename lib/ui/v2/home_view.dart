@@ -20,9 +20,19 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  late String qookitTip;
+
+  @override
+  void initState() {
+    super.initState();
+    qookitTip = QookitTips().loadNewTip();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var paddingBottom = MediaQuery.of(context).padding.bottom;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -236,6 +246,21 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ],
                 ),
+                Positioned(
+                  bottom: 175,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      qookitTip,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: 'Comfortaa', fontStyle: FontStyle.italic, fontSize: 20, color: Colors.black),
+                    ),
+                  ),
+                ),
+
+
                 Positioned(
                   bottom: 20 + paddingBottom,
                   left: 0,
