@@ -177,7 +177,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                           ),
-                          // Qooking Tips Button
+                          /* Qooking Tips Button
                           InkWell(
                             onTap: () {
                               Navigator.push(
@@ -203,7 +203,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                             ),
-                          ),
+                          ),*/
                           // Deactivate Account Button
                           InkWell(
                             onTap: () {

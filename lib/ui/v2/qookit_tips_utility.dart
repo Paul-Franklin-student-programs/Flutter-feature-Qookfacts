@@ -1,7 +1,6 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
 
-class PaulTestQookitTipsViewState{
+class QookitTips{
 
   final List<String> cookingTips = [
     "Add a pinch of salt to enhance the sweetness of your baked goods.",
