@@ -1,14 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import '../../services/theme/theme_service.dart';
+class PaulTestQookitTipsViewState{
 
-class QookitTipsView extends StatefulWidget {
-  @override
-  _QookitTipsViewState createState() => _QookitTipsViewState();
-}
-
-class _QookitTipsViewState extends State<QookitTipsView> {
   final List<String> cookingTips = [
     "Add a pinch of salt to enhance the sweetness of your baked goods.",
     "Use fresh herbs for a burst of flavor in your dishes.",
@@ -124,69 +118,8 @@ class _QookitTipsViewState extends State<QookitTipsView> {
 
   String currentTip = "";
 
-  @override
-  void initState() {
-    super.initState();
-    loadNewTip();
-  }
-
-  void loadNewTip() {
-    setState(() {
-      currentTip = cookingTips[Random().nextInt(cookingTips.length)];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var paddingBottom = MediaQuery.of(context).padding.bottom;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Qooking Tips', style: qookitLight.textTheme.headline4),
-        centerTitle: true,
-        backgroundColor: qookitLight.primaryColor,
-        iconTheme: IconThemeData(color: Colors.black54),
-        actionsIconTheme: IconThemeData(color: Colors.black54),
-      ),
-      body: Stack(
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    currentTip,
-                    style: qookitLight.textTheme.headline5,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 40),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 10 + paddingBottom,
-            right: 16.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton(
-                  backgroundColor: Colors.amber,
-                  onPressed: loadNewTip,
-                  child: Icon(Icons.refresh),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Refresh',
-                  style: qookitLight.tabBarTheme.labelStyle,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  String loadNewTip() {
+    currentTip = cookingTips[Random().nextInt(cookingTips.length)];
+    return currentTip;
   }
 }
