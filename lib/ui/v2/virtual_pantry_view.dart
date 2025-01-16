@@ -5,7 +5,7 @@ import 'package:qookit/services/theme/theme_service.dart';
 import 'package:qookit/ui/v2/services/hive_service.dart';
 
 class VirtualPantryView extends StatefulWidget {
-  @override
+g  @override
   _VirtualPantryViewState createState() => _VirtualPantryViewState();
 }
 
