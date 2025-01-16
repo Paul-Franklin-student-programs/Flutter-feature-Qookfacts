@@ -117,6 +117,7 @@ class QookitTips{
 
   String currentTip = "";
 
+  //chooses tip at random and passes it to HomeView
   String loadNewTip() {
     currentTip = cookingTips[Random().nextInt(cookingTips.length)];
     return currentTip;

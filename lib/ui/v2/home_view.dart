@@ -22,13 +22,14 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   late String qookitTip;
 
+  //fetches and displays Tip when HomeView is first loaded
   @override
   void initState() {
     super.initState();
     qookitTip = QookitTips().loadNewTip();
   }
 
-  // Function to refresh Qookit Tip
+  // refreshes Qookit Tip to display a new Tip
   void refreshQookitTip() {
     setState(() {
       qookitTip = QookitTips().loadNewTip();
