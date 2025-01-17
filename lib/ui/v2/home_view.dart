@@ -286,6 +286,7 @@ class _HomeViewState extends State<HomeView> {
                     padding: const EdgeInsets.all(16.0),
                     child: Material(
                       color: Colors.transparent, // Make the Material background transparent
+                      //user refreshes tip by tapping the text
                       child: InkWell(
                         onTap: refreshQookitTip,
                         child: Text(
