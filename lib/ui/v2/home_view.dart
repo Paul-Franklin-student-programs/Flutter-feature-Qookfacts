@@ -29,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
     qookitTip = QookitTips().loadNewTip();
   }
 
-  // refreshes Qookit Tip to display a new Tip
+  //refreshes Qookit Tip to display a new Tip
   void refreshQookitTip() {
     setState(() {
       qookitTip = QookitTips().loadNewTip();
@@ -277,7 +277,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),*/
 
-
+                //Qookit Tip display
                 Positioned(
                   bottom: 175,
                   left: 0,
