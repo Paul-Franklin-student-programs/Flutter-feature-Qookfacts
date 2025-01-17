@@ -287,10 +287,7 @@ class _HomeViewState extends State<HomeView> {
                     child: Material(
                       color: Colors.transparent, // Make the Material background transparent
                       child: InkWell(
-                        onTap: () {
-                          // Add your on-tap logic here
-                          refreshQookitTip;
-                        },
+                        onTap: refreshQookitTip,
                         child: Text(
                           qookitTip,
                           textAlign: TextAlign.center,
