@@ -263,7 +263,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   ],
                 ),
-                Positioned(
+                /*Positioned(
                   bottom: 175,
                   left: 0,
                   right: 0,
@@ -275,7 +275,37 @@ class _HomeViewState extends State<HomeView> {
                       style: TextStyle(fontFamily: 'Comfortaa', fontStyle: FontStyle.italic, fontSize: 20, color: Colors.black),
                     ),
                   ),
+                ),*/
+
+
+                Positioned(
+                  bottom: 175,
+                  left: 0,
+                  right: 0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Material(
+                      color: Colors.transparent, // Make the Material background transparent
+                      child: InkWell(
+                        onTap: () {
+                          // Add your on-tap logic here
+                          refreshQookitTip;
+                        },
+                        child: Text(
+                          qookitTip,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: 'Comfortaa',
+                            fontStyle: FontStyle.italic,
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
+
 
 
                 Positioned(
