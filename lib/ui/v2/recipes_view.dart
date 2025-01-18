@@ -52,7 +52,7 @@ class _RecipesViewState extends State<RecipesView> {
 
     setState(() {
       //contentData.addAll(newData.split('\n'));
-      contentData.addAll(newData.split(""));
+      contentData.addAll(newData.split('""'));
       isLoading = false;
     });
   }
