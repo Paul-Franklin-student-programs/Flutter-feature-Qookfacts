@@ -26,13 +26,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    qookitTip = QookitTips().loadNewTip();
+    qookitTip = QookitTipsUtility().loadNewTip();
   }
 
   //refreshes Qookit Tip to display a new Tip
   void refreshQookitTip() {
     setState(() {
-      qookitTip = QookitTips().loadNewTip();
+      qookitTip = QookitTipsUtility().loadNewTip();
     });
   }
 

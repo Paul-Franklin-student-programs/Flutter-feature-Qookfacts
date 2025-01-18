@@ -1,6 +1,6 @@
 import 'dart:math';
 
-class QookitTips{
+class QookitTipsUtility{
 
   final List<String> cookingTips = [
     "Add a pinch of salt to enhance the sweetness of your baked goods.",
