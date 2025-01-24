@@ -51,8 +51,7 @@ class _RecipesViewState extends State<RecipesView> {
     final newData = await FacadeService.loadMoreRecipes(ocrResults, dietaryRestrictions.join(','), culinaryPreferences.join(','));
 
     setState(() {
-      //contentData.addAll(newData.split('\n'));
-      contentData.addAll(newData.split('""'));
+      contentData.addAll(newData.split('\n'));
       isLoading = false;
     });
   }
